@@ -240,65 +240,68 @@ function Index() {
           </div>
         </div>
 
-        {/* Upper fluid sky layer */}
-        <div className="relative overflow-hidden rounded-b-[40px] bg-[#FFE9D9] pb-8 pt-[max(env(safe-area-inset-top),40px)] sm:pt-8 shadow-[0_20px_40px_-30px_rgba(46,107,138,0.35)]">
-          <div className="pointer-events-none absolute -right-8 -top-4 h-32 w-32 rounded-full bg-[#ffe4e6] opacity-70 blur-2xl" />
-          <div className="pointer-events-none absolute -left-6 top-16 h-24 w-24 rounded-full bg-[#f9a8a8] opacity-30 blur-2xl" />
+        {/* Scrollable content area */}
+        <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          {/* Upper fluid sky layer — header only */}
+          <div className="relative rounded-b-[40px] bg-[#FFE9D9] pb-5 pt-[max(env(safe-area-inset-top),40px)] sm:pt-8 shadow-[0_20px_40px_-30px_rgba(46,107,138,0.35)]">
+            <div className="pointer-events-none absolute -right-8 -top-4 h-32 w-32 rounded-full bg-[#ffe4e6] opacity-70 blur-2xl" />
+            <div className="pointer-events-none absolute -left-6 top-16 h-24 w-24 rounded-full bg-[#f9a8a8] opacity-30 blur-2xl" />
 
-          {/* Header */}
-          <div className="relative flex items-center justify-between px-6">
-            <div className="min-w-0">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/55">
-                Thứ tư · 15 Tháng 4
-              </p>
-              <h1 className="font-display mt-1 text-[26px] font-bold leading-tight tracking-tight text-foreground">
-                Chào, {displayName ?? "bạn"} 👋
-              </h1>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                aria-label="Tìm kiếm"
-                onClick={() => navigate({ to: "/search" })}
-                className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
-              >
-                <Search className="h-[18px] w-[18px]" strokeWidth={2.2} />
-              </button>
-              <button
-                type="button"
-                aria-label="Thông báo"
-                onClick={() => navigate({ to: "/notifications" })}
-                className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
-              >
-                <Bell className="h-[18px] w-[18px]" strokeWidth={2.2} />
-                <span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-[#f9a8a8] ring-2 ring-white" />
-              </button>
-              {signedIn ? (
+            {/* Header */}
+            <div className="relative flex items-center justify-between px-6">
+              <div className="min-w-0">
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/55">
+                  Thứ tư · 15 Tháng 4
+                </p>
+                <h1 className="font-display mt-1 text-[26px] font-bold leading-tight tracking-tight text-foreground">
+                  Chào, {displayName ?? "bạn"} 👋
+                </h1>
+              </div>
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => navigate({ to: "/profile" })}
-                  aria-label="Hồ sơ & cài đặt"
-                  title="Hồ sơ"
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-95"
+                  aria-label="Tìm kiếm"
+                  onClick={() => navigate({ to: "/search" })}
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
                 >
-                  <User className="h-5 w-5" strokeWidth={2.2} />
+                  <Search className="h-[18px] w-[18px]" strokeWidth={2.2} />
                 </button>
-              ) : (
                 <button
                   type="button"
-                  onClick={() => navigate({ to: "/auth" })}
-                  aria-label="Đăng nhập"
-                  title="Đăng nhập"
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-95"
+                  aria-label="Thông báo"
+                  onClick={() => navigate({ to: "/notifications" })}
+                  className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
                 >
-                  <User className="h-5 w-5" strokeWidth={2.2} />
+                  <Bell className="h-[18px] w-[18px]" strokeWidth={2.2} />
+                  <span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-[#f9a8a8] ring-2 ring-white" />
                 </button>
-              )}
+                {signedIn ? (
+                  <button
+                    type="button"
+                    onClick={() => navigate({ to: "/profile" })}
+                    aria-label="Hồ sơ & cài đặt"
+                    title="Hồ sơ"
+                    className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-95"
+                  >
+                    <User className="h-5 w-5" strokeWidth={2.2} />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => navigate({ to: "/auth" })}
+                    aria-label="Đăng nhập"
+                    title="Đăng nhập"
+                    className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-95"
+                  >
+                    <User className="h-5 w-5" strokeWidth={2.2} />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Financial Widget */}
-          <div className="relative mx-5 mt-6 mb-3">
+          {/* Financial Widget — visible right below header */}
+          <div className="relative mx-5 mt-5 mb-3">
             <p className="text-[12px] font-medium uppercase tracking-widest text-foreground/50">Tổng tài sản ròng</p>
             <p className="font-display mt-1 text-[38px] font-bold leading-none tracking-tight text-foreground">
               {formatVND(netWorth)}
@@ -327,7 +330,7 @@ function Index() {
           </div>
 
           {/* Quick Actions */}
-          <div className="mx-5 mt-1 grid grid-cols-3 gap-3">
+          <div className="mx-5 mt-1 mb-6 grid grid-cols-3 gap-3">
             <button className="flex flex-col items-center justify-center gap-1.5 rounded-3xl bg-white/50 py-3 shadow-sm backdrop-blur-md active:scale-95 transition-transform border border-white/40">
               <ArrowUpCircle className="h-6 w-6 text-emerald-600" strokeWidth={2.2} />
               <span className="text-[11px] font-bold tracking-wide text-foreground/70">Thu nhập</span>
@@ -341,122 +344,122 @@ function Index() {
               <span className="text-[11px] font-bold tracking-wide text-foreground/70">Quét hóa đơn</span>
             </button>
           </div>
-        </div>
 
-        {/* Photo Journal & Calendar Section */}
-        <div className="flex-1 px-5 pb-32 pt-6">
-          {/* Hero card - Moved down */}
-          <div className="relative mb-6 rounded-[32px] border border-white/60 bg-white/55 p-5 backdrop-blur-md shadow-sm">
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <span className="block font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-foreground/55">
-                  Khoảnh khắc tháng này
-                </span>
-                <div className="mt-1.5 flex items-baseline gap-1.5">
-                  <span className="font-display text-[40px] font-bold leading-none text-foreground tabular-nums">
-                    {daysLogged}
+          {/* Photo Journal & Calendar Section */}
+          <div className="px-5 pb-32">
+            {/* Hero card */}
+            <div className="relative mb-6 rounded-[32px] border border-white/60 bg-white/55 p-5 backdrop-blur-md shadow-sm">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <span className="block font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-foreground/55">
+                    Khoảnh khắc tháng này
                   </span>
-                  <span className="font-sans text-[13px] font-medium text-foreground/55">
-                    / {target} ngày
-                  </span>
+                  <div className="mt-1.5 flex items-baseline gap-1.5">
+                    <span className="font-display text-[40px] font-bold leading-none text-foreground tabular-nums">
+                      {daysLogged}
+                    </span>
+                    <span className="font-sans text-[13px] font-medium text-foreground/55">
+                      / {target} ngày
+                    </span>
+                  </div>
+                  <div className="mt-3 flex items-center gap-1.5">
+                    <Camera className="h-3.5 w-3.5 text-[#B5828C]" strokeWidth={2.2} />
+                    <span className="font-sans text-[12px] font-semibold text-foreground/75 tabular-nums">
+                      {totalPhotos} tấm ảnh
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-3 flex items-center gap-1.5">
-                  <Camera className="h-3.5 w-3.5 text-[#B5828C]" strokeWidth={2.2} />
-                  <span className="font-sans text-[12px] font-semibold text-foreground/75 tabular-nums">
-                    {totalPhotos} tấm ảnh
-                  </span>
+
+                {/* Progress ring */}
+                <div className="relative h-[68px] w-[68px] shrink-0">
+                  <svg viewBox="0 0 60 60" className="h-full w-full -rotate-90">
+                    <circle cx="30" cy="30" r="26" fill="none" stroke="#FFE9D9" strokeWidth="6" />
+                    <circle
+                      cx="30"
+                      cy="30"
+                      r="26"
+                      fill="none"
+                      stroke="#B5828C"
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeDasharray={dash}
+                      strokeDashoffset={dash * (1 - pct / 100)}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="font-display text-[15px] font-bold leading-none text-foreground tabular-nums">
+                      {pct}%
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Progress ring */}
-              <div className="relative h-[68px] w-[68px] shrink-0">
-                <svg viewBox="0 0 60 60" className="h-full w-full -rotate-90">
-                  <circle cx="30" cy="30" r="26" fill="none" stroke="#FFE9D9" strokeWidth="6" />
-                  <circle
-                    cx="30"
-                    cy="30"
-                    r="26"
-                    fill="none"
-                    stroke="#B5828C"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    strokeDasharray={dash}
-                    strokeDashoffset={dash * (1 - pct / 100)}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="font-display text-[15px] font-bold leading-none text-foreground tabular-nums">
-                    {pct}%
-                  </span>
-                </div>
+              <div className="mt-4 flex h-1.5 gap-1 overflow-hidden rounded-full bg-[#FFF8F0]">
+                <div className="h-full rounded-full bg-[#FFB4A2]" style={{ width: "58%" }} />
+                <div className="h-full rounded-full bg-[#f9a8a8]" style={{ width: "22%" }} />
               </div>
-            </div>
-
-            <div className="mt-4 flex h-1.5 gap-1 overflow-hidden rounded-full bg-[#FFF8F0]">
-              <div className="h-full rounded-full bg-[#FFB4A2]" style={{ width: "58%" }} />
-              <div className="h-full rounded-full bg-[#f9a8a8]" style={{ width: "22%" }} />
-            </div>
-            <p className="mt-3 font-sans text-[12px] font-medium text-foreground/65">
-              🎉 Nhiều hơn <span className="font-bold text-foreground">12 khoảnh khắc</span> so với tháng trước.
-            </p>
-          </div>
-
-          {/* Calendar */}
-          <div className="mb-4 flex items-center justify-between px-1">
-            <div>
-              <h2 className="font-display text-[20px] font-bold leading-none tracking-tight text-foreground">
-                Tháng 4, 2026
-              </h2>
-              <p className="mt-1 font-sans text-[11px] font-medium text-foreground/50">
-                Nhấn vào ngày để xem lại kỷ niệm
+              <p className="mt-3 font-sans text-[12px] font-medium text-foreground/65">
+                🎉 Nhiều hơn <span className="font-bold text-foreground">12 khoảnh khắc</span> so với tháng trước.
               </p>
             </div>
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                aria-label="Tháng trước"
-                className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-95"
-              >
-                <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
-              </button>
-              <button
-                type="button"
-                aria-label="Tháng sau"
-                className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-95"
-              >
-                <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
-              </button>
-            </div>
-          </div>
 
-          <div className="rounded-[24px] bg-white/60 p-3 backdrop-blur-sm">
-            <div className="grid grid-cols-7 gap-y-0.5 text-center">
-              {WEEKDAYS.map((d) => (
-                <div
-                  key={d}
-                  className="pb-2 font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/40"
+            {/* Calendar */}
+            <div className="mb-4 flex items-center justify-between px-1">
+              <div>
+                <h2 className="font-display text-[20px] font-bold leading-none tracking-tight text-foreground">
+                  Tháng 4, 2026
+                </h2>
+                <p className="mt-1 font-sans text-[11px] font-medium text-foreground/50">
+                  Nhấn vào ngày để xem lại kỷ niệm
+                </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  aria-label="Tháng trước"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-95"
                 >
-                  {d}
-                </div>
-              ))}
-              {cells.map((entry, i) => (
-                <DayCell
-                  key={i}
-                  entry={entry}
-                  day={i >= LEADING_BLANKS ? i - LEADING_BLANKS + 1 : 0}
-                />
-              ))}
+                  <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Tháng sau"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-95"
+                >
+                  <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+                </button>
+              </div>
             </div>
-          </div>
 
-          {/* Legend */}
-          <div className="mt-4 flex items-center justify-center gap-4 font-sans text-[11px] font-medium text-foreground/55">
-            <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-[#B5828C]" /> Hôm nay
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-[#f9a8a8]" /> Có ảnh
-            </span>
+            <div className="rounded-[24px] bg-white/60 p-3 backdrop-blur-sm">
+              <div className="grid grid-cols-7 gap-y-0.5 text-center">
+                {WEEKDAYS.map((d) => (
+                  <div
+                    key={d}
+                    className="pb-2 font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/40"
+                  >
+                    {d}
+                  </div>
+                ))}
+                {cells.map((entry, i) => (
+                  <DayCell
+                    key={i}
+                    entry={entry}
+                    day={i >= LEADING_BLANKS ? i - LEADING_BLANKS + 1 : 0}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="mt-4 flex items-center justify-center gap-4 font-sans text-[11px] font-medium text-foreground/55">
+              <span className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-[#B5828C]" /> Hôm nay
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-[#f9a8a8]" /> Có ảnh
+              </span>
+            </div>
           </div>
         </div>
 
@@ -466,6 +469,3 @@ function Index() {
     </main>
   );
 }
-
-
-
