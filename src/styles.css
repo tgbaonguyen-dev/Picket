@@ -1,0 +1,148 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/inter";
+@import "@fontsource/noto-color-emoji/index.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-expense: var(--expense);
+  --color-income: var(--income);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-chip: var(--chip);
+  --color-chip-foreground: var(--chip-foreground);
+  --color-coral: var(--coral);
+  --color-peach: var(--peach);
+  --color-mauve: var(--mauve);
+  --color-cream: var(--cream);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, "Noto Color Emoji", sans-serif;
+  --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, system-ui, "Noto Color Emoji", sans-serif;
+}
+
+:root {
+  --radius: 1.25rem;
+  /* Peach & Coral pastel palette */
+  --cream: #FFF8F0;
+  --peach: #FFD6BA;
+  --coral: #FFB4A2;
+  --mauve: #B5828C;
+
+  --page: #F5E8DA;
+  --background: #FFF8F0;
+  --surface: #FFFFFF;
+  --surface-soft: #FFF1E4;
+  --foreground: #4A2C2A;
+  --card: rgba(255, 255, 255, 0.78);
+  --card-foreground: #4A2C2A;
+  --popover: #FFFFFF;
+  --popover-foreground: #4A2C2A;
+  --primary: #B5828C;
+  --primary-foreground: #FFF8F0;
+  --secondary: #FFE4D2;
+  --secondary-foreground: #4A2C2A;
+  --muted: #FFF1E4;
+  --muted-foreground: #9B7278;
+  --accent: #FFB4A2;
+  --accent-foreground: #4A2C2A;
+  --destructive: #E85D5D;
+  --destructive-foreground: #FFF8F0;
+  --border: rgba(181, 130, 140, 0.15);
+  --input: rgba(255, 255, 255, 0.7);
+  --ring: #FFB4A2;
+  --expense: #E07A6B;
+  --income: #7DA87B;
+  --brand: #FFB4A2;
+  --brand-foreground: #4A2C2A;
+  --chip: #FFE4D2;
+  --chip-foreground: #B5828C;
+}
+
+.dark {
+  --page: #2A1A1C;
+  --background: #3A2325;
+  --foreground: #FFF1E4;
+  --card: rgba(74, 44, 42, 0.7);
+  --card-foreground: #FFF1E4;
+  --border: rgba(255, 212, 186, 0.15);
+  --muted: #4A2C2A;
+  --muted-foreground: #D4A79A;
+}
+
+@utility emoji {
+  font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 32px -8px rgba(181, 130, 140, 0.18);
+}
+
+@utility soft-shadow {
+  box-shadow: 0 12px 40px -14px rgba(181, 130, 140, 0.28);
+}
+
+@utility surface-card {
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 6px 20px -10px rgba(181, 130, 140, 0.2);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background-color: var(--color-page);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  input, textarea, select, [contenteditable="true"] {
+    user-select: auto;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
+}
