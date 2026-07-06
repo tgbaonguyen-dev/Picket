@@ -22,6 +22,7 @@ import { Route as OnboardingPrivacyRouteImport } from './routes/onboarding-priva
 import { Route as OnboardingPermissionsRouteImport } from './routes/onboarding-permissions'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MonthlyWrapRouteImport } from './routes/monthly-wrap'
+import { Route as ItemsRouteImport } from './routes/items'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as CategoriesRouteImport } from './routes/categories'
@@ -30,6 +31,7 @@ import { Route as BudgetsRouteImport } from './routes/budgets'
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ItemsIndexRouteImport } from './routes/items.index'
 import { Route as BillsIndexRouteImport } from './routes/bills.index'
 import { Route as TransactionsTransferRouteImport } from './routes/transactions.transfer'
 import { Route as TransactionsReconcileRouteImport } from './routes/transactions.reconcile'
@@ -37,6 +39,8 @@ import { Route as TransactionsNewRouteImport } from './routes/transactions.new'
 import { Route as TransactionsCategoryRouteImport } from './routes/transactions.category'
 import { Route as TransactionsBulkRouteImport } from './routes/transactions.bulk'
 import { Route as TransactionsIdRouteImport } from './routes/transactions.$id'
+import { Route as ItemsNewRouteImport } from './routes/items.new'
+import { Route as ItemsIdRouteImport } from './routes/items.$id'
 import { Route as BudgetsTransferRouteImport } from './routes/budgets.transfer'
 import { Route as BudgetsNewRouteImport } from './routes/budgets.new'
 import { Route as BudgetsMethodRouteImport } from './routes/budgets.method'
@@ -120,6 +124,11 @@ const MonthlyWrapRoute = MonthlyWrapRouteImport.update({
   path: '/monthly-wrap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ItemsRoute = ItemsRouteImport.update({
+  id: '/items',
+  path: '/items',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InboxRoute = InboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
@@ -160,6 +169,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ItemsIndexRoute = ItemsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ItemsRoute,
+} as any)
 const BillsIndexRoute = BillsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -194,6 +208,16 @@ const TransactionsIdRoute = TransactionsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => TransactionsRoute,
+} as any)
+const ItemsNewRoute = ItemsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => ItemsRoute,
+} as any)
+const ItemsIdRoute = ItemsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ItemsRoute,
 } as any)
 const BudgetsTransferRoute = BudgetsTransferRouteImport.update({
   id: '/transfer',
@@ -291,6 +315,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof CategoriesRoute
   '/expenses': typeof ExpensesRoute
   '/inbox': typeof InboxRoute
+  '/items': typeof ItemsRouteWithChildren
   '/monthly-wrap': typeof MonthlyWrapRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding-permissions': typeof OnboardingPermissionsRoute
@@ -312,6 +337,8 @@ export interface FileRoutesByFullPath {
   '/budgets/method': typeof BudgetsMethodRoute
   '/budgets/new': typeof BudgetsNewRoute
   '/budgets/transfer': typeof BudgetsTransferRoute
+  '/items/$id': typeof ItemsIdRoute
+  '/items/new': typeof ItemsNewRoute
   '/transactions/$id': typeof TransactionsIdRouteWithChildren
   '/transactions/bulk': typeof TransactionsBulkRoute
   '/transactions/category': typeof TransactionsCategoryRoute
@@ -319,6 +346,7 @@ export interface FileRoutesByFullPath {
   '/transactions/reconcile': typeof TransactionsReconcileRoute
   '/transactions/transfer': typeof TransactionsTransferRoute
   '/bills/': typeof BillsIndexRoute
+  '/items/': typeof ItemsIndexRoute
   '/bills/$id/edit': typeof BillsIdEditRoute
   '/bills/subscriptions/new': typeof BillsSubscriptionsNewRoute
   '/budgets/$id/alert': typeof BudgetsIdAlertRoute
@@ -357,6 +385,8 @@ export interface FileRoutesByTo {
   '/budgets/method': typeof BudgetsMethodRoute
   '/budgets/new': typeof BudgetsNewRoute
   '/budgets/transfer': typeof BudgetsTransferRoute
+  '/items/$id': typeof ItemsIdRoute
+  '/items/new': typeof ItemsNewRoute
   '/transactions/$id': typeof TransactionsIdRouteWithChildren
   '/transactions/bulk': typeof TransactionsBulkRoute
   '/transactions/category': typeof TransactionsCategoryRoute
@@ -364,6 +394,7 @@ export interface FileRoutesByTo {
   '/transactions/reconcile': typeof TransactionsReconcileRoute
   '/transactions/transfer': typeof TransactionsTransferRoute
   '/bills': typeof BillsIndexRoute
+  '/items': typeof ItemsIndexRoute
   '/bills/$id/edit': typeof BillsIdEditRoute
   '/bills/subscriptions/new': typeof BillsSubscriptionsNewRoute
   '/budgets/$id/alert': typeof BudgetsIdAlertRoute
@@ -384,6 +415,7 @@ export interface FileRoutesById {
   '/categories': typeof CategoriesRoute
   '/expenses': typeof ExpensesRoute
   '/inbox': typeof InboxRoute
+  '/items': typeof ItemsRouteWithChildren
   '/monthly-wrap': typeof MonthlyWrapRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding-permissions': typeof OnboardingPermissionsRoute
@@ -405,6 +437,8 @@ export interface FileRoutesById {
   '/budgets/method': typeof BudgetsMethodRoute
   '/budgets/new': typeof BudgetsNewRoute
   '/budgets/transfer': typeof BudgetsTransferRoute
+  '/items/$id': typeof ItemsIdRoute
+  '/items/new': typeof ItemsNewRoute
   '/transactions/$id': typeof TransactionsIdRouteWithChildren
   '/transactions/bulk': typeof TransactionsBulkRoute
   '/transactions/category': typeof TransactionsCategoryRoute
@@ -412,6 +446,7 @@ export interface FileRoutesById {
   '/transactions/reconcile': typeof TransactionsReconcileRoute
   '/transactions/transfer': typeof TransactionsTransferRoute
   '/bills/': typeof BillsIndexRoute
+  '/items/': typeof ItemsIndexRoute
   '/bills/$id/edit': typeof BillsIdEditRoute
   '/bills/subscriptions/new': typeof BillsSubscriptionsNewRoute
   '/budgets/$id/alert': typeof BudgetsIdAlertRoute
@@ -433,6 +468,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/expenses'
     | '/inbox'
+    | '/items'
     | '/monthly-wrap'
     | '/notifications'
     | '/onboarding-permissions'
@@ -454,6 +490,8 @@ export interface FileRouteTypes {
     | '/budgets/method'
     | '/budgets/new'
     | '/budgets/transfer'
+    | '/items/$id'
+    | '/items/new'
     | '/transactions/$id'
     | '/transactions/bulk'
     | '/transactions/category'
@@ -461,6 +499,7 @@ export interface FileRouteTypes {
     | '/transactions/reconcile'
     | '/transactions/transfer'
     | '/bills/'
+    | '/items/'
     | '/bills/$id/edit'
     | '/bills/subscriptions/new'
     | '/budgets/$id/alert'
@@ -499,6 +538,8 @@ export interface FileRouteTypes {
     | '/budgets/method'
     | '/budgets/new'
     | '/budgets/transfer'
+    | '/items/$id'
+    | '/items/new'
     | '/transactions/$id'
     | '/transactions/bulk'
     | '/transactions/category'
@@ -506,6 +547,7 @@ export interface FileRouteTypes {
     | '/transactions/reconcile'
     | '/transactions/transfer'
     | '/bills'
+    | '/items'
     | '/bills/$id/edit'
     | '/bills/subscriptions/new'
     | '/budgets/$id/alert'
@@ -525,6 +567,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/expenses'
     | '/inbox'
+    | '/items'
     | '/monthly-wrap'
     | '/notifications'
     | '/onboarding-permissions'
@@ -546,6 +589,8 @@ export interface FileRouteTypes {
     | '/budgets/method'
     | '/budgets/new'
     | '/budgets/transfer'
+    | '/items/$id'
+    | '/items/new'
     | '/transactions/$id'
     | '/transactions/bulk'
     | '/transactions/category'
@@ -553,6 +598,7 @@ export interface FileRouteTypes {
     | '/transactions/reconcile'
     | '/transactions/transfer'
     | '/bills/'
+    | '/items/'
     | '/bills/$id/edit'
     | '/bills/subscriptions/new'
     | '/budgets/$id/alert'
@@ -573,6 +619,7 @@ export interface RootRouteChildren {
   CategoriesRoute: typeof CategoriesRoute
   ExpensesRoute: typeof ExpensesRoute
   InboxRoute: typeof InboxRoute
+  ItemsRoute: typeof ItemsRouteWithChildren
   MonthlyWrapRoute: typeof MonthlyWrapRoute
   NotificationsRoute: typeof NotificationsRoute
   OnboardingPermissionsRoute: typeof OnboardingPermissionsRoute
@@ -681,6 +728,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MonthlyWrapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/items': {
+      id: '/items'
+      path: '/items'
+      fullPath: '/items'
+      preLoaderRoute: typeof ItemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inbox': {
       id: '/inbox'
       path: '/inbox'
@@ -737,6 +791,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/items/': {
+      id: '/items/'
+      path: '/'
+      fullPath: '/items/'
+      preLoaderRoute: typeof ItemsIndexRouteImport
+      parentRoute: typeof ItemsRoute
+    }
     '/bills/': {
       id: '/bills/'
       path: '/'
@@ -785,6 +846,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/transactions/$id'
       preLoaderRoute: typeof TransactionsIdRouteImport
       parentRoute: typeof TransactionsRoute
+    }
+    '/items/new': {
+      id: '/items/new'
+      path: '/new'
+      fullPath: '/items/new'
+      preLoaderRoute: typeof ItemsNewRouteImport
+      parentRoute: typeof ItemsRoute
+    }
+    '/items/$id': {
+      id: '/items/$id'
+      path: '/$id'
+      fullPath: '/items/$id'
+      preLoaderRoute: typeof ItemsIdRouteImport
+      parentRoute: typeof ItemsRoute
     }
     '/budgets/transfer': {
       id: '/budgets/transfer'
@@ -983,6 +1058,20 @@ const BudgetsRouteChildren: BudgetsRouteChildren = {
 const BudgetsRouteWithChildren =
   BudgetsRoute._addFileChildren(BudgetsRouteChildren)
 
+interface ItemsRouteChildren {
+  ItemsIdRoute: typeof ItemsIdRoute
+  ItemsNewRoute: typeof ItemsNewRoute
+  ItemsIndexRoute: typeof ItemsIndexRoute
+}
+
+const ItemsRouteChildren: ItemsRouteChildren = {
+  ItemsIdRoute: ItemsIdRoute,
+  ItemsNewRoute: ItemsNewRoute,
+  ItemsIndexRoute: ItemsIndexRoute,
+}
+
+const ItemsRouteWithChildren = ItemsRoute._addFileChildren(ItemsRouteChildren)
+
 interface TransactionsIdRouteChildren {
   TransactionsIdEditRoute: typeof TransactionsIdEditRoute
   TransactionsIdRefundRoute: typeof TransactionsIdRefundRoute
@@ -1030,6 +1119,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesRoute: CategoriesRoute,
   ExpensesRoute: ExpensesRoute,
   InboxRoute: InboxRoute,
+  ItemsRoute: ItemsRouteWithChildren,
   MonthlyWrapRoute: MonthlyWrapRoute,
   NotificationsRoute: NotificationsRoute,
   OnboardingPermissionsRoute: OnboardingPermissionsRoute,
@@ -1047,13 +1137,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

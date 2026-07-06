@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Check, Camera, Clock, X } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { findTx, ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/$id/refund")({
@@ -23,25 +24,36 @@ export const Route = createFileRoute("/transactions/$id/refund")({
 function RefundPage() {
   const t = Route.useLoaderData();
   const nav = useNavigate();
-  const [mode, setMode] = useState<"refund" | "reimburse">("refund");
+  const [mode, setMode] = useState<"refund" | "split">("refund");
   const [amount, setAmount] = useState(String(t.amount));
-  const [dest, setDest] = useState(ACCOUNTS[0].name);
+  const [dest, setDest] = useState(t.account);
 
   const partial = Number(amount) < t.amount;
 
   return (
-    <PhoneFrame title={mode === "refund" ? "Hoàn tiền" : "Hoàn ứng"} subtitle={t.merchant}>
-      <div className="space-y-4 px-5 pb-6">
+    <PhoneFrame
+      title={mode === "refund" ? "Hoàn tiền" : "Chia tiền"}
+      right={
+        <button className="text-[14px] font-semibold text-primary" onClick={() => {
+          toast.success("Đã ghi nhận yêu cầu");
+          nav({ to: "/transactions/$id", params: { id: t.id } });
+        }}>
+          Lưu
+        </button>
+      }
+    >
+      <div className="space-y-4 px-5 pb-6 pt-4">
+        {/* Toggle */}
         <div className="flex rounded-2xl bg-foreground/5 p-1">
-          {(["refund", "reimburse"] as const).map((m) => (
+          {(["refund", "split"] as const).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
-              className={`flex-1 rounded-xl py-2 text-[13px] font-semibold ${
-                mode === m ? "bg-white shadow" : "text-foreground/55"
+              className={`flex-1 rounded-xl py-2 text-[13px] font-semibold transition-all ${
+                mode === m ? "bg-white shadow-sm text-foreground" : "text-foreground/50 hover:bg-white/50"
               }`}
             >
-              {m === "refund" ? "Hoàn từ merchant" : "Yêu cầu hoàn ứng"}
+              {m === "refund" ? "Merchant hoàn" : "Đòi bạn bè"}
             </button>
           ))}
         </div>
@@ -89,13 +101,14 @@ function RefundPage() {
               {mode === "refund" ? "Nhận vào tài khoản" : "Từ người"}
             </p>
             {mode === "refund" ? (
-              <select
-                value={dest}
-                onChange={(e) => setDest(e.target.value)}
-                className="w-full bg-transparent text-[15px] font-semibold outline-none"
-              >
-                {ACCOUNTS.map((a) => (<option key={a.id}>{a.name}</option>))}
-              </select>
+              <Select value={dest} onValueChange={setDest}>
+                <SelectTrigger className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 text-[15px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
+                  {ACCOUNTS.map((a) => (<SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>))}
+                </SelectContent>
+              </Select>
             ) : (
               <p className="text-[15px] font-semibold">Nam Nguyễn</p>
             )}

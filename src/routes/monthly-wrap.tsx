@@ -138,7 +138,7 @@ function MonthlyWrapPage() {
         <div className="rounded-[22px] border border-white bg-white p-4 shadow-sm">
           <div className="mb-3 flex items-center gap-2">
             <Camera className="h-4 w-4 text-[#B5828C]" />
-            <h3 className="font-display text-[14px] font-bold text-foreground">Khoảnh khắc nổi bật</h3>
+            <h3 className="font-display text-[14px] font-bold text-foreground">Hoá đơn & ảnh đã lưu</h3>
           </div>
           <div className="grid grid-cols-4 gap-2">
             {PHOTOS.map((src) => (

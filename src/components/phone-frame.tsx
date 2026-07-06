@@ -1,13 +1,16 @@
-import { Signal, Wifi, BatteryFull, ChevronLeft, Home, Wallet, PieChart, CalendarDays, Camera } from "lucide-react";
+import { Signal, Wifi, BatteryFull, ChevronLeft, Home, Wallet, PieChart, CalendarDays, Camera, ArrowLeftRight, Box } from "lucide-react";
 import { useRouter, useRouterState, useCanGoBack, Link } from "@tanstack/react-router";
 import { vibrateLight, vibrateMedium } from "@/lib/haptic";
 import { QuickAddSheet } from "@/components/quick-add-sheet";
+import { PullToRefresh } from "@/components/pull-to-refresh";
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
+import { Squish } from "@/components/ui/animations";
 
 const NAV_ITEMS = [
   { to: "/", label: "Trang chủ", icon: Home, match: (p: string) => p === "/" },
-  { to: "/transactions", label: "Giao dịch", icon: Wallet, match: (p: string) => p.startsWith("/transactions") || p.startsWith("/expenses") },
-  { to: "/budgets", label: "Ngân sách", icon: PieChart, match: (p: string) => p.startsWith("/budgets") },
+  { to: "/transactions", label: "Giao dịch", icon: ArrowLeftRight, match: (p: string) => p.startsWith("/transactions") || p.startsWith("/expenses") },
+  { to: "/items", label: "Tài sản", icon: Box, match: (p: string) => p.startsWith("/items") },
   { to: "/bills", label: "Hoá đơn", icon: CalendarDays, match: (p: string) => p.startsWith("/bills") || p.startsWith("/inbox") || p.startsWith("/notifications") },
 ] as const;
 
@@ -25,22 +28,24 @@ export function BottomNav() {
           const active = match(pathname);
           return (
             <li key={to}>
-              <Link
-                to={to}
-                onClick={() => {
-                  if (!active) vibrateLight();
-                }}
-                aria-label={label}
-                aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-0.5 rounded-2xl px-1 py-1.5 transition ${
-                  active ? "text-[#B5828C]" : "text-foreground/50 hover:text-foreground/80"
-                }`}
-              >
-                <span className={`flex h-9 w-9 items-center justify-center rounded-2xl transition ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
-                  <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
-                </span>
-                <span className="text-[9px] font-semibold tracking-tight">{label}</span>
-              </Link>
+              <Squish>
+                <Link
+                  to={to}
+                  onClick={() => {
+                    if (!active) vibrateLight();
+                  }}
+                  aria-label={label}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex flex-col items-center gap-0.5 rounded-2xl px-1 py-1.5 transition ${
+                    active ? "text-[#B5828C]" : "text-foreground/50 hover:text-foreground/80"
+                  }`}
+                >
+                  <span className={`flex h-9 w-9 items-center justify-center rounded-2xl transition ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
+                    <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
+                  </span>
+                  <span className="text-[9px] font-semibold tracking-tight">{label}</span>
+                </Link>
+              </Squish>
             </li>
           );
         })}
@@ -48,13 +53,16 @@ export function BottomNav() {
         {/* Center camera FAB */}
         <li className="flex justify-center">
           <QuickAddSheet>
-            <button
-              onClick={vibrateMedium}
-              aria-label="Thêm nhanh"
-              className="-mt-8 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#B5828C] to-[#FFB4A2] text-white shadow-[0_12px_24px_-6px_rgba(181,130,140,0.55)] ring-4 ring-white/90 transition active:scale-95"
-            >
-              <Camera className="h-6 w-6" strokeWidth={2.5} />
-            </button>
+            <div className="flex flex-col items-center gap-0.5 cursor-pointer -mt-8">
+              <Squish
+                onClick={vibrateMedium}
+                aria-label="Thêm nhanh"
+                className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#B5828C] to-[#FFB4A2] text-white shadow-[0_12px_24px_-6px_rgba(181,130,140,0.55)] ring-4 ring-white/90 transition pointer-events-none"
+              >
+                <Camera className="h-6 w-6" strokeWidth={2.5} />
+              </Squish>
+              <span className="text-[9px] font-semibold tracking-tight text-foreground/80 mt-1">Quét</span>
+            </div>
           </QuickAddSheet>
         </li>
 
@@ -62,22 +70,24 @@ export function BottomNav() {
           const active = match(pathname);
           return (
             <li key={to}>
-              <Link
-                to={to}
-                onClick={() => {
-                  if (!active) vibrateLight();
-                }}
-                aria-label={label}
-                aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-0.5 rounded-2xl px-1 py-1.5 transition ${
-                  active ? "text-[#B5828C]" : "text-foreground/50 hover:text-foreground/80"
-                }`}
-              >
-                <span className={`flex h-9 w-9 items-center justify-center rounded-2xl transition ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
-                  <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
-                </span>
-                <span className="text-[9px] font-semibold tracking-tight">{label}</span>
-              </Link>
+              <Squish>
+                <Link
+                  to={to}
+                  onClick={() => {
+                    if (!active) vibrateLight();
+                  }}
+                  aria-label={label}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex flex-col items-center gap-0.5 rounded-2xl px-1 py-1.5 transition ${
+                    active ? "text-[#B5828C]" : "text-foreground/50 hover:text-foreground/80"
+                  }`}
+                >
+                  <span className={`flex h-9 w-9 items-center justify-center rounded-2xl transition ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
+                    <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
+                  </span>
+                  <span className="text-[9px] font-semibold tracking-tight">{label}</span>
+                </Link>
+              </Squish>
             </li>
           );
         })}
@@ -95,6 +105,8 @@ export function PhoneFrame({
   scrollClassName = "",
   hideBottomNav = false,
   overlay,
+  containerClassName,
+  frameClassName,
 }: {
   title?: string;
   subtitle?: string;
@@ -104,6 +116,8 @@ export function PhoneFrame({
   scrollClassName?: string;
   hideBottomNav?: boolean;
   overlay?: ReactNode;
+  containerClassName?: string;
+  frameClassName?: string;
 }) {
   const router = useRouter();
 
@@ -118,8 +132,8 @@ export function PhoneFrame({
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-page sm:p-4">
-      <div className="relative mx-auto flex h-[100dvh] w-full flex-col overflow-hidden bg-background sm:h-[844px] sm:max-h-[calc(100vh-32px)] sm:min-h-0 sm:max-w-[390px] sm:rounded-[44px] sm:shadow-2xl sm:ring-[6px] sm:ring-white/80">
+    <main className={`flex min-h-screen items-center justify-center sm:p-4 ${containerClassName || "bg-page"}`}>
+      <div className={`relative mx-auto flex h-[100dvh] w-full flex-col overflow-hidden sm:h-[844px] sm:max-h-[calc(100vh-32px)] sm:min-h-0 sm:max-w-[390px] sm:rounded-[44px] sm:shadow-2xl sm:ring-[6px] sm:ring-white/80 ${frameClassName || "bg-background"}`}>
         {/* Ambient blobs */}
         <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-peach/60 blur-3xl" />
         <div className="pointer-events-none absolute -left-8 top-32 h-32 w-32 rounded-full bg-coral/40 blur-3xl" />
@@ -167,7 +181,14 @@ export function PhoneFrame({
           </div>
         )}
 
-        <div className={`relative z-10 flex-1 overflow-y-auto ${hideBottomNav ? "" : "pb-24"} ${scrollClassName}`}>{children}</div>
+        <PullToRefresh
+          scrollClassName={`${hideBottomNav ? "" : "pb-24"} ${scrollClassName}`}
+          onRefresh={async () => {
+            await new Promise(r => setTimeout(r, 1000));
+          }}
+        >
+          {children}
+        </PullToRefresh>
 
         {!hideBottomNav && <BottomNav />}
 

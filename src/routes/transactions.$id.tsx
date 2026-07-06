@@ -1,9 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import {
-  Pencil, Split, Undo2, Paperclip, Share2, Trash2, Users, Clock, Receipt,
+  Pencil, Split, Undo2, Paperclip, Share2, Trash2, Users, Clock, Receipt, TrendingUp
 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
+import { MetaRow } from "@/components/meta-row";
 import { findTx, formatVND } from "@/lib/mock-transactions";
+import { useState } from "react";
 
 export const Route = createFileRoute("/transactions/$id")({
   loader: ({ params }) => {
@@ -26,6 +28,7 @@ export const Route = createFileRoute("/transactions/$id")({
 
 function TxDetail() {
   const t = Route.useLoaderData();
+  const [shareMode, setShareMode] = useState(false);
   const isNeg = t.type === "expense";
   const isPlus = t.type === "income" || t.type === "refund";
   const sign = isNeg ? "−" : isPlus ? "+" : "";
@@ -49,11 +52,11 @@ function TxDetail() {
               </span>
             )}
           </div>
-          <p className="mt-3 font-display text-[36px] font-bold leading-none tabular-nums">
+          <p className={`mt-3 font-display text-[36px] font-bold leading-none tabular-nums transition duration-500 ${shareMode ? 'blur-md select-none opacity-80' : ''}`}>
             {sign}
             {formatVND(t.amount, t.currency)}
           </p>
-          <p className="mt-2 text-[15px] font-semibold">{t.merchant}</p>
+          <p className={`mt-2 text-[15px] font-semibold transition duration-500 ${shareMode ? 'blur-sm select-none opacity-80' : ''}`}>{t.merchant}</p>
           <p className="text-[12px] opacity-75">
             {new Date(t.date).toLocaleString("vi-VN", {
               weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit",
@@ -61,13 +64,32 @@ function TxDetail() {
           </p>
         </div>
 
+        {/* Budget impact */}
+        {isNeg && (
+          <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-sm flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+              <TrendingUp className="h-5 w-5" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[12px] font-semibold text-foreground/70">Ngân sách {t.category}</p>
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-foreground/10 flex">
+                <div className="h-full bg-foreground/20" style={{ width: '36.5%' }} />
+                <div className="h-full bg-orange-500 relative" style={{ width: '5.5%' }}>
+                   <div className="absolute inset-0 bg-white/30 animate-pulse" />
+                </div>
+              </div>
+              <p className="mt-1.5 text-[10px] font-medium text-foreground/50">Giao dịch này chiếm <span className="font-bold text-orange-600">5.5%</span></p>
+            </div>
+          </div>
+        )}
+
         {/* Details */}
         <div className="divide-y divide-foreground/5 rounded-2xl border border-white/70 bg-white/80 shadow-sm">
-          <Row label="Tài khoản" value={t.account} />
-          <Row label="Danh mục" value={`${t.categoryEmoji} ${t.category}`} />
-          <Row label="Loại" value={typeLabel(t.type)} />
-          {t.note && <Row label="Ghi chú" value={t.note} />}
-          {t.shared && <Row label="Chia sẻ" value="Chung với 2 người" icon={<Users className="h-3.5 w-3.5" />} />}
+          <MetaRow label="Tài khoản" value={t.account} />
+          <MetaRow label="Danh mục" value={`${t.categoryEmoji} ${t.category}`} />
+          <MetaRow label="Loại" value={typeLabel(t.type)} />
+          {t.note && <MetaRow label="Ghi chú" value={t.note} />}
+          {t.shared && <MetaRow label="Chia sẻ" value="Chung với 2 người" icon={<Users className="h-3.5 w-3.5" />} />}
         </div>
 
         {/* Receipts */}
@@ -122,8 +144,12 @@ function TxDetail() {
         </div>
 
         <div className="flex gap-2 pt-2">
-          <button className="flex-1 rounded-xl border border-foreground/10 bg-white py-3 text-[13px] font-semibold">
-            <Share2 className="mr-1.5 inline h-4 w-4" /> Chia sẻ
+          <button 
+            onClick={() => setShareMode(!shareMode)}
+            className={`flex-1 rounded-xl border py-3 text-[13px] font-semibold transition ${shareMode ? 'bg-[#dc2626] border-[#dc2626] text-white shadow-lg shadow-rose-600/20' : 'border-foreground/10 bg-white'}`}
+          >
+            {shareMode ? <Undo2 className="mr-1.5 inline h-4 w-4" /> : <Share2 className="mr-1.5 inline h-4 w-4" />}
+            {shareMode ? "Huỷ chia sẻ" : "Chia sẻ an toàn"}
           </button>
           <button className="flex-1 rounded-xl border border-destructive/30 bg-white py-3 text-[13px] font-semibold text-destructive">
             <Trash2 className="mr-1.5 inline h-4 w-4" /> Xoá
@@ -134,17 +160,7 @@ function TxDetail() {
   );
 }
 
-function Row({ label, value, icon }: { label: string; value: string; icon?: React.ReactNode }) {
-  return (
-    <div className="flex items-center justify-between px-4 py-3">
-      <span className="text-[12px] text-foreground/55">{label}</span>
-      <span className="flex items-center gap-1.5 text-right font-display text-[14px] font-semibold">
-        {icon}
-        {value}
-      </span>
-    </div>
-  );
-}
+
 
 function ActionBtn({
   to, params, icon, label,

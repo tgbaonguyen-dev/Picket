@@ -1,4 +1,4 @@
-import { motion, useAnimation, PanInfo } from "framer-motion";
+import { motion, useAnimation, PanInfo, useMotionValue, useTransform } from "framer-motion";
 import { Trash2 } from "lucide-react";
 import { vibrateHeavy } from "@/lib/haptic";
 import { useState } from "react";
@@ -12,6 +12,8 @@ interface SwipeableItemProps {
 export function SwipeableItem({ children, onDelete, className = "" }: SwipeableItemProps) {
   const controls = useAnimation();
   const [isDeleting, setIsDeleting] = useState(false);
+  const x = useMotionValue(0);
+  const redOpacity = useTransform(x, [0, -40], [0, 1]);
 
   const handleDragEnd = async (event: any, info: PanInfo) => {
     const offset = info.offset.x;
@@ -43,9 +45,12 @@ export function SwipeableItem({ children, onDelete, className = "" }: SwipeableI
   return (
     <div className={`relative w-full overflow-hidden ${className}`}>
       {/* Background (Delete Action) */}
-      <div className="absolute inset-0 flex items-center justify-end bg-red-500 px-6">
+      <motion.div 
+        style={{ opacity: redOpacity }}
+        className="absolute inset-0 flex items-center justify-end bg-[#dc2626] px-6"
+      >
         <Trash2 className="h-5 w-5 text-white" />
-      </div>
+      </motion.div>
 
       {/* Foreground Draggable Item */}
       <motion.div
@@ -54,7 +59,8 @@ export function SwipeableItem({ children, onDelete, className = "" }: SwipeableI
         dragElastic={0.2}
         onDragEnd={handleDragEnd}
         animate={controls}
-        className="relative z-10 h-full w-full bg-[#fdfdfd]"
+        style={{ x }}
+        className="relative z-10 h-full w-full"
       >
         {children}
       </motion.div>

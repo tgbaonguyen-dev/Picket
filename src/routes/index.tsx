@@ -1,30 +1,43 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  User,
-  LogOut,
-  Bell,
-  ChevronLeft,
-  ChevronRight,
-  Camera,
-  Signal,
-  Wifi,
-  BatteryFull,
   Search,
+  Bell,
+  User,
+  Plus,
+  Camera,
   Banknote,
   Landmark,
   CreditCard,
+  Building2,
+  Wallet,
   Wallet as WalletIcon,
+  ArrowRightLeft,
   ArrowDownCircle,
   ArrowUpCircle,
-  ScanLine
+  ArrowRightCircle,
+  ScanLine,
+  ChevronLeft,
+  ChevronRight,
+  Settings,
+  Flame,
+  Eye,
+  EyeOff,
+  TrendingUp,
+  Sparkles,
+  Lightbulb,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { BottomNav } from "@/components/phone-frame";
-import { ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { BottomNav, PhoneFrame } from "@/components/phone-frame";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ACCOUNTS, TRANSACTIONS, formatVND } from "@/lib/mock-transactions";
+import { motion } from "framer-motion";
+import { PullToRefresh } from "@/components/pull-to-refresh";
+import { TransactionRow } from "@/components/transaction-row";
+import { Squish, FadeInUp } from "@/components/ui/animations";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/")(  {
   component: Index,
 });
 
@@ -93,7 +106,7 @@ function DayCell({ entry, day }: { entry?: DayEntry; day: number }) {
               <img
                 key={i}
                 src={src}
-                alt=""
+                alt="Ảnh hoá đơn"
                 loading="lazy"
                 className={`absolute h-7 w-7 rounded-[7px] border-2 border-white object-cover shadow-[0_2px_6px_-2px_rgba(46,107,138,0.45)] ${rot} ${pos}`}
                 style={{ zIndex: i + 1 }}
@@ -127,8 +140,16 @@ function DayCell({ entry, day }: { entry?: DayEntry; day: number }) {
 
 function Index() {
   const navigate = useNavigate();
-  const [displayName, setDisplayName] = useState<string | null>(null);
+  const [displayName, setDisplayName] = useState("bạn");
+  const [maskBalance, setMaskBalance] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200);
+    return () => clearTimeout(t);
+  }, []);
 
   const totalAssets = ACCOUNTS.filter(a => a.balance > 0).reduce((s, a) => s + a.balance, 0);
   const totalDebts = ACCOUNTS.filter(a => a.balance < 0).reduce((s, a) => s + a.balance, 0);
@@ -157,7 +178,7 @@ function Index() {
   useEffect(() => {
     // First-visit onboarding
     try {
-      if (typeof window !== "undefined" && !localStorage.getItem("canmoney.onboarded")) {
+      if (typeof window !== "undefined" && !localStorage.getItem("picket.onboarded")) {
         navigate({ to: "/welcome", replace: true });
         return;
       }
@@ -183,7 +204,7 @@ function Index() {
         const { data } = await supabase
           .from("profiles")
           .select("display_name")
-          .eq("id", userId)
+          .eq("id", userId!)
           .maybeSingle();
         const fallback =
           (meta?.display_name as string | undefined) ??
@@ -205,11 +226,6 @@ function Index() {
     };
   }, []);
 
-  async function handleSignOut() {
-    await supabase.auth.signOut();
-    toast.success("Đã đăng xuất");
-  }
-
   const cells: (DayEntry | undefined)[] = [
     ...Array(LEADING_BLANKS).fill(undefined),
     ...Array.from({ length: DAYS_IN_MONTH }, (_, i) => ENTRIES[i + 1] ?? { day: i + 1 }),
@@ -224,25 +240,19 @@ function Index() {
   const pct = Math.round((daysLogged / target) * 100);
   const dash = 2 * Math.PI * 26;
 
+  // Recent transactions (top 5)
+  const recentTxs = TRANSACTIONS.slice(0, 5);
+
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
-      {/* Phone frame */}
-      <div className="relative mx-auto flex h-[100dvh] w-full sm:max-w-[390px] sm:h-[844px] sm:max-h-[calc(100vh-32px)] flex-col overflow-hidden sm:rounded-[44px] bg-[#FFF8F0] sm:shadow-2xl sm:ring-[6px] sm:ring-white">
-        {/* Status bar */}
-        <div className="hidden sm:flex items-center justify-between px-7 pt-3 pb-1 text-[12px] font-semibold text-foreground/80">
-          <span className="tabular-nums">9:41</span>
-          <div className="h-4 w-16 rounded-full bg-foreground/80" />
-          <div className="flex items-center gap-1 text-foreground/80">
-            <Signal className="h-3 w-3" />
-            <Wifi className="h-3 w-3" />
-            <BatteryFull className="h-3.5 w-3.5" />
-          </div>
-        </div>
-
-        {/* Scrollable content area */}
-        <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {/* Upper fluid sky layer — header only */}
+    <PhoneFrame
+      hideBottomNav={false}
+      back={false}
+      containerClassName="bg-[#F5E8DA]"
+      frameClassName="bg-[#FFF8F0]"
+      scrollClassName="[&::-webkit-scrollbar]:hidden"
+    >
+      {/* Upper fluid sky layer — header only */}
           <div className="relative rounded-b-[40px] bg-[#FFE9D9] pb-5 pt-[max(env(safe-area-inset-top),40px)] sm:pt-8 shadow-[0_20px_40px_-30px_rgba(46,107,138,0.35)]">
             <div className="pointer-events-none absolute -right-8 -top-4 h-32 w-32 rounded-full bg-[#ffe4e6] opacity-70 blur-2xl" />
             <div className="pointer-events-none absolute -left-6 top-16 h-24 w-24 rounded-full bg-[#f9a8a8] opacity-30 blur-2xl" />
@@ -273,7 +283,11 @@ function Index() {
                   className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
                 >
                   <Bell className="h-[18px] w-[18px]" strokeWidth={2.2} />
-                  <span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-[#f9a8a8] ring-2 ring-white" />
+                  {unreadCount > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-[#dc2626] font-sans text-[9px] font-bold text-white shadow-sm ring-2 ring-[#FFE9D9]">
+                      {unreadCount}
+                    </span>
+                  )}
                 </button>
                 {signedIn ? (
                   <button
@@ -286,15 +300,16 @@ function Index() {
                     <User className="h-5 w-5" strokeWidth={2.2} />
                   </button>
                 ) : (
-                  <button
+                  <Squish
+                    as="button"
                     type="button"
                     onClick={() => navigate({ to: "/auth" })}
                     aria-label="Đăng nhập"
                     title="Đăng nhập"
-                    className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-95"
+                    className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition-colors"
                   >
                     <User className="h-5 w-5" strokeWidth={2.2} />
-                  </button>
+                  </Squish>
                 )}
               </div>
             </div>
@@ -302,10 +317,41 @@ function Index() {
 
           {/* Financial Widget — visible right below header */}
           <div className="relative mx-5 mt-5 mb-3">
-            <p className="text-[12px] font-medium uppercase tracking-widest text-foreground/50">Tổng tài sản ròng</p>
-            <p className="font-display mt-1 text-[38px] font-bold leading-none tracking-tight text-foreground">
-              {formatVND(netWorth)}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-[12px] font-medium uppercase tracking-widest text-foreground/50">Tổng tài sản ròng</p>
+              <Squish as="button" onClick={() => setMaskBalance(!maskBalance)} className="text-foreground/40 transition-transform">
+                {maskBalance ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+              </Squish>
+            </div>
+            {isLoading ? (
+              <div className="mt-2 space-y-2">
+                <Skeleton className="h-9 w-48 rounded-xl bg-black/5" />
+                <Skeleton className="h-4 w-32 rounded-lg bg-black/5" />
+              </div>
+            ) : (
+              <>
+                <p className="font-display mt-1 text-[38px] font-bold leading-none tracking-tight text-foreground">
+                  {maskBalance ? "•••••• ₫" : formatVND(netWorth)}
+                </p>
+                <div className="mt-2 flex items-center gap-1.5 text-[12px] font-semibold text-income">
+                  <TrendingUp className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  <span>+2.4% so với tháng trước</span>
+                </div>
+              </>
+            )}
+          </div>
+          
+          {/* Summary Card (Tháng này) */}
+          <div className="mx-5 mb-5 flex items-center justify-between rounded-3xl border border-white/60 bg-white/50 p-4 shadow-sm backdrop-blur-md">
+            <div>
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-wider text-foreground/50">Thu nhập</p>
+              <p className="font-display text-[15px] font-bold text-income tabular-nums">{maskBalance ? "•••••• ₫" : "+24.500.000 ₫"}</p>
+            </div>
+            <div className="h-8 w-px bg-foreground/10" />
+            <div className="text-right">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-wider text-foreground/50">Chi tiêu</p>
+              <p className="font-display text-[15px] font-bold text-expense tabular-nums">{maskBalance ? "•••••• ₫" : "-12.450.000 ₫"}</p>
+            </div>
           </div>
 
           {/* Wallets Scroller */}
@@ -315,57 +361,136 @@ function Index() {
                 const Icon = getIconForType(account.type);
                 const isDebt = account.balance < 0;
                 return (
-                  <Link key={account.id} to="/wallets" className="flex w-[140px] flex-col rounded-3xl bg-white/60 p-3.5 shadow-sm backdrop-blur-md active:scale-95 transition-transform border border-white/40">
-                    <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-2xl ${getColor(account.type)}`}>
-                      <Icon className="h-5 w-5" strokeWidth={2.2} />
-                    </div>
-                    <p className="font-sans text-[12px] font-semibold text-foreground/70 line-clamp-1">{account.name}</p>
-                    <p className={`mt-0.5 font-display text-[15px] font-bold tabular-nums ${isDebt ? "text-rose-600" : "text-foreground"}`}>
-                      {isDebt ? "−" : ""}{formatVND(Math.abs(account.balance))}
-                    </p>
-                  </Link>
+                  <Squish key={account.id}>
+                    <Link to="/wallets" className="flex w-[140px] flex-col rounded-3xl bg-white/60 p-3.5 shadow-sm backdrop-blur-md transition-colors border border-white/40">
+                      <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-2xl ${getColor(account.type)}`}>
+                        <Icon className="h-5 w-5" strokeWidth={2.2} />
+                      </div>
+                      <p className="font-sans text-[12px] font-semibold text-foreground/70 line-clamp-1">{account.name}</p>
+                      <p className={`mt-0.5 font-display text-[15px] font-bold tabular-nums ${isDebt ? "text-expense" : "text-foreground"}`}>
+                        {maskBalance ? "•••••• ₫" : <>{isDebt ? "−" : ""}{formatVND(Math.abs(account.balance))}</>}
+                      </p>
+                    </Link>
+                  </Squish>
                 )
               })}
             </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="mx-5 mt-1 mb-6 grid grid-cols-3 gap-3">
-            <button className="flex flex-col items-center justify-center gap-1.5 rounded-3xl bg-white/50 py-3 shadow-sm backdrop-blur-md active:scale-95 transition-transform border border-white/40">
-              <ArrowUpCircle className="h-6 w-6 text-emerald-600" strokeWidth={2.2} />
-              <span className="text-[11px] font-bold tracking-wide text-foreground/70">Thu nhập</span>
-            </button>
-            <button className="flex flex-col items-center justify-center gap-1.5 rounded-3xl bg-white/50 py-3 shadow-sm backdrop-blur-md active:scale-95 transition-transform border border-white/40">
-              <ArrowDownCircle className="h-6 w-6 text-rose-600" strokeWidth={2.2} />
-              <span className="text-[11px] font-bold tracking-wide text-foreground/70">Chi tiêu</span>
-            </button>
-            <button className="flex flex-col items-center justify-center gap-1.5 rounded-3xl bg-white/50 py-3 shadow-sm backdrop-blur-md active:scale-95 transition-transform border border-white/40">
-              <ScanLine className="h-6 w-6 text-blue-600" strokeWidth={2.2} />
-              <span className="text-[11px] font-bold tracking-wide text-foreground/70">Quét hóa đơn</span>
-            </button>
+
+
+          {/* Smart Insight (Demo) */}
+          <div className="mx-5 mb-6 rounded-3xl border border-[#B5828C]/20 bg-gradient-to-br from-[#FFE9D9]/80 to-[#ffe4e6]/80 p-4 shadow-sm backdrop-blur-md relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 opacity-10">
+              <Sparkles className="h-20 w-20 text-[#B5828C]" />
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white text-[#B5828C] shadow-sm">
+                <Lightbulb className="h-5 w-5" strokeWidth={2.2} />
+              </div>
+              <div className="min-w-0">
+                <p className="font-sans text-[11px] font-bold uppercase tracking-widest text-[#B5828C]">
+                  Gợi ý cho bạn
+                </p>
+                <p className="mt-1 font-sans text-[13px] font-medium leading-relaxed text-foreground/80">
+                  {(() => {
+                    const foodSpent = TRANSACTIONS.filter(t => t.category === "Ăn uống" && t.type === "expense").reduce((s, t) => s + t.amount, 0);
+                    return (
+                      <>Bạn đã chi <strong className="text-foreground">{formatVND(foodSpent)}</strong> cho Ăn uống tháng này. Vượt 15% so với tháng trước. Hãy cân nhắc nấu ăn tại nhà vài ngày tới nhé!</>
+                    );
+                  })()}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Transactions */}
+          <div className="mx-5 mb-6">
+            <div className="mb-3 flex items-baseline justify-between px-1">
+              <h2 className="font-display text-[16px] font-bold text-foreground">Giao dịch gần đây</h2>
+              <Link to="/transactions" className="font-sans text-[11px] font-semibold text-[#B5828C]">
+                Xem tất cả →
+              </Link>
+            </div>
+            
+            {isLoading ? (
+              <div className="overflow-hidden rounded-2xl border border-white/70 bg-white/80 shadow-sm p-4 space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <Skeleton className="h-10 w-10 rounded-2xl bg-black/5" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-4 w-24 rounded-lg bg-black/5" />
+                      <Skeleton className="h-3 w-16 rounded-lg bg-black/5" />
+                    </div>
+                    <Skeleton className="h-4 w-20 rounded-lg bg-black/5" />
+                  </div>
+                ))}
+              </div>
+            ) : recentTxs.length > 0 ? (
+              <div className="flex flex-col gap-2.5">
+                {recentTxs.map((t, i) => {
+                  return (
+                    <FadeInUp key={t.id} delay={i * 0.08}>
+                      <Link
+                        to="/transactions/$id"
+                        params={{ id: t.id }}
+                        className="block"
+                      >
+                        <TransactionRow
+                          transaction={t}
+                          maskBalance={maskBalance}
+                        />
+                      </Link>
+                    </FadeInUp>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-white/70 bg-white/80 p-8 text-center shadow-sm">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#B5828C]/10 text-[#B5828C]">
+                  <ScanLine className="h-6 w-6" />
+                </div>
+                <h3 className="font-display text-[15px] font-bold text-foreground">Chưa có giao dịch</h3>
+                <p className="mt-1 max-w-[200px] text-[12px] text-foreground/60">
+                  Hãy quét hóa đơn đầu tiên của bạn để bắt đầu theo dõi chi tiêu nhé!
+                </p>
+                <button
+                  onClick={() => navigate({ to: "/capture-receipt" })}
+                  className="mt-4 rounded-xl bg-[#dc2626] px-4 py-2 text-[13px] font-bold text-white active:scale-95 transition"
+                >
+                  Quét hóa đơn ngay
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Photo Journal & Calendar Section */}
           <div className="px-5 pb-32">
-            {/* Hero card */}
+            {/* Hero card — Spending Diary */}
             <div className="relative mb-6 rounded-[32px] border border-white/60 bg-white/55 p-5 backdrop-blur-md shadow-sm">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
-                  <span className="block font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-foreground/55">
-                    Khoảnh khắc tháng này
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="block font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-foreground/55">
+                      Nhật ký chi tiêu
+                    </span>
+                    <span className="flex items-center gap-1 rounded-full bg-orange-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-orange-700">
+                      <Flame className="h-3 w-3" strokeWidth={3} />
+                      14 ngày
+                    </span>
+                  </div>
                   <div className="mt-1.5 flex items-baseline gap-1.5">
                     <span className="font-display text-[40px] font-bold leading-none text-foreground tabular-nums">
                       {daysLogged}
                     </span>
                     <span className="font-sans text-[13px] font-medium text-foreground/55">
-                      / {target} ngày
+                      / {target} ngày ghi chép
                     </span>
                   </div>
                   <div className="mt-3 flex items-center gap-1.5">
                     <Camera className="h-3.5 w-3.5 text-[#B5828C]" strokeWidth={2.2} />
                     <span className="font-sans text-[12px] font-semibold text-foreground/75 tabular-nums">
-                      {totalPhotos} tấm ảnh
+                      {totalPhotos} hoá đơn & ảnh
                     </span>
                   </div>
                 </div>
@@ -399,7 +524,7 @@ function Index() {
                 <div className="h-full rounded-full bg-[#f9a8a8]" style={{ width: "22%" }} />
               </div>
               <p className="mt-3 font-sans text-[12px] font-medium text-foreground/65">
-                🎉 Nhiều hơn <span className="font-bold text-foreground">12 khoảnh khắc</span> so với tháng trước.
+                🎉 Bạn ghi chép đều hơn <span className="font-bold text-foreground">12 ngày</span> so với tháng trước.
               </p>
             </div>
 
@@ -410,7 +535,7 @@ function Index() {
                   Tháng 4, 2026
                 </h2>
                 <p className="mt-1 font-sans text-[11px] font-medium text-foreground/50">
-                  Nhấn vào ngày để xem lại kỷ niệm
+                  Nhấn vào ngày để xem hoá đơn & ghi chép
                 </p>
               </div>
               <div className="flex items-center gap-1">
@@ -457,15 +582,10 @@ function Index() {
                 <span className="h-2 w-2 rounded-full bg-[#B5828C]" /> Hôm nay
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-[#f9a8a8]" /> Có ảnh
+                <span className="h-2 w-2 rounded-full bg-[#f9a8a8]" /> Có hoá đơn/ảnh
               </span>
             </div>
           </div>
-        </div>
-
-        {/* Bottom nav — shared with PhoneFrame so every screen matches */}
-        <BottomNav />
-      </div>
-    </main>
+    </PhoneFrame>
   );
 }

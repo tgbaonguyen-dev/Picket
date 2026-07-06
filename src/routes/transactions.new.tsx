@@ -2,7 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Delete, Camera, Repeat, Calendar as CalendarIcon } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
+import { MetaRow } from "@/components/meta-row";
 import { ACCOUNTS, CATEGORIES, formatVND } from "@/lib/mock-transactions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/new")({
@@ -81,13 +83,16 @@ function NewTx() {
             />
           </div>
           <MetaRow label="Tài khoản">
-            <select
-              value={account}
-              onChange={(e) => setAccount(e.target.value)}
-              className="bg-transparent text-right text-[14px] font-semibold outline-none"
-            >
-              {ACCOUNTS.map((a) => (<option key={a.id}>{a.name}</option>))}
-            </select>
+            <Select value={account} onValueChange={setAccount}>
+              <SelectTrigger className="flex h-auto w-auto items-center justify-end border-none bg-transparent p-0 text-right text-[14px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:ml-1">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
+                {ACCOUNTS.map((a) => (
+                  <SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </MetaRow>
           <MetaRow label="Ngày">
             <span className="flex items-center gap-1.5 text-[14px] font-semibold">
@@ -160,16 +165,5 @@ function NewTx() {
         </div>
       </div>
     </PhoneFrame>
-  );
-}
-
-function MetaRow({
-  label, children, onClick,
-}: { label: string; children: React.ReactNode; onClick?: () => void }) {
-  return (
-    <div onClick={onClick} className="flex items-center justify-between px-4 py-3">
-      <span className="text-[12px] text-foreground/55">{label}</span>
-      <div className="text-right">{children}</div>
-    </div>
   );
 }

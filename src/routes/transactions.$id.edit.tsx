@@ -3,6 +3,7 @@ import { useState } from "react";
 import { History, AlertTriangle } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { findTx, ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/$id/edit")({
@@ -62,13 +63,14 @@ function EditTx() {
             />
           </Field>
           <Field label="Tài khoản">
-            <select
-              value={account}
-              onChange={(e) => setAccount(e.target.value)}
-              className="w-full bg-transparent text-[15px] font-semibold outline-none"
-            >
-              {ACCOUNTS.map((a) => (<option key={a.id}>{a.name}</option>))}
-            </select>
+            <Select value={account} onValueChange={setAccount}>
+              <SelectTrigger className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 text-[15px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
+                {ACCOUNTS.map((a) => (<SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>))}
+              </SelectContent>
+            </Select>
           </Field>
           <Field label="Ghi chú">
             <textarea

@@ -318,7 +318,7 @@ function ProfilePage() {
       const { data } = await supabase
         .from("profiles")
         .select("display_name, avatar_url")
-        .eq("id", userId)
+        .eq("id", userId!)
         .maybeSingle();
       const fallback =
         (meta?.display_name as string | undefined) ??
@@ -590,7 +590,7 @@ function ProfilePage() {
         <Section title="Bảo mật & Riêng tư">
           <Row
             icon={Fingerprint}
-            label="Mở khoá bằng sinh trắc học"
+            label="Khóa ứng dụng (Face ID / PIN)"
             right={<Toggle on={prefs.biometric} onChange={(v) => update({ biometric: v })} />}
           />
           <Row icon={ShieldCheck} label="Quyền & Riêng tư" onClick={() => navigate({ to: "/onboarding-privacy" })} />

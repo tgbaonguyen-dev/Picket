@@ -18,14 +18,13 @@ type Action = {
 
 const ACTIONS: Action[] = [
   { key: "receipt", label: "Chụp hoá đơn", desc: "OCR tự động điền", icon: Camera, bg: "bg-[#FFE9D9]", color: "text-[#B5828C]", to: "/capture-receipt", available: true },
-  { key: "item", label: "Chụp món đồ", desc: "Lưu vào bộ sưu tập", icon: ScanLine, bg: "bg-[#fae8ff]", color: "text-[#c026d3]", to: "/capture-receipt", available: true },
   { key: "expense", label: "Thêm chi", desc: "Ghi khoản chi tay", icon: TrendingDown, bg: "bg-[#fee2e2]", color: "text-[#dc2626]", to: "/transactions/new", available: true },
   { key: "income", label: "Thêm thu", desc: "Lương, thưởng, hoàn tiền", icon: TrendingUp, bg: "bg-[#dcfce7]", color: "text-[#16a34a]", to: "/transactions/new?type=income", available: true },
   { key: "transfer", label: "Chuyển tiền", desc: "Giữa các tài khoản", icon: ArrowLeftRight, bg: "bg-[#fef3c7]", color: "text-[#b45309]", to: "/transactions/transfer", available: true },
   { key: "shared", label: "Chi tiêu chung", desc: "Chia bill với bạn bè", icon: Users, bg: "bg-[#ede9fe]", color: "text-[#7c3aed]", available: false },
 ];
 
-const RECENT = ["receipt", "expense", "shared"];
+const RECENT = ["receipt", "expense", "transfer"];
 
 export function QuickAddSheet({ children }: { children: ReactNode }) {
   const navigate = useNavigate();

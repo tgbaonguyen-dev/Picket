@@ -94,7 +94,7 @@ function WelcomePage() {
   const markOnboarded = () => {
     try {
       if (typeof window !== "undefined") {
-        localStorage.setItem("canmoney.onboarded", "1");
+        localStorage.setItem("picket.onboarded", "1");
       }
     } catch {
       // ignore

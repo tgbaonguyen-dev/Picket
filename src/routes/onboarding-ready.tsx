@@ -29,7 +29,7 @@ function ReadyPage() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("canmoney.permissions");
+      const raw = localStorage.getItem("picket.permissions");
       if (raw) setPerms(JSON.parse(raw));
     } catch {
       // ignore
@@ -38,8 +38,8 @@ function ReadyPage() {
 
   const finish = async (intent: "receipt" | "expense" | "home") => {
     try {
-      localStorage.setItem("canmoney.onboarded", "1");
-      localStorage.setItem("canmoney.firstIntent", intent);
+      localStorage.setItem("picket.onboarded", "1");
+      localStorage.setItem("picket.firstIntent", intent);
     } catch {
       // ignore
     }

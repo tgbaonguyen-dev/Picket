@@ -4,7 +4,7 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
-import { Camera, Loader2, Mail, Lock, User as UserIcon } from "lucide-react";
+import { Camera, Loader2, Mail, Lock, User as UserIcon, ShieldCheck } from "lucide-react";
 import { BackButton } from "@/components/back-button";
 
 export const Route = createFileRoute("/auth")({
@@ -27,8 +27,8 @@ type Mode = "signin" | "signup";
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("signin");
-  const [email, setEmail] = useState("mock@picket.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<null | "google" | "apple">(null);
@@ -290,6 +290,11 @@ function AuthPage() {
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {mode === "signin" ? "Đăng nhập" : "Tạo tài khoản"}
             </button>
+            
+            <div className="mt-2 flex items-center justify-center gap-1.5 text-foreground/40">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              <span className="font-sans text-[10px] font-bold uppercase tracking-wider">Mã hoá dữ liệu 256-bit</span>
+            </div>
           </form>
         </div>
 

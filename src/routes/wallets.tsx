@@ -90,7 +90,7 @@ function WalletsPage() {
   };
 
   return (
-    <PhoneFrame title="Tài khoản & Ví" back>
+    <PhoneFrame title="Ví của bạn" back>
       <div className="flex h-full flex-col">
         {/* Net Worth Header */}
         <div className="mx-5 mb-6 mt-2 rounded-3xl bg-gradient-to-br from-foreground to-foreground/85 p-6 text-background shadow-lg relative overflow-hidden">

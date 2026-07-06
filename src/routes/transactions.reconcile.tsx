@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Check, AlertTriangle, Plus, CheckCircle2 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { TRANSACTIONS, ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/reconcile")({
@@ -40,16 +41,20 @@ function ReconcilePage() {
   return (
     <PhoneFrame title="Đối soát tài khoản" subtitle={account.name}>
       <div className="space-y-4 px-5 pb-6">
-        <select
+        <Select
           value={account.id}
-          onChange={(e) => {
-            const a = ACCOUNTS.find((x) => x.id === e.target.value);
+          onValueChange={(val) => {
+            const a = ACCOUNTS.find((x) => x.id === val);
             if (a) setAccount(a);
           }}
-          className="w-full rounded-2xl border border-white/70 bg-white/85 px-4 py-3 font-display text-[15px] font-semibold shadow-sm outline-none"
         >
-          {ACCOUNTS.map((a) => (<option key={a.id} value={a.id}>{a.name}</option>))}
-        </select>
+          <SelectTrigger className="w-full flex h-auto items-center justify-between rounded-2xl border border-white/70 bg-white/85 px-4 py-3 font-display text-[15px] font-semibold shadow-sm outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
+            {ACCOUNTS.map((a) => (<SelectItem key={a.id} value={a.id} className="rounded-lg">{a.name}</SelectItem>))}
+          </SelectContent>
+        </Select>
 
         {/* Statement */}
         <div className="space-y-3 rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm">

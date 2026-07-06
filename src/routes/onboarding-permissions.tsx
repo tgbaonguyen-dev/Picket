@@ -87,7 +87,7 @@ function PermissionsPage() {
   const finishAll = () => {
     try {
       localStorage.setItem(
-        "canmoney.permissions",
+        "picket.permissions",
         JSON.stringify(status),
       );
     } catch {

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowDown, ArrowLeftRight, AlertTriangle } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/transfer")({
@@ -128,18 +129,22 @@ function AccountCard({
       <p className="text-[11px] font-bold uppercase tracking-widest text-foreground/50">
         {label}
       </p>
-      <select
+      <Select
         value={account.id}
-        onChange={(e) => {
-          const a = ACCOUNTS.find((x) => x.id === e.target.value);
+        onValueChange={(val) => {
+          const a = ACCOUNTS.find((x) => x.id === val);
           if (a) onChange(a);
         }}
-        className="w-full bg-transparent font-display text-[16px] font-semibold outline-none"
       >
-        {ACCOUNTS.map((a) => (
-          <option key={a.id} value={a.id}>{a.name}</option>
-        ))}
-      </select>
+        <SelectTrigger className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 font-display text-[16px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
+          {ACCOUNTS.map((a) => (
+            <SelectItem key={a.id} value={a.id} className="rounded-lg">{a.name}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       <p className="mt-1 text-[12px] text-foreground/55 tabular-nums">
         Số dư: {formatVND(account.balance, account.currency)}
       </p>

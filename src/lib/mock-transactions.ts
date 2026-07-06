@@ -23,16 +23,21 @@ export const ACCOUNTS = [
   { id: "vcb", name: "Vietcombank ••4821", balance: 12_450_000, type: "bank" },
   { id: "cash", name: "Tiền mặt", balance: 850_000, type: "cash" },
   { id: "mmo", name: "Momo", balance: 2_100_000, type: "ewallet" },
+  { id: "credit", name: "Thẻ Visa ••1234", balance: -4_200_000, type: "credit" },
   { id: "usd", name: "USD Savings", balance: 1240, type: "bank", currency: "USD" },
 ];
 
+export function getExpenses() {
+  return TRANSACTIONS.filter((t) => t.type === "expense");
+}
+
 export const CATEGORIES = [
-  { id: "food", label: "Ăn uống", emoji: "🍜", color: "#f97316" },
-  { id: "transport", label: "Di chuyển", emoji: "🚗", color: "#3b82f6" },
+  { id: "food", label: "Ăn uống", emoji: "🍜", color: "#dc2626" },
+  { id: "transport", label: "Di chuyển", emoji: "🚗", color: "#f59e0b" },
   { id: "shopping", label: "Mua sắm", emoji: "🛍️", color: "#ec4899" },
-  { id: "bills", label: "Hóa đơn", emoji: "💡", color: "#eab308" },
-  { id: "entertainment", label: "Giải trí", emoji: "🎬", color: "#a855f7" },
-  { id: "salary", label: "Lương", emoji: "💰", color: "#10b981" },
+  { id: "bills", label: "Hóa đơn", emoji: "💡", color: "#3b82f6" },
+  { id: "entertainment", label: "Giải trí", emoji: "🎬", color: "#8b5cf6" },
+  { id: "salary", label: "Lương", emoji: "💰", color: "#16a34a" },
   { id: "transfer", label: "Chuyển khoản", emoji: "🔁", color: "#64748b" },
   { id: "other", label: "Khác", emoji: "📦", color: "#94a3b8" },
 ];
