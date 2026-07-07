@@ -19,7 +19,9 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OnboardingReadyRouteImport } from './routes/onboarding-ready'
 import { Route as OnboardingPrivacyRouteImport } from './routes/onboarding-privacy'
+import { Route as OnboardingPersonaRouteImport } from './routes/onboarding-persona'
 import { Route as OnboardingPermissionsRouteImport } from './routes/onboarding-permissions'
+import { Route as OnboardingGoalsRouteImport } from './routes/onboarding-goals'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MonthlyWrapRouteImport } from './routes/monthly-wrap'
 import { Route as ItemsRouteImport } from './routes/items'
@@ -53,6 +55,7 @@ import { Route as BudgetsIdRouteImport } from './routes/budgets.$id'
 import { Route as BillsSubscriptionsRouteImport } from './routes/bills.subscriptions'
 import { Route as BillsNewRouteImport } from './routes/bills.new'
 import { Route as BillsIdRouteImport } from './routes/bills.$id'
+import { Route as AccountsIdRouteImport } from './routes/accounts.$id'
 import { Route as BillsSubscriptionsIndexRouteImport } from './routes/bills.subscriptions.index'
 import { Route as TransactionsIdSplitRouteImport } from './routes/transactions.$id.split'
 import { Route as TransactionsIdRefundRouteImport } from './routes/transactions.$id.refund'
@@ -60,6 +63,7 @@ import { Route as TransactionsIdEditRouteImport } from './routes/transactions.$i
 import { Route as BudgetsIdEditRouteImport } from './routes/budgets.$id.edit'
 import { Route as BudgetsIdAlertRouteImport } from './routes/budgets.$id.alert'
 import { Route as BillsSubscriptionsNewRouteImport } from './routes/bills.subscriptions.new'
+import { Route as BillsSubscriptionsIdRouteImport } from './routes/bills.subscriptions.$id'
 import { Route as BillsIdEditRouteImport } from './routes/bills.$id.edit'
 import { Route as BillsSubscriptionsIdAlertRouteImport } from './routes/bills.subscriptions.$id.alert'
 
@@ -113,9 +117,19 @@ const OnboardingPrivacyRoute = OnboardingPrivacyRouteImport.update({
   path: '/onboarding-privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingPersonaRoute = OnboardingPersonaRouteImport.update({
+  id: '/onboarding-persona',
+  path: '/onboarding-persona',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingPermissionsRoute = OnboardingPermissionsRouteImport.update({
   id: '/onboarding-permissions',
   path: '/onboarding-permissions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingGoalsRoute = OnboardingGoalsRouteImport.update({
+  id: '/onboarding-goals',
+  path: '/onboarding-goals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NotificationsRoute = NotificationsRouteImport.update({
@@ -283,6 +297,11 @@ const BillsIdRoute = BillsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => BillsRoute,
 } as any)
+const AccountsIdRoute = AccountsIdRouteImport.update({
+  id: '/accounts/$id',
+  path: '/accounts/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BillsSubscriptionsIndexRoute = BillsSubscriptionsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -318,6 +337,11 @@ const BillsSubscriptionsNewRoute = BillsSubscriptionsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => BillsSubscriptionsRoute,
 } as any)
+const BillsSubscriptionsIdRoute = BillsSubscriptionsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => BillsSubscriptionsRoute,
+} as any)
 const BillsIdEditRoute = BillsIdEditRouteImport.update({
   id: '/edit',
   path: '/edit',
@@ -325,9 +349,9 @@ const BillsIdEditRoute = BillsIdEditRouteImport.update({
 } as any)
 const BillsSubscriptionsIdAlertRoute =
   BillsSubscriptionsIdAlertRouteImport.update({
-    id: '/$id/alert',
-    path: '/$id/alert',
-    getParentRoute: () => BillsSubscriptionsRoute,
+    id: '/alert',
+    path: '/alert',
+    getParentRoute: () => BillsSubscriptionsIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -342,7 +366,9 @@ export interface FileRoutesByFullPath {
   '/items': typeof ItemsRouteWithChildren
   '/monthly-wrap': typeof MonthlyWrapRoute
   '/notifications': typeof NotificationsRoute
+  '/onboarding-goals': typeof OnboardingGoalsRoute
   '/onboarding-permissions': typeof OnboardingPermissionsRoute
+  '/onboarding-persona': typeof OnboardingPersonaRoute
   '/onboarding-privacy': typeof OnboardingPrivacyRoute
   '/onboarding-ready': typeof OnboardingReadyRoute
   '/profile': typeof ProfileRoute
@@ -353,6 +379,7 @@ export interface FileRoutesByFullPath {
   '/verify-otp': typeof VerifyOtpRoute
   '/wallets': typeof WalletsRoute
   '/welcome': typeof WelcomeRoute
+  '/accounts/$id': typeof AccountsIdRoute
   '/bills/$id': typeof BillsIdRouteWithChildren
   '/bills/new': typeof BillsNewRoute
   '/bills/subscriptions': typeof BillsSubscriptionsRouteWithChildren
@@ -376,6 +403,7 @@ export interface FileRoutesByFullPath {
   '/items/': typeof ItemsIndexRoute
   '/transactions/': typeof TransactionsIndexRoute
   '/bills/$id/edit': typeof BillsIdEditRoute
+  '/bills/subscriptions/$id': typeof BillsSubscriptionsIdRouteWithChildren
   '/bills/subscriptions/new': typeof BillsSubscriptionsNewRoute
   '/budgets/$id/alert': typeof BudgetsIdAlertRoute
   '/budgets/$id/edit': typeof BudgetsIdEditRoute
@@ -393,7 +421,9 @@ export interface FileRoutesByTo {
   '/inbox': typeof InboxRoute
   '/monthly-wrap': typeof MonthlyWrapRoute
   '/notifications': typeof NotificationsRoute
+  '/onboarding-goals': typeof OnboardingGoalsRoute
   '/onboarding-permissions': typeof OnboardingPermissionsRoute
+  '/onboarding-persona': typeof OnboardingPersonaRoute
   '/onboarding-privacy': typeof OnboardingPrivacyRoute
   '/onboarding-ready': typeof OnboardingReadyRoute
   '/profile': typeof ProfileRoute
@@ -403,6 +433,7 @@ export interface FileRoutesByTo {
   '/verify-otp': typeof VerifyOtpRoute
   '/wallets': typeof WalletsRoute
   '/welcome': typeof WelcomeRoute
+  '/accounts/$id': typeof AccountsIdRoute
   '/bills/$id': typeof BillsIdRouteWithChildren
   '/bills/new': typeof BillsNewRoute
   '/budgets/$id': typeof BudgetsIdRouteWithChildren
@@ -425,6 +456,7 @@ export interface FileRoutesByTo {
   '/items': typeof ItemsIndexRoute
   '/transactions': typeof TransactionsIndexRoute
   '/bills/$id/edit': typeof BillsIdEditRoute
+  '/bills/subscriptions/$id': typeof BillsSubscriptionsIdRouteWithChildren
   '/bills/subscriptions/new': typeof BillsSubscriptionsNewRoute
   '/budgets/$id/alert': typeof BudgetsIdAlertRoute
   '/budgets/$id/edit': typeof BudgetsIdEditRoute
@@ -447,7 +479,9 @@ export interface FileRoutesById {
   '/items': typeof ItemsRouteWithChildren
   '/monthly-wrap': typeof MonthlyWrapRoute
   '/notifications': typeof NotificationsRoute
+  '/onboarding-goals': typeof OnboardingGoalsRoute
   '/onboarding-permissions': typeof OnboardingPermissionsRoute
+  '/onboarding-persona': typeof OnboardingPersonaRoute
   '/onboarding-privacy': typeof OnboardingPrivacyRoute
   '/onboarding-ready': typeof OnboardingReadyRoute
   '/profile': typeof ProfileRoute
@@ -458,6 +492,7 @@ export interface FileRoutesById {
   '/verify-otp': typeof VerifyOtpRoute
   '/wallets': typeof WalletsRoute
   '/welcome': typeof WelcomeRoute
+  '/accounts/$id': typeof AccountsIdRoute
   '/bills/$id': typeof BillsIdRouteWithChildren
   '/bills/new': typeof BillsNewRoute
   '/bills/subscriptions': typeof BillsSubscriptionsRouteWithChildren
@@ -481,6 +516,7 @@ export interface FileRoutesById {
   '/items/': typeof ItemsIndexRoute
   '/transactions/': typeof TransactionsIndexRoute
   '/bills/$id/edit': typeof BillsIdEditRoute
+  '/bills/subscriptions/$id': typeof BillsSubscriptionsIdRouteWithChildren
   '/bills/subscriptions/new': typeof BillsSubscriptionsNewRoute
   '/budgets/$id/alert': typeof BudgetsIdAlertRoute
   '/budgets/$id/edit': typeof BudgetsIdEditRoute
@@ -504,7 +540,9 @@ export interface FileRouteTypes {
     | '/items'
     | '/monthly-wrap'
     | '/notifications'
+    | '/onboarding-goals'
     | '/onboarding-permissions'
+    | '/onboarding-persona'
     | '/onboarding-privacy'
     | '/onboarding-ready'
     | '/profile'
@@ -515,6 +553,7 @@ export interface FileRouteTypes {
     | '/verify-otp'
     | '/wallets'
     | '/welcome'
+    | '/accounts/$id'
     | '/bills/$id'
     | '/bills/new'
     | '/bills/subscriptions'
@@ -538,6 +577,7 @@ export interface FileRouteTypes {
     | '/items/'
     | '/transactions/'
     | '/bills/$id/edit'
+    | '/bills/subscriptions/$id'
     | '/bills/subscriptions/new'
     | '/budgets/$id/alert'
     | '/budgets/$id/edit'
@@ -555,7 +595,9 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/monthly-wrap'
     | '/notifications'
+    | '/onboarding-goals'
     | '/onboarding-permissions'
+    | '/onboarding-persona'
     | '/onboarding-privacy'
     | '/onboarding-ready'
     | '/profile'
@@ -565,6 +607,7 @@ export interface FileRouteTypes {
     | '/verify-otp'
     | '/wallets'
     | '/welcome'
+    | '/accounts/$id'
     | '/bills/$id'
     | '/bills/new'
     | '/budgets/$id'
@@ -587,6 +630,7 @@ export interface FileRouteTypes {
     | '/items'
     | '/transactions'
     | '/bills/$id/edit'
+    | '/bills/subscriptions/$id'
     | '/bills/subscriptions/new'
     | '/budgets/$id/alert'
     | '/budgets/$id/edit'
@@ -608,7 +652,9 @@ export interface FileRouteTypes {
     | '/items'
     | '/monthly-wrap'
     | '/notifications'
+    | '/onboarding-goals'
     | '/onboarding-permissions'
+    | '/onboarding-persona'
     | '/onboarding-privacy'
     | '/onboarding-ready'
     | '/profile'
@@ -619,6 +665,7 @@ export interface FileRouteTypes {
     | '/verify-otp'
     | '/wallets'
     | '/welcome'
+    | '/accounts/$id'
     | '/bills/$id'
     | '/bills/new'
     | '/bills/subscriptions'
@@ -642,6 +689,7 @@ export interface FileRouteTypes {
     | '/items/'
     | '/transactions/'
     | '/bills/$id/edit'
+    | '/bills/subscriptions/$id'
     | '/bills/subscriptions/new'
     | '/budgets/$id/alert'
     | '/budgets/$id/edit'
@@ -664,7 +712,9 @@ export interface RootRouteChildren {
   ItemsRoute: typeof ItemsRouteWithChildren
   MonthlyWrapRoute: typeof MonthlyWrapRoute
   NotificationsRoute: typeof NotificationsRoute
+  OnboardingGoalsRoute: typeof OnboardingGoalsRoute
   OnboardingPermissionsRoute: typeof OnboardingPermissionsRoute
+  OnboardingPersonaRoute: typeof OnboardingPersonaRoute
   OnboardingPrivacyRoute: typeof OnboardingPrivacyRoute
   OnboardingReadyRoute: typeof OnboardingReadyRoute
   ProfileRoute: typeof ProfileRoute
@@ -675,6 +725,7 @@ export interface RootRouteChildren {
   VerifyOtpRoute: typeof VerifyOtpRoute
   WalletsRoute: typeof WalletsRoute
   WelcomeRoute: typeof WelcomeRoute
+  AccountsIdRoute: typeof AccountsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -749,11 +800,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding-persona': {
+      id: '/onboarding-persona'
+      path: '/onboarding-persona'
+      fullPath: '/onboarding-persona'
+      preLoaderRoute: typeof OnboardingPersonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding-permissions': {
       id: '/onboarding-permissions'
       path: '/onboarding-permissions'
       fullPath: '/onboarding-permissions'
       preLoaderRoute: typeof OnboardingPermissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding-goals': {
+      id: '/onboarding-goals'
+      path: '/onboarding-goals'
+      fullPath: '/onboarding-goals'
+      preLoaderRoute: typeof OnboardingGoalsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notifications': {
@@ -987,6 +1052,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BillsIdRouteImport
       parentRoute: typeof BillsRoute
     }
+    '/accounts/$id': {
+      id: '/accounts/$id'
+      path: '/accounts/$id'
+      fullPath: '/accounts/$id'
+      preLoaderRoute: typeof AccountsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bills/subscriptions/': {
       id: '/bills/subscriptions/'
       path: '/'
@@ -1036,6 +1108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BillsSubscriptionsNewRouteImport
       parentRoute: typeof BillsSubscriptionsRoute
     }
+    '/bills/subscriptions/$id': {
+      id: '/bills/subscriptions/$id'
+      path: '/$id'
+      fullPath: '/bills/subscriptions/$id'
+      preLoaderRoute: typeof BillsSubscriptionsIdRouteImport
+      parentRoute: typeof BillsSubscriptionsRoute
+    }
     '/bills/$id/edit': {
       id: '/bills/$id/edit'
       path: '/edit'
@@ -1045,10 +1124,10 @@ declare module '@tanstack/react-router' {
     }
     '/bills/subscriptions/$id/alert': {
       id: '/bills/subscriptions/$id/alert'
-      path: '/$id/alert'
+      path: '/alert'
       fullPath: '/bills/subscriptions/$id/alert'
       preLoaderRoute: typeof BillsSubscriptionsIdAlertRouteImport
-      parentRoute: typeof BillsSubscriptionsRoute
+      parentRoute: typeof BillsSubscriptionsIdRoute
     }
   }
 }
@@ -1064,16 +1143,27 @@ const BillsIdRouteChildren: BillsIdRouteChildren = {
 const BillsIdRouteWithChildren =
   BillsIdRoute._addFileChildren(BillsIdRouteChildren)
 
-interface BillsSubscriptionsRouteChildren {
-  BillsSubscriptionsNewRoute: typeof BillsSubscriptionsNewRoute
-  BillsSubscriptionsIndexRoute: typeof BillsSubscriptionsIndexRoute
+interface BillsSubscriptionsIdRouteChildren {
   BillsSubscriptionsIdAlertRoute: typeof BillsSubscriptionsIdAlertRoute
 }
 
+const BillsSubscriptionsIdRouteChildren: BillsSubscriptionsIdRouteChildren = {
+  BillsSubscriptionsIdAlertRoute: BillsSubscriptionsIdAlertRoute,
+}
+
+const BillsSubscriptionsIdRouteWithChildren =
+  BillsSubscriptionsIdRoute._addFileChildren(BillsSubscriptionsIdRouteChildren)
+
+interface BillsSubscriptionsRouteChildren {
+  BillsSubscriptionsIdRoute: typeof BillsSubscriptionsIdRouteWithChildren
+  BillsSubscriptionsNewRoute: typeof BillsSubscriptionsNewRoute
+  BillsSubscriptionsIndexRoute: typeof BillsSubscriptionsIndexRoute
+}
+
 const BillsSubscriptionsRouteChildren: BillsSubscriptionsRouteChildren = {
+  BillsSubscriptionsIdRoute: BillsSubscriptionsIdRouteWithChildren,
   BillsSubscriptionsNewRoute: BillsSubscriptionsNewRoute,
   BillsSubscriptionsIndexRoute: BillsSubscriptionsIndexRoute,
-  BillsSubscriptionsIdAlertRoute: BillsSubscriptionsIdAlertRoute,
 }
 
 const BillsSubscriptionsRouteWithChildren =
@@ -1210,7 +1300,9 @@ const rootRouteChildren: RootRouteChildren = {
   ItemsRoute: ItemsRouteWithChildren,
   MonthlyWrapRoute: MonthlyWrapRoute,
   NotificationsRoute: NotificationsRoute,
+  OnboardingGoalsRoute: OnboardingGoalsRoute,
   OnboardingPermissionsRoute: OnboardingPermissionsRoute,
+  OnboardingPersonaRoute: OnboardingPersonaRoute,
   OnboardingPrivacyRoute: OnboardingPrivacyRoute,
   OnboardingReadyRoute: OnboardingReadyRoute,
   ProfileRoute: ProfileRoute,
@@ -1221,6 +1313,7 @@ const rootRouteChildren: RootRouteChildren = {
   VerifyOtpRoute: VerifyOtpRoute,
   WalletsRoute: WalletsRoute,
   WelcomeRoute: WelcomeRoute,
+  AccountsIdRoute: AccountsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

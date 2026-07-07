@@ -1,8 +1,9 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "picket",
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "packageManager": "pnpm@11.5.3",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",

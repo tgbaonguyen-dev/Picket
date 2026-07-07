@@ -8,7 +8,7 @@ export const Route = createFileRoute("/items/")({
   component: ItemsIndex,
 });
 
-const CATEGORIES = ["Tất cả", "Công nghệ", "Gia dụng", "Nội thất", "Xe cộ"];
+const ITEM_CATEGORIES = ["Tất cả", "Công nghệ", "Gia dụng", "Nội thất", "Xe cộ"];
 
 const ITEMS = [
   { id: "macbook", name: "MacBook Pro M3", category: "Công nghệ", price: 45000000, date: "15/01/2026", img: "💻", warranty: "Còn 6 tháng" },
@@ -58,7 +58,7 @@ function ItemsIndex() {
 
         {/* Categories */}
         <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar -mx-2 px-2">
-          {CATEGORIES.map(cat => (
+          {ITEM_CATEGORIES.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCat(cat)}

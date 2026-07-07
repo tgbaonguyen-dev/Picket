@@ -12,7 +12,7 @@ import {
   PieChart,
 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
-import { TRANSACTIONS, formatVND } from "@/lib/mock-transactions";
+import { TRANSACTIONS, formatVND } from "@/data";
 
 export const Route = createFileRoute("/expenses/")({
   head: () => ({
@@ -26,13 +26,7 @@ export const Route = createFileRoute("/expenses/")({
 
 type Category = "food" | "transport" | "shopping" | "bills" | "entertainment" | "other";
 
-const CATEGORIES: {
-  key: Category;
-  label: string;
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  bg: string;
-  fg: string;
-}[] = [
+const LOCAL_CATEGORIES = [
   { key: "food", label: "Ăn uống", icon: Utensils, bg: "#ffe4e6", fg: "#b03a4a" },
   { key: "transport", label: "Di chuyển", icon: Car, bg: "#FFE9D9", fg: "#B5828C" },
   { key: "shopping", label: "Mua sắm", icon: ShoppingBag, bg: "#fef3c7", fg: "#a16207" },
@@ -58,12 +52,12 @@ function ExpensesPage() {
   const total = expenses.reduce((s, e) => s + e.amount, 0);
 
   const byCat = useMemo(() => {
-    const map = new Map<Category, number>();
+    const map = new Map<string, number>();
     for (const e of expenses) {
       const catKey = CATEGORY_MAP[e.category] ?? "other";
       map.set(catKey, (map.get(catKey) ?? 0) + e.amount);
     }
-    return CATEGORIES.map((c) => ({ ...c, amount: map.get(c.key) ?? 0 })).sort(
+    return LOCAL_CATEGORIES.map((c) => ({ ...c, amount: map.get(c.key) ?? 0 })).sort(
       (a, b) => b.amount - a.amount,
     );
   }, [expenses]);
@@ -112,7 +106,7 @@ function ExpensesPage() {
           <div className="mb-4 flex items-baseline justify-between">
             <h2 className="font-display text-[16px] font-bold text-foreground">Phân bổ chi tiêu</h2>
             <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground/40">
-              {CATEGORIES.length} loại
+              {LOCAL_CATEGORIES.length} loại
             </span>
           </div>
           

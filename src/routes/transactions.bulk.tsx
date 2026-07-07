@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { Tag, FolderTree, CheckCircle, Trash2, Download, Undo2 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
-import { TRANSACTIONS, formatVND } from "@/lib/mock-transactions";
+import { TRANSACTIONS, formatVND } from "@/data";
 import { toast } from "sonner";
 
 const searchSchema = z.object({

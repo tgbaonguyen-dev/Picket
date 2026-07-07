@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search, Plus, Sparkles, Check } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
-import { CATEGORIES } from "@/lib/mock-transactions";
+import { CATEGORIES , CURRENT_MONTH_STR, CURRENT_MONTH_SHORT, CURRENT_DATE_ISO, CURRENT_YEAR} from "@/data";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/category")({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/transactions/category")({
 });
 
 const RECENT_IDS = ["food", "transport", "shopping"];
-const TAGS = ["#công-tác", "#gia-đình", "#du-lịch", "#khẩn-cấp", "#thưởng"];
+
 
 function CategoryPicker() {
   const nav = useNavigate();
@@ -95,7 +95,7 @@ function CategoryPicker() {
             Nhãn
           </p>
           <div className="flex flex-wrap gap-2">
-            {TAGS.map((t) => {
+            {tags.map((t) => {
               const on = tags.includes(t);
               return (
                 <button

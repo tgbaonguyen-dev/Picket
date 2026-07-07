@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { MetaRow } from "@/components/meta-row";
-import { findTx, formatVND } from "@/lib/mock-transactions";
+import { findTx, formatVND } from "@/data";
 import { useState } from "react";
 
 export const Route = createFileRoute("/transactions/$id")({

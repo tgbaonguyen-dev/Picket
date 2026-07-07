@@ -22,7 +22,7 @@ import {
   Minus
 } from "lucide-react";
 import { toast } from "sonner";
-import { formatVND, CATEGORIES } from "@/lib/mock-transactions";
+import { formatVND, getCategories } from "@/data";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/capture-receipt")({
@@ -811,7 +811,7 @@ function FieldRow({ field, onChange, onFocus, onBlur }: { field: Field; onChange
 
 function LineItemRow({ item, isLast, onChange, onDelete, onFocus, onBlur }: { item: LineItem; isLast: boolean; onChange: (u: Partial<LineItem>) => void; onDelete?: () => void; onFocus?: () => void; onBlur?: () => void; }) {
   const low = item.confidence < 0.85;
-  const cat = CATEGORIES.find((c) => c.id === item.category) || CATEGORIES[0];
+  const cat = getCategories().find((c) => c.id === item.category) || getCategories()[0];
 
   return (
     <div className={`p-4 relative group ${!isLast ? "border-b border-foreground/5" : ""}`}>
@@ -828,7 +828,7 @@ function LineItemRow({ item, isLast, onChange, onDelete, onFocus, onBlur }: { it
               <SelectValue>{cat.emoji}</SelectValue>
             </SelectTrigger>
             <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg min-w-[120px]">
-              {CATEGORIES.map(c => (
+              {getCategories().map(c => (
                 <SelectItem key={c.id} value={c.id} className="rounded-lg">{c.emoji} {c.label}</SelectItem>
               ))}
             </SelectContent>

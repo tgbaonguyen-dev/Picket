@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Delete, Camera, Repeat, Calendar as CalendarIcon } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { MetaRow } from "@/components/meta-row";
-import { ACCOUNTS, CATEGORIES, formatVND } from "@/lib/mock-transactions";
+import { ACCOUNTS, getCategories, formatVND } from "@/data";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
@@ -17,7 +17,7 @@ function NewTx() {
   const [amount, setAmount] = useState("0");
   const [note, setNote] = useState("");
   const [account, setAccount] = useState(ACCOUNTS[0].name);
-  const [cat, setCat] = useState(CATEGORIES[0]);
+  const [cat, setCat] = useState(getCategories()[0]);
   const [merchant, setMerchant] = useState("");
   const [recurring, setRecurring] = useState(false);
 

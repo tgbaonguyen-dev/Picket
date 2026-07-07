@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
+import { reportLovableError } from "../lib/error/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { WifiOff } from "lucide-react";
 

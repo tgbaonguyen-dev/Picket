@@ -1,6 +1,6 @@
 import { createFileRoute, useParams, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
-import { TRANSACTIONS, formatVND } from "@/lib/mock-transactions";
+import { TRANSACTIONS, formatVND } from "@/data";
 import { TransactionRow } from "@/components/transaction-row";
 import { Utensils, Car, ShoppingBag, Receipt, Film, MoreHorizontal, PieChart } from "lucide-react";
 import { useMemo } from "react";
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/expenses/$id")({
   component: CategoryDetail,
 });
 
-const CATEGORIES: Record<string, { label: string; icon: React.ComponentType<any>; bg: string; fg: string }> = {
+const LOCAL_CATEGORIES: Record<string, { label: string; icon: React.ComponentType<any>; bg: string; fg: string }> = {
   food: { label: "Ăn uống", icon: Utensils, bg: "#ffe4e6", fg: "#b03a4a" },
   transport: { label: "Di chuyển", icon: Car, bg: "#FFE9D9", fg: "#B5828C" },
   shopping: { label: "Mua sắm", icon: ShoppingBag, bg: "#fef3c7", fg: "#a16207" },
@@ -30,7 +30,7 @@ const CATEGORY_MAP: Record<string, string> = {
 function CategoryDetail() {
   const { id } = useParams({ from: "/expenses/$id" });
   
-  const catInfo = CATEGORIES[id] ?? CATEGORIES.other;
+  const catInfo = LOCAL_CATEGORIES[id] ?? LOCAL_CATEGORIES.other;
 
   const categoryTxs = useMemo(() => {
     return TRANSACTIONS.filter(t => t.type === "expense" && (CATEGORY_MAP[t.category] === id || (id === "other" && !CATEGORY_MAP[t.category])));

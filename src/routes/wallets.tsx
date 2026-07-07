@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
-import { ACCOUNTS as INITIAL_ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { ACCOUNTS as INITIAL_ACCOUNTS, formatVND } from "@/data";
 import { Banknote, CreditCard, Landmark, Plus, Wallet as WalletIcon, ChevronLeft } from "lucide-react";
 import { Drawer } from "vaul";
 import { vibrateLight } from "@/lib/haptic";

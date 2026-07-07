@@ -9,7 +9,7 @@ export const Route = createFileRoute("/items/new")({
   component: NewItem,
 });
 
-const CATEGORIES = ["Công nghệ", "Gia dụng", "Nội thất", "Xe cộ", "Khác"];
+const ITEM_CATEGORIES = ["Công nghệ", "Gia dụng", "Nội thất", "Xe cộ", "Khác"];
 
 function NewItem() {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ function NewItem() {
             <Tag className="h-4 w-4" /> Danh mục
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
-            {CATEGORIES.map(c => (
+            {ITEM_CATEGORIES.map(c => (
               <button
                 key={c}
                 type="button"

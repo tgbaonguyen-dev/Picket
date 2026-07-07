@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { Plus, ChevronRight, TrendingUp, AlertTriangle, CheckCircle2, Calendar, ArrowRightLeft } from "lucide-react";
 import { useState, useEffect } from "react";
-import { formatVND } from "@/lib/mock-transactions";
+import { formatVND } from "@/data";
 
 export const Route = createFileRoute("/budgets/")({ component: BudgetDashboard });
 

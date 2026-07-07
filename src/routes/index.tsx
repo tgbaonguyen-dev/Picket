@@ -32,7 +32,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { BottomNav, PhoneFrame } from "@/components/phone-frame";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ACCOUNTS, TRANSACTIONS, formatVND } from "@/lib/mock-transactions";
+import { getAccounts, getTransactions, formatVND , CURRENT_MONTH_STR, CURRENT_MONTH_SHORT, CURRENT_DATE_ISO, CURRENT_YEAR, getWeekdays} from "@/data";
 import { motion } from "framer-motion";
 import { PullToRefresh } from "@/components/pull-to-refresh";
 import { TransactionRow } from "@/components/transaction-row";
@@ -47,7 +47,7 @@ type DayEntry = {
   photos?: string[];
 };
 
-const WEEKDAYS = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+
 
 // April 2026 — starts on Wednesday. 30 days.
 const LEADING_BLANKS = 2;
@@ -152,8 +152,8 @@ function Index() {
     return () => clearTimeout(t);
   }, []);
 
-  const totalAssets = ACCOUNTS.filter(a => a.balance > 0).reduce((s, a) => s + a.balance, 0);
-  const totalDebts = ACCOUNTS.filter(a => a.balance < 0).reduce((s, a) => s + a.balance, 0);
+  const totalAssets = getAccounts().filter(a => a.balance > 0).reduce((s, a) => s + a.balance, 0);
+  const totalDebts = getAccounts().filter(a => a.balance < 0).reduce((s, a) => s + a.balance, 0);
   const netWorth = totalAssets + totalDebts;
 
   function getIconForType(type: string) {
@@ -242,7 +242,7 @@ function Index() {
   const dash = 2 * Math.PI * 26;
 
   // Recent transactions (top 5)
-  const recentTxs = TRANSACTIONS.slice(0, 5);
+  const recentTxs = getTransactions().slice(0, 5);
 
 
   return (
@@ -358,7 +358,7 @@ function Index() {
           {/* Wallets Scroller */}
           <div className="relative w-full overflow-x-auto pb-4 pl-5" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="flex gap-3 pr-5 w-max">
-              {ACCOUNTS.map(account => {
+              {getAccounts().map(account => {
                 const Icon = getIconForType(account.type);
                 const isDebt = account.balance < 0;
                 return (
@@ -411,7 +411,7 @@ function Index() {
                 </p>
                 <p className="mt-1 font-sans text-[13px] font-medium leading-relaxed text-foreground/80">
                   {(() => {
-                    const foodSpent = TRANSACTIONS.filter(t => t.category === "Ăn uống" && t.type === "expense").reduce((s, t) => s + t.amount, 0);
+                    const foodSpent = getTransactions().filter(t => t.category === "Ăn uống" && t.type === "expense").reduce((s, t) => s + t.amount, 0);
                     return (
                       <>Bạn đã chi <strong className="text-foreground">{formatVND(foodSpent)}</strong> cho Ăn uống tháng này. Vượt 15% so với tháng trước. Hãy cân nhắc nấu ăn tại nhà vài ngày tới nhé!</>
                     );
@@ -549,7 +549,7 @@ function Index() {
             <div className="mb-4 flex items-center justify-between px-1">
               <div>
                 <h2 className="font-display text-[20px] font-bold leading-none tracking-tight text-foreground">
-                  Tháng 4, 2026
+                  {CURRENT_MONTH_SHORT}
                 </h2>
                 <p className="mt-1 font-sans text-[11px] font-medium text-foreground/50">
                   Nhấn vào ngày để xem hoá đơn & ghi chép
@@ -575,7 +575,7 @@ function Index() {
 
             <div className="rounded-[24px] bg-white/60 p-3 backdrop-blur-sm">
               <div className="grid grid-cols-7 gap-y-0.5 text-center">
-                {WEEKDAYS.map((d) => (
+                {getWeekdays().map((d) => (
                   <div
                     key={d}
                     className="pb-2 font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/40"

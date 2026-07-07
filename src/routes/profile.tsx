@@ -1,3 +1,4 @@
+import { getCurrencies, getTimezones, getLanguages, getDateFormats } from "@/data";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -90,45 +91,13 @@ function savePrefs(p: Prefs) {
 
 // ---------- Options ----------
 
-const CURRENCIES = [
-  { code: "VND", label: "Việt Nam Đồng", symbol: "₫" },
-  { code: "USD", label: "US Dollar", symbol: "$" },
-  { code: "EUR", label: "Euro", symbol: "€" },
-  { code: "JPY", label: "Japanese Yen", symbol: "¥" },
-  { code: "KRW", label: "Korean Won", symbol: "₩" },
-  { code: "GBP", label: "British Pound", symbol: "£" },
-  { code: "AUD", label: "Australian Dollar", symbol: "A$" },
-  { code: "SGD", label: "Singapore Dollar", symbol: "S$" },
-  { code: "THB", label: "Thai Baht", symbol: "฿" },
-  { code: "CNY", label: "Chinese Yuan", symbol: "¥" },
-];
 
-const TIMEZONES = [
-  "Asia/Ho_Chi_Minh",
-  "Asia/Bangkok",
-  "Asia/Singapore",
-  "Asia/Tokyo",
-  "Asia/Seoul",
-  "Asia/Shanghai",
-  "Asia/Dubai",
-  "Europe/London",
-  "Europe/Paris",
-  "Europe/Berlin",
-  "America/New_York",
-  "America/Los_Angeles",
-  "Australia/Sydney",
-  "UTC",
-];
 
-const LANGUAGES = [
-  { code: "vi", label: "Tiếng Việt" },
-  { code: "en", label: "English" },
-  { code: "ja", label: "日本語" },
-  { code: "ko", label: "한국어" },
-  { code: "zh", label: "中文" },
-];
 
-const DATE_FORMATS = ["DD/MM/YYYY", "MM/DD/YYYY", "YYYY-MM-DD", "D MMM YYYY"];
+
+
+
+
 const NUMBER_FORMATS: Prefs["numberFormat"][] = ["1.234,56", "1,234.56", "1 234,56"];
 
 // ---------- Small components ----------
@@ -386,11 +355,11 @@ function ProfilePage() {
   }
 
   const currencyLabel = useMemo(() => {
-    const c = CURRENCIES.find((x) => x.code === prefs.currency);
+    const c = getCurrencies().find((x) => x.code === prefs.currency);
     return c ? `${c.symbol} · ${c.code}` : prefs.currency;
   }, [prefs.currency]);
   const languageLabel = useMemo(
-    () => LANGUAGES.find((l) => l.code === prefs.language)?.label ?? prefs.language,
+    () => getLanguages().find((l) => l.code === prefs.language)?.label ?? prefs.language,
     [prefs.language],
   );
   const themeLabel = prefs.theme === "system" ? "Theo hệ thống" : prefs.theme === "light" ? "Sáng" : "Tối";
@@ -401,12 +370,12 @@ function ProfilePage() {
       <PickerSheet
         open={picker === "currency"}
         title="Chọn tiền tệ"
-        options={CURRENCIES.map((c) => c.code)}
+        options={getCurrencies().map((c) => c.code)}
         value={prefs.currency}
         onSelect={(v) => update({ currency: v })}
         onClose={() => setPicker(null)}
         render={(code) => {
-          const c = CURRENCIES.find((x) => x.code === code);
+          const c = getCurrencies().find((x) => x.code === code);
           return (
             <span className="flex items-center justify-between gap-3">
               <span>
@@ -420,7 +389,7 @@ function ProfilePage() {
       <PickerSheet
         open={picker === "timezone"}
         title="Chọn múi giờ"
-        options={TIMEZONES}
+        options={getTimezones()}
         value={prefs.timezone}
         onSelect={(v) => update({ timezone: v })}
         onClose={() => setPicker(null)}
@@ -428,16 +397,16 @@ function ProfilePage() {
       <PickerSheet
         open={picker === "language"}
         title="Ngôn ngữ"
-        options={LANGUAGES.map((l) => l.code)}
+        options={getLanguages().map((l) => l.code)}
         value={prefs.language}
         onSelect={(v) => update({ language: v })}
         onClose={() => setPicker(null)}
-        render={(code) => LANGUAGES.find((l) => l.code === code)?.label ?? code}
+        render={(code) => getLanguages().find((l) => l.code === code)?.label ?? code}
       />
       <PickerSheet
         open={picker === "dateFormat"}
         title="Định dạng ngày"
-        options={DATE_FORMATS}
+        options={getDateFormats() as unknown as string[]}
         value={prefs.dateFormat}
         onSelect={(v) => update({ dateFormat: v })}
         onClose={() => setPicker(null)}

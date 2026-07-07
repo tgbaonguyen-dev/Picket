@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Plus, Trash2, Users, Percent, Divide } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
-import { findTx, formatVND, CATEGORIES } from "@/lib/mock-transactions";
+import { findTx, formatVND, getCategories } from "@/data";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/$id/split")({
@@ -98,7 +98,7 @@ function SplitTx() {
         {/* Rows */}
         <div className="space-y-2">
           {rows.map((r, i) => {
-            const cat = CATEGORIES.find((c) => c.id === r.category) ?? CATEGORIES[0];
+            const cat = getCategories().find((c) => c.id === r.category) ?? getCategories()[0];
             return (
               <div key={r.id} className="rounded-2xl border border-white/70 bg-white/85 p-3 shadow-sm">
                 <div className="flex items-center gap-2">

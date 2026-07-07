@@ -26,7 +26,7 @@ const CYCLES = [
   { id: "weekly", label: "Hàng tuần" },
 ] as const;
 
-const CATEGORIES = ["Giải trí", "Công việc", "Học tập", "Sức khoẻ", "Khác"] as const;
+const SUB_CATEGORIES = ["Giải trí", "Công việc", "Học tập", "Sức khoẻ", "Khác"] as const;
 
 const fmt = (n: number) => n.toLocaleString("vi-VN") + "₫";
 
@@ -37,7 +37,7 @@ function NewSubscription() {
   const [amount, setAmount] = useState<number>(0);
   const [cycle, setCycle] = useState<(typeof CYCLES)[number]["id"]>("monthly");
   const [nextDate, setNextDate] = useState("2026-08-01");
-  const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("Giải trí");
+  const [category, setCategory] = useState<(typeof SUB_CATEGORIES)[number]>("Giải trí");
   const [method, setMethod] = useState("Thẻ Techcombank");
   const [remind, setRemind] = useState(true);
   const [trial, setTrial] = useState(false);
@@ -223,7 +223,7 @@ function NewSubscription() {
             <Tag className="h-4 w-4 text-[#B5828C]" />Danh mục
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
-            {CATEGORIES.map(c => (
+            {SUB_CATEGORIES.map(c => (
               <button
                 key={c}
                 type="button"

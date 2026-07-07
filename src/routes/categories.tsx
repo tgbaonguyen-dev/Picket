@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
-import { CATEGORIES } from "@/lib/mock-transactions";
+import { getCategories } from "@/data";
 import { Plus, Tag } from "lucide-react";
 import { useState } from "react";
 import { vibrateLight } from "@/lib/haptic";
@@ -14,8 +14,8 @@ function CategoriesPage() {
   const [tab, setTab] = useState<"expense" | "income" | "labels">("expense");
 
   // Filter categories
-  const expenseCats = CATEGORIES.slice(0, 10);
-  const incomeCats = CATEGORIES.slice(10);
+  const expenseCats = getCategories().slice(0, 10);
+  const incomeCats = getCategories().slice(10);
   
   // Dummy labels
   const labels = [

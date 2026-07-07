@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { History, AlertTriangle } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
-import { findTx, ACCOUNTS, formatVND } from "@/lib/mock-transactions";
+import { findTx, ACCOUNTS, formatVND } from "@/data";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 

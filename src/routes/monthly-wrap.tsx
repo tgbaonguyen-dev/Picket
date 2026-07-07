@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { getTopMerchants, getMonthlyPhotos } from "@/data";
 import { PhoneFrame } from "@/components/phone-frame";
 import { TrendingUp, TrendingDown, Target, Wallet, Camera, Share2, ArrowRight, Sparkles } from "lucide-react";
 
@@ -6,11 +7,7 @@ export const Route = createFileRoute("/monthly-wrap")({
   component: MonthlyWrapPage,
 });
 
-const TOP_MERCHANTS = [
-  { name: "Shopee", change: +38, amount: "2.4tr" },
-  { name: "Grab", change: +22, amount: "890k" },
-  { name: "Starbucks", change: +15, amount: "620k" },
-];
+
 
 const PHOTOS = ["a1", "b1", "c1", "d1"].map((s) => `https://picsum.photos/seed/${s}/200/200`);
 
@@ -119,7 +116,7 @@ function MonthlyWrapPage() {
             <span className="font-sans text-[11px] text-foreground/50">so tháng trước</span>
           </div>
           <div className="space-y-2.5">
-            {TOP_MERCHANTS.map((m) => (
+            {getTopMerchants().map((m) => (
               <div key={m.name} className="flex items-center gap-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-foreground/5 font-display text-[13px] font-bold text-foreground">
                   {m.name[0]}

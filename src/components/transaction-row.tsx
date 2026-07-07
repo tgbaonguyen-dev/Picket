@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { Tx, formatVND } from "@/lib/mock-transactions";
+import { Tx, formatVND } from "@/data";
 
 interface TransactionRowProps {
   transaction: Tx;

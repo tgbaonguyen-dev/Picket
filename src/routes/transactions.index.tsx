@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import {
   TRANSACTIONS, ACCOUNTS, groupByDay, dayLabel, daySum, formatVND, type TxType,
-} from "@/lib/mock-transactions";
+} from "@/data";
 import {
   AlertDialog,
   AlertDialogAction,
