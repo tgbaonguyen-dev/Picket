@@ -18,3 +18,4 @@ export * from "./settings";
 export * from "./onboarding";
 export * from "./subscriptions";
 export * from "./ocr";
+export * from "./pricing";

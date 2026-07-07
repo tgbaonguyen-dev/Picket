@@ -138,7 +138,7 @@ function MonthlyWrapPage() {
             <h3 className="font-display text-[14px] font-bold text-foreground">Hoá đơn & ảnh đã lưu</h3>
           </div>
           <div className="grid grid-cols-4 gap-2">
-            {PHOTOS.map((src) => (
+            {getMonthlyPhotos().map((src) => (
               <img key={src} src={src} alt="" loading="lazy" className="aspect-square w-full rounded-xl object-cover" />
             ))}
           </div>

@@ -8,15 +8,10 @@ export const Route = createFileRoute("/bills/subscriptions/")({ component: SubDa
 
 const fmt = (n: number) => n.toLocaleString("vi-VN") + "₫";
 
-const subs = [
-  { id: "netflix", name: "Netflix Premium", icon: "🎬", monthly: 260000, flag: "trial", note: "Trial hết 12/07" },
-  { id: "spotify", name: "Spotify Family", icon: "🎵", monthly: 149000, flag: null, note: "Đang dùng thường xuyên" },
-  { id: "icloud", name: "iCloud+ 200GB", icon: "☁️", monthly: 59000, flag: "increase", note: "Tăng giá +10.000₫ từ 08/2026" },
-  { id: "chatgpt", name: "ChatGPT Plus", icon: "🤖", monthly: 520000, flag: null, note: "" },
-  { id: "youtube", name: "YouTube Premium", icon: "▶️", monthly: 79000, flag: "duplicate", note: "Trùng với Family plan" },
-];
+import { getSubscriptions } from "@/data";
 
 function SubDashboard() {
+  const subs = getSubscriptions();
   const monthly = subs.reduce((s, x) => s + x.monthly, 0);
   
   return (
@@ -46,16 +41,19 @@ function SubDashboard() {
         </div>
 
         {/* Hero Summary Card */}
-        <PopIn className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-fuchsia-500 to-pink-600 p-6 text-white shadow-xl shadow-pink-500/20">
-          <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/20 blur-2xl" />
-          <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10 blur-3xl" />
-          
-          <div className="relative z-10">
-            <p className="text-sm font-medium opacity-90">Tổng mỗi tháng</p>
-            <p className="mt-1 text-4xl font-bold tracking-tight">{fmt(monthly)}</p>
+        <PopIn className="relative rounded-3xl shadow-xl shadow-pink-500/20">
+          <div className="relative rounded-3xl bg-gradient-to-br from-fuchsia-500 to-pink-600 p-6 text-white overflow-hidden">
+            {/* Decorative blobs — clipped by this inner container */}
+            <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/20 blur-2xl" />
+            <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10 blur-3xl" />
             
-            <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/20 px-3 py-1.5 text-[11px] font-medium backdrop-blur-md">
-              Quy đổi năm: {fmt(monthly * 12)}
+            <div className="relative z-10">
+              <p className="text-sm font-medium opacity-90">Tổng mỗi tháng</p>
+              <p className="mt-1 text-4xl font-bold tracking-tight">{fmt(monthly)}</p>
+              
+              <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/20 px-3 py-1.5 text-[11px] font-medium backdrop-blur-md">
+                Quy đổi năm: {fmt(monthly * 12)}
+              </div>
             </div>
           </div>
         </PopIn>

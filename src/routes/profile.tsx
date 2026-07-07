@@ -22,6 +22,7 @@ import {
   Download,
   Check,
   Tag,
+  Crown,
 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { supabase } from "@/integrations/supabase/client";
@@ -519,6 +520,24 @@ function ProfilePage() {
             Đăng nhập / Tạo tài khoản
           </Link>
         )}
+
+        {/* Upgrade Banner */}
+        <Link
+          to="/pricing"
+          className="mt-4 block relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#B5828C] to-[#FFB4A2] p-4 text-white shadow-lg shadow-[#B5828C]/25 transition active:scale-[0.98]"
+        >
+          <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-white/15 blur-2xl" />
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-md">
+              <Crown className="h-5 w-5" strokeWidth={2.2} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-bold">Nâng cấp Picket</p>
+              <p className="mt-0.5 text-[11px] font-medium opacity-80">Dùng thử 14 ngày miễn phí · Không quảng cáo</p>
+            </div>
+            <ChevronRight className="h-5 w-5 opacity-70" strokeWidth={2.2} />
+          </div>
+        </Link>
 
         {/* Bản địa hoá */}
         <Section title="Bản địa hoá">

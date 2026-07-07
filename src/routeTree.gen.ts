@@ -17,6 +17,7 @@ import { Route as SearchResultsRouteImport } from './routes/search-results'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as OnboardingReadyRouteImport } from './routes/onboarding-ready'
 import { Route as OnboardingPrivacyRouteImport } from './routes/onboarding-privacy'
 import { Route as OnboardingPersonaRouteImport } from './routes/onboarding-persona'
@@ -105,6 +106,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingReadyRoute = OnboardingReadyRouteImport.update({
@@ -371,6 +377,7 @@ export interface FileRoutesByFullPath {
   '/onboarding-persona': typeof OnboardingPersonaRoute
   '/onboarding-privacy': typeof OnboardingPrivacyRoute
   '/onboarding-ready': typeof OnboardingReadyRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
@@ -426,6 +433,7 @@ export interface FileRoutesByTo {
   '/onboarding-persona': typeof OnboardingPersonaRoute
   '/onboarding-privacy': typeof OnboardingPrivacyRoute
   '/onboarding-ready': typeof OnboardingReadyRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
@@ -484,6 +492,7 @@ export interface FileRoutesById {
   '/onboarding-persona': typeof OnboardingPersonaRoute
   '/onboarding-privacy': typeof OnboardingPrivacyRoute
   '/onboarding-ready': typeof OnboardingReadyRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
@@ -545,6 +554,7 @@ export interface FileRouteTypes {
     | '/onboarding-persona'
     | '/onboarding-privacy'
     | '/onboarding-ready'
+    | '/pricing'
     | '/profile'
     | '/reset-password'
     | '/search'
@@ -600,6 +610,7 @@ export interface FileRouteTypes {
     | '/onboarding-persona'
     | '/onboarding-privacy'
     | '/onboarding-ready'
+    | '/pricing'
     | '/profile'
     | '/reset-password'
     | '/search'
@@ -657,6 +668,7 @@ export interface FileRouteTypes {
     | '/onboarding-persona'
     | '/onboarding-privacy'
     | '/onboarding-ready'
+    | '/pricing'
     | '/profile'
     | '/reset-password'
     | '/search'
@@ -717,6 +729,7 @@ export interface RootRouteChildren {
   OnboardingPersonaRoute: typeof OnboardingPersonaRoute
   OnboardingPrivacyRoute: typeof OnboardingPrivacyRoute
   OnboardingReadyRoute: typeof OnboardingReadyRoute
+  PricingRoute: typeof PricingRoute
   ProfileRoute: typeof ProfileRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SearchRoute: typeof SearchRoute
@@ -784,6 +797,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding-ready': {
@@ -1305,6 +1325,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingPersonaRoute: OnboardingPersonaRoute,
   OnboardingPrivacyRoute: OnboardingPrivacyRoute,
   OnboardingReadyRoute: OnboardingReadyRoute,
+  PricingRoute: PricingRoute,
   ProfileRoute: ProfileRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SearchRoute: SearchRoute,

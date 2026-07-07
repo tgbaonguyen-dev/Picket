@@ -7,14 +7,10 @@ export const Route = createFileRoute("/search")({
   component: SearchPage,
 });
 
-const RECENT = ["Starbucks", "Grab tháng 3", "Hoá đơn > 500k", "An chia"];
-const CHIPS = ["Giao dịch", "Merchant", "Hoá đơn", "Ví"];
-const SUGGESTIONS = [
-  "Chi tiêu ăn uống tuần này",
-  "Giao dịch chưa phân loại",
-  "Hoá đơn có ảnh mờ",
-  "Merchant tăng chi 20%",
-];
+import { getSearchRecent, getSearchChips, getSearchSuggestions } from "@/data";
+const RECENT = getSearchRecent();
+const CHIPS = getSearchChips();
+const SUGGESTIONS = getSearchSuggestions();
 
 function SearchPage() {
   const [q, setQ] = useState("");

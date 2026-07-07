@@ -9,13 +9,7 @@ export const Route = createFileRoute("/bills/")({ component: BillsCalendar });
 
 const fmt = (n: number) => n.toLocaleString("vi-VN") + "₫";
 
-const bills = [
-  { id: "netflix", day: 5, name: "Netflix", amount: 260000, status: "paid", icon: "🎬" },
-  { id: "electric", day: 10, name: "Điện EVN", amount: 850000, status: "due", icon: "💡" },
-  { id: "internet", day: 12, name: "FPT Internet", amount: 240000, status: "upcoming", icon: "🌐" },
-  { id: "spotify", day: 15, name: "Spotify", amount: 59000, status: "upcoming", icon: "🎵" },
-  { id: "rent", day: 25, name: "Tiền nhà", amount: 6500000, status: "upcoming", icon: "🏠" },
-];
+import { getBills } from "@/data";
 
 function BillsCalendar() {
   const [tab, setTab] = useState<"cal" | "list">("cal");
@@ -23,6 +17,7 @@ function BillsCalendar() {
   const month = 6; // July (0-indexed)
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDow = (new Date(year, month, 1).getDay() + 6) % 7;
+  const bills = getBills();
   const total = bills.reduce((s, b) => s + b.amount, 0);
 
   return (
@@ -52,22 +47,23 @@ function BillsCalendar() {
         </div>
 
         {/* Hero Summary Card */}
-        <PopIn 
-          className="relative flex flex-col justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#8F5F68] to-[#D5A3A0] p-6 text-white shadow-xl shadow-[#8F5F68]/20"
-        >
-          <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
-          <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10 blur-3xl" />
+        <PopIn className="relative rounded-3xl shadow-xl shadow-[#8F5F68]/20">
+          <div className="relative rounded-3xl bg-gradient-to-br from-[#8F5F68] to-[#D5A3A0] p-6 text-white overflow-hidden">
+            {/* Decorative blobs — clipped by this inner container */}
+            <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+            <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10 blur-3xl" />
           
-          <div className="relative z-10 w-full">
-            <p className="text-sm font-medium opacity-90">Tổng cần trả tháng này</p>
-            <p className="mt-1 text-4xl font-bold tracking-tight">{fmt(total)}</p>
+            <div className="relative z-10">
+              <p className="text-sm font-medium opacity-90">Tổng cần trả tháng này</p>
+              <p className="mt-1 text-4xl font-bold tracking-tight">{fmt(total)}</p>
             
-            <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/20 px-3 py-1.5 text-[11px] font-medium backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-              </span>
-              Số dư an toàn: {fmt(4200000)}
+              <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/20 px-3 py-1.5 text-[11px] font-medium backdrop-blur-md">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                </span>
+                Số dư an toàn: {fmt(4200000)}
+              </div>
             </div>
           </div>
         </PopIn>

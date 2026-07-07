@@ -6,13 +6,9 @@ import { formatVND } from "@/data";
 
 export const Route = createFileRoute("/budgets/")({ component: BudgetDashboard });
 
-const budgets = [
-  { id: "food", name: "Ăn uống", spent: 3200000, limit: 4500000, status: "ok" as const, icon: "🍜" },
-  { id: "transport", name: "Di chuyển", spent: 1800000, limit: 2000000, status: "warn" as const, icon: "🚕" },
-  { id: "shopping", name: "Mua sắm", spent: 2600000, limit: 2000000, status: "over" as const, icon: "🛍️" },
-  { id: "bills", name: "Hóa đơn", spent: 2100000, limit: 3000000, status: "ok" as const, icon: "💡" },
-  { id: "fun", name: "Giải trí", spent: 900000, limit: 1500000, status: "ok" as const, icon: "🎬" },
-];
+import { getBudgets } from "@/data";
+
+const budgets = getBudgets();
 
 const fmt = (n: number) => formatVND(n);
 
@@ -48,6 +44,7 @@ function BudgetDashboard() {
       </PhoneFrame>
     );
   }
+
 
   const totalLimit = budgetsList.reduce((s, b) => s + b.limit, 0);
   const totalSpent = budgetsList.reduce((s, b) => s + b.spent, 0);
