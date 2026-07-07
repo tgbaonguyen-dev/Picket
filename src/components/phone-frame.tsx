@@ -10,7 +10,7 @@ import { Squish } from "@/components/ui/animations";
 const NAV_ITEMS = [
   { to: "/", label: "Trang chủ", icon: Home, match: (p: string) => p === "/" },
   { to: "/transactions", label: "Giao dịch", icon: ArrowLeftRight, match: (p: string) => p.startsWith("/transactions") || p.startsWith("/expenses") },
-  { to: "/items", label: "Tài sản", icon: Box, match: (p: string) => p.startsWith("/items") },
+  { to: "/budgets", label: "Ngân sách", icon: Wallet, match: (p: string) => p.startsWith("/budgets") },
   { to: "/bills", label: "Hoá đơn", icon: CalendarDays, match: (p: string) => p.startsWith("/bills") || p.startsWith("/inbox") || p.startsWith("/notifications") },
 ] as const;
 

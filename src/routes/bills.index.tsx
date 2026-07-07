@@ -3,7 +3,7 @@ import { PhoneFrame } from "@/components/phone-frame";
 import { Plus, ChevronLeft, ChevronRight, Calendar, List } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FadeInUp } from "@/components/ui/animations";
+import { FadeInUp, PopIn } from "@/components/ui/animations";
 
 export const Route = createFileRoute("/bills/")({ component: BillsCalendar });
 
@@ -52,15 +52,13 @@ function BillsCalendar() {
         </div>
 
         {/* Hero Summary Card */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#8F5F68] to-[#D5A3A0] p-6 text-white shadow-xl shadow-[#8F5F68]/20"
+        <PopIn 
+          className="relative flex flex-col justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#8F5F68] to-[#D5A3A0] p-6 text-white shadow-xl shadow-[#8F5F68]/20"
         >
           <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
           <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10 blur-3xl" />
           
-          <div className="relative z-10">
+          <div className="relative z-10 w-full">
             <p className="text-sm font-medium opacity-90">Tổng cần trả tháng này</p>
             <p className="mt-1 text-4xl font-bold tracking-tight">{fmt(total)}</p>
             
@@ -72,7 +70,7 @@ function BillsCalendar() {
               Số dư an toàn: {fmt(4200000)}
             </div>
           </div>
-        </motion.div>
+        </PopIn>
 
         {/* View Toggle */}
         <div className="flex gap-2 rounded-2xl bg-white/40 p-1.5 backdrop-blur-sm">

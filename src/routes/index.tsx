@@ -26,6 +26,7 @@ import {
   TrendingUp,
   Sparkles,
   Lightbulb,
+  Box,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -378,6 +379,22 @@ function Index() {
           </div>
 
 
+
+          {/* Manage Items */}
+          <div className="mx-5 mb-6">
+            <Link to="/items" className="flex items-center justify-between rounded-3xl border border-white/60 bg-white/50 p-4 shadow-sm backdrop-blur-md transition active:scale-95">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#B5828C]/10 text-[#B5828C]">
+                  <Box className="h-5 w-5" strokeWidth={2.2} />
+                </div>
+                <div>
+                  <p className="font-display text-[15px] font-bold text-foreground">Kho tài sản</p>
+                  <p className="font-sans text-[12px] text-foreground/60">Quản lý đồ đạc, bảo hành</p>
+                </div>
+              </div>
+              <ChevronRight className="h-4 w-4 text-foreground/40" />
+            </Link>
+          </div>
 
           {/* Smart Insight (Demo) */}
           <div className="mx-5 mb-6 rounded-3xl border border-[#B5828C]/20 bg-gradient-to-br from-[#FFE9D9]/80 to-[#ffe4e6]/80 p-4 shadow-sm backdrop-blur-md relative overflow-hidden">
