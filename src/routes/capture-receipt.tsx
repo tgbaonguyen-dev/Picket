@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatVND, getCategories } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 
 export const Route = createFileRoute("/capture-receipt")({
   component: CaptureReceiptPage,
@@ -812,6 +812,7 @@ function FieldRow({ field, onChange, onFocus, onBlur }: { field: Field; onChange
 function LineItemRow({ item, isLast, onChange, onDelete, onFocus, onBlur }: { item: LineItem; isLast: boolean; onChange: (u: Partial<LineItem>) => void; onDelete?: () => void; onFocus?: () => void; onBlur?: () => void; }) {
   const low = item.confidence < 0.85;
   const cat = getCategories().find((c) => c.id === item.category) || getCategories()[0];
+  const [picker, setPicker] = useState(false);
 
   return (
     <div className={`p-4 relative group ${!isLast ? "border-b border-foreground/5" : ""}`}>
@@ -820,19 +821,13 @@ function LineItemRow({ item, isLast, onChange, onDelete, onFocus, onBlur }: { it
       <div className="flex items-start gap-3">
         {/* Category selector */}
         <div className="relative shrink-0">
-          <Select 
-            value={item.category}
-            onValueChange={(val) => onChange({ category: val })}
+          <button
+            type="button"
+            onClick={() => setPicker(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-sm border border-foreground/5 text-[16px] outline-none ring-0 focus:ring-0"
           >
-            <SelectTrigger className="flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-sm border border-foreground/5 text-[16px] p-0 ring-0 focus:ring-0 [&>span:last-child]:hidden [&>span:first-child]:w-full [&>span:first-child]:text-center">
-              <SelectValue>{cat.emoji}</SelectValue>
-            </SelectTrigger>
-            <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg min-w-[120px]">
-              {getCategories().map(c => (
-                <SelectItem key={c.id} value={c.id} className="rounded-lg">{c.emoji} {c.label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {cat.emoji}
+          </button>
         </div>
 
         {/* Inputs */}
@@ -867,6 +862,18 @@ function LineItemRow({ item, isLast, onChange, onDelete, onFocus, onBlur }: { it
           </button>
         )}
       </div>
+      <PickerSheet
+        open={picker}
+        title="Chọn danh mục"
+        options={getCategories().map((c) => c.id)}
+        value={item.category}
+        onSelect={(val) => onChange({ category: val })}
+        onClose={() => setPicker(false)}
+        render={(val) => {
+          const c = getCategories().find((x) => x.id === val);
+          return c ? `${c.emoji} ${c.label}` : val;
+        }}
+      />
     </div>
   );
 }

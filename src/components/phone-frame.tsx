@@ -40,7 +40,7 @@ export function BottomNav() {
                     active ? "text-[#B5828C]" : "text-foreground/50 hover:text-foreground/80"
                   }`}
                 >
-                  <span className={`flex h-9 w-9 items-center justify-center rounded-2xl transition ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
+                  <span className={`flex h-9 w-9 items-center justify-center rounded-2xl ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
                     <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
                   </span>
                   <span className="text-[9px] font-semibold tracking-tight">{label}</span>
@@ -82,7 +82,7 @@ export function BottomNav() {
                     active ? "text-[#B5828C]" : "text-foreground/50 hover:text-foreground/80"
                   }`}
                 >
-                  <span className={`flex h-9 w-9 items-center justify-center rounded-2xl transition ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
+                  <span className={`flex h-9 w-9 items-center justify-center rounded-2xl ${active ? "bg-[#FFE4D2]" : "bg-transparent"}`}>
                     <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
                   </span>
                   <span className="text-[9px] font-semibold tracking-tight">{label}</span>
@@ -160,7 +160,7 @@ export function PhoneFrame({
                   goBack();
                 }}
                 aria-label="Quay lại"
-                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-foreground shadow-sm backdrop-blur-md transition active:scale-95"
+                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-foreground shadow-sm backdrop-blur-md transition active:scale-[0.97]"
               >
                 <ChevronLeft className="h-5 w-5" strokeWidth={2.4} />
               </button>

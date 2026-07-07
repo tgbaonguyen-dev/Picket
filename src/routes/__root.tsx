@@ -128,6 +128,7 @@ function OfflineBanner() {
   );
 }
 
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -139,3 +140,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+

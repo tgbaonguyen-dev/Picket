@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { AlertTriangle, Sparkles, Plus } from "lucide-react";
 import { PopIn, FadeInUp, FadeInLeft } from "@/components/ui/animations";
-import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/bills/subscriptions/")({ component: SubDashboard });
 
@@ -22,7 +21,7 @@ function SubDashboard() {
         <Link 
           to="/bills/subscriptions/new" 
           aria-label="Thêm subscription" 
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-lg shadow-black/10 transition-transform active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-lg shadow-black/10 transition-transform active:scale-[0.97]"
         >
           <Plus className="h-5 w-5" />
         </Link>
@@ -88,7 +87,7 @@ function SubDashboard() {
                 <Link 
                   to="/bills/subscriptions/$id/alert" 
                   params={{ id: s.id }} 
-                  className="block rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md transition-transform active:scale-[0.98]"
+                  className="block rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">

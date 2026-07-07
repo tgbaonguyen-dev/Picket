@@ -6,7 +6,7 @@ import { PhoneFrame } from "@/components/phone-frame";
 import { SwipeableItem } from "@/components/swipeable-item";
 import { TransactionRow } from "@/components/transaction-row";
 import { FadeInUp } from "@/components/ui/animations";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 import { toast } from "sonner";
 import {
   TRANSACTIONS, ACCOUNTS, groupByDay, dayLabel, daySum, formatVND, type TxType,
@@ -42,6 +42,7 @@ function TransactionsPage() {
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [deleteTxId, setDeleteTxId] = useState<string | null>(null);
+  const [picker, setPicker] = useState<"account" | null>(null);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -98,25 +99,21 @@ function TransactionsPage() {
       <div className="relative flex h-full flex-col">
         <div className="space-y-3 px-5 pb-3">
           {/* account switcher */}
-          <Select value={account} onValueChange={setAccount}>
-            <SelectTrigger className="flex h-auto w-full items-center justify-between rounded-2xl border border-white/80 bg-white/80 px-4 py-3 text-left shadow-sm backdrop-blur-md focus:ring-0 [&>span:last-child]:hidden outline-none">
-              <div className="text-left flex-1 min-w-0">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-foreground/50">
-                  Tài khoản
-                </p>
-                <p className="font-display text-[15px] font-semibold truncate mt-0.5">
-                  <SelectValue placeholder="Tất cả tài khoản" />
-                </p>
-              </div>
-              <ChevronDown className="h-4 w-4 shrink-0 text-foreground/50" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
-              <SelectItem value="all" className="rounded-lg">Tất cả tài khoản</SelectItem>
-              {ACCOUNTS.map(a => (
-                <SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <button 
+            type="button"
+            onClick={() => setPicker("account")}
+            className="flex h-auto w-full items-center justify-between rounded-2xl border border-white/80 bg-white/80 px-4 py-3 text-left shadow-sm backdrop-blur-md focus:ring-0 outline-none"
+          >
+            <div className="text-left flex-1 min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-foreground/50">
+                Tài khoản
+              </p>
+              <p className="font-display text-[15px] font-semibold truncate mt-0.5">
+                {account === "all" ? "Tất cả tài khoản" : account}
+              </p>
+            </div>
+            <ChevronDown className="h-4 w-4 shrink-0 text-foreground/50" />
+          </button>
 
           {/* search */}
           <div className="flex items-center gap-2 rounded-2xl border border-white/80 bg-white/80 px-4 py-2.5 shadow-sm">
@@ -305,6 +302,16 @@ function TransactionsPage() {
           </AlertDialogContent>
         </AlertDialog>
       </div>
+
+      <PickerSheet
+        open={picker === "account"}
+        title="Chọn tài khoản"
+        options={["all", ...ACCOUNTS.map((a) => a.name)]}
+        value={account}
+        onSelect={(v) => setAccount(v)}
+        onClose={() => setPicker(null)}
+        render={(val) => val === "all" ? "Tất cả tài khoản" : val}
+      />
     </PhoneFrame>
   );
 }

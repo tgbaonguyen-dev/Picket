@@ -76,7 +76,7 @@ export function QuickAddSheet({ children }: { children: ReactNode }) {
                     key={k}
                     type="button"
                     onClick={() => trigger(a)}
-                    className="flex shrink-0 items-center gap-2 rounded-full border border-white bg-white px-3 py-2 shadow-sm transition active:scale-95"
+                    className="flex shrink-0 items-center gap-2 rounded-full border border-white bg-white px-3 py-2 shadow-sm transition active:scale-[0.97]"
                   >
                     <span className={`flex h-6 w-6 items-center justify-center rounded-lg ${a.bg} ${a.color}`}>
                       <Icon className="h-3.5 w-3.5" strokeWidth={2.4} />
@@ -134,7 +134,7 @@ export function QuickAddSheet({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={vibrateLight}
-                className="mt-5 w-full rounded-2xl bg-foreground/5 py-3 font-sans text-[13px] font-semibold text-foreground/70 transition active:scale-[0.99]"
+                className="mt-5 w-full rounded-2xl bg-foreground/5 py-3 font-sans text-[13px] font-semibold text-foreground/70 transition active:scale-[0.97]"
               >
                 Đóng
               </button>

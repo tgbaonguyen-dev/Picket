@@ -131,7 +131,7 @@ function NewBill() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <button className="flex items-center justify-between rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md active:scale-95 transition-transform">
+            <button className="flex items-center justify-between rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md active:scale-[0.97] transition-transform">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wider text-foreground/40">Tài khoản</p>
                 <p className="mt-1 text-sm font-semibold text-foreground">VCB *8899</p>
@@ -140,7 +140,7 @@ function NewBill() {
                 <Wallet className="h-4 w-4" />
               </div>
             </button>
-            <button className="flex items-center justify-between rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md active:scale-95 transition-transform">
+            <button className="flex items-center justify-between rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md active:scale-[0.97] transition-transform">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wider text-foreground/40">Danh mục</p>
                 <p className="mt-1 text-sm font-semibold text-foreground">Hóa đơn</p>
@@ -180,7 +180,7 @@ function NewBill() {
         <FadeInUp delay={0.1} className="pt-2">
           <Link 
             to="/bills" 
-            className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#8F5F68] to-[#B5828C] py-4 text-sm font-bold text-white shadow-lg shadow-[#8F5F68]/25 transition-transform active:scale-[0.98]"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#8F5F68] to-[#B5828C] py-4 text-sm font-bold text-white shadow-lg shadow-[#8F5F68]/25 transition-transform active:scale-[0.97]"
           >
             Lưu khoản định kỳ
             <ArrowRight className="h-4 w-4" />

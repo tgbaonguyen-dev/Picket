@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
@@ -65,7 +66,7 @@ function ReadyPage() {
   ];
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
       <div className="relative mx-auto flex h-[100dvh] w-full sm:max-w-[390px] sm:h-[844px] sm:max-h-[calc(100vh-32px)] flex-col overflow-hidden sm:rounded-[44px] bg-[#f4f8fb] sm:shadow-2xl sm:ring-[6px] sm:ring-white">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-[#dcfce7] to-transparent" />
         <div className="pointer-events-none absolute -left-16 top-32 h-56 w-56 rounded-full bg-[#fde68a]/50 blur-3xl" />
@@ -126,7 +127,7 @@ function ReadyPage() {
             <button
               type="button"
               onClick={() => finish("receipt")}
-              className="flex items-center gap-3 rounded-[20px] bg-[#B5828C] p-4 text-left text-white shadow-[0_18px_40px_-16px_rgba(46,107,138,0.7)] transition active:scale-[0.98]"
+              className="flex items-center gap-3 rounded-[20px] bg-[#B5828C] p-4 text-left text-white shadow-[0_18px_40px_-16px_rgba(46,107,138,0.7)] transition active:scale-[0.97]"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15">
                 <Receipt className="h-5 w-5" strokeWidth={2.3} />
@@ -145,7 +146,7 @@ function ReadyPage() {
             <button
               type="button"
               onClick={() => finish("expense")}
-              className="flex items-center gap-3 rounded-[20px] border border-white/70 bg-white/85 p-4 text-left backdrop-blur-md transition active:scale-[0.98]"
+              className="flex items-center gap-3 rounded-[20px] border border-white/70 bg-white/85 p-4 text-left backdrop-blur-md transition active:scale-[0.97]"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#ffe4e6] text-[#b03a4a]">
                 <Wallet className="h-5 w-5" strokeWidth={2.3} />
@@ -164,7 +165,7 @@ function ReadyPage() {
             <button
               type="button"
               onClick={() => finish("home")}
-              className="flex items-center gap-3 rounded-[20px] border border-white/60 bg-white/60 p-4 text-left backdrop-blur-md transition active:scale-[0.98]"
+              className="flex items-center gap-3 rounded-[20px] border border-white/60 bg-white/60 p-4 text-left backdrop-blur-md transition active:scale-[0.97]"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FFE9D9] text-[#B5828C]">
                 <HomeIcon className="h-5 w-5" strokeWidth={2.3} />
@@ -182,6 +183,6 @@ function ReadyPage() {
           </div>
         </div>
       </div>
-    </main>
+    </main></FadeInUp>
   );
 }

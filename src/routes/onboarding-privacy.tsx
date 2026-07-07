@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Lock, Share2, DownloadCloud, ShieldCheck, ArrowRight } from "lucide-react";
 
@@ -39,7 +40,7 @@ const PRINCIPLES = [
 function PrivacyPage() {
   const navigate = useNavigate();
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
       <div className="relative mx-auto flex h-[100dvh] w-full sm:max-w-[390px] sm:h-[844px] sm:max-h-[calc(100vh-32px)] flex-col overflow-hidden sm:rounded-[44px] bg-[#f4f8fb] sm:shadow-2xl sm:ring-[6px] sm:ring-white">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-[#FFE9D9] to-transparent" />
         <div className="pointer-events-none absolute -right-16 top-24 h-56 w-56 rounded-full bg-[#FFB4A2]/40 blur-3xl" />
@@ -104,7 +105,7 @@ function PrivacyPage() {
             <button
               type="button"
               onClick={() => navigate({ to: "/onboarding-permissions" })}
-              className="flex h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#B5828C] font-sans text-[14px] font-bold tracking-wide text-white shadow-[0_18px_40px_-16px_rgba(46,107,138,0.7)] transition active:scale-[0.98]"
+              className="flex h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#B5828C] font-sans text-[14px] font-bold tracking-wide text-white shadow-[0_18px_40px_-16px_rgba(46,107,138,0.7)] transition active:scale-[0.97]"
             >
               Tôi hiểu, tiếp tục
               <ArrowRight className="h-4 w-4" strokeWidth={2.6} />
@@ -115,6 +116,6 @@ function PrivacyPage() {
           </div>
         </div>
       </div>
-    </main>
+    </main></FadeInUp>
   );
 }

@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { useState } from "react";
 import { Check, Camera, Image as ImageIcon, Receipt, MapPin, Tag, ShieldCheck, Link2, CalendarDays } from "lucide-react";
-import { motion } from "framer-motion";
 import { FadeInUp } from "@/components/ui/animations";
 
 export const Route = createFileRoute("/items/new")({
@@ -27,7 +26,7 @@ function NewItem() {
         <button
           type="button"
           onClick={() => navigate({ to: "/items" })}
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]"
         >
           <Check className="h-4 w-4 text-foreground/70" />
         </button>
@@ -98,7 +97,7 @@ function NewItem() {
                 key={c}
                 type="button"
                 onClick={() => setCategory(c)}
-                className={`rounded-xl px-3.5 py-1.5 text-[12px] font-bold transition-all active:scale-95 ${category === c ? "bg-foreground text-background shadow-sm" : "bg-white/50 text-foreground/60 shadow-sm"}`}
+                className={`rounded-xl px-3.5 py-1.5 text-[12px] font-bold transition-all active:scale-[0.97] ${category === c ? "bg-foreground text-background shadow-sm" : "bg-white/50 text-foreground/60 shadow-sm"}`}
               >
                 {c}
               </button>
@@ -141,7 +140,7 @@ function NewItem() {
           delay={0.2}
           className="space-y-2"
         >
-          <button className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.98] transition-transform">
+          <button className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.97] transition-transform">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-2xl bg-blue-100 text-blue-500">
                 <Receipt className="h-4 w-4" />
@@ -153,7 +152,7 @@ function NewItem() {
             </div>
           </button>
 
-          <button className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.98] transition-transform">
+          <button className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.97] transition-transform">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-2xl bg-amber-100 text-amber-500">
                 <MapPin className="h-4 w-4" />
@@ -165,7 +164,7 @@ function NewItem() {
             </div>
           </button>
           
-          <button className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.98] transition-transform">
+          <button className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.97] transition-transform">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-2xl bg-purple-100 text-purple-500">
                 <Link2 className="h-4 w-4" />
@@ -185,7 +184,7 @@ function NewItem() {
           <button
             type="button"
             onClick={() => navigate({ to: "/items" })}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground py-4 text-sm font-bold text-background shadow-lg shadow-black/20 transition-transform active:scale-[0.98]"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground py-4 text-sm font-bold text-background shadow-lg shadow-black/20 transition-transform active:scale-[0.97]"
           >
             Lưu tài sản
           </button>

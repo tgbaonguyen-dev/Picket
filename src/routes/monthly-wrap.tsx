@@ -19,7 +19,7 @@ function MonthlyWrapPage() {
       right={
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white bg-white text-[#B5828C] shadow-sm transition active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white bg-white text-[#B5828C] shadow-sm transition active:scale-[0.97]"
           aria-label="Chia sẻ"
         >
           <Share2 className="h-4 w-4" />
@@ -164,7 +164,7 @@ function MonthlyWrapPage() {
               <button
                 key={n}
                 type="button"
-                className="flex w-full items-center justify-between rounded-xl bg-foreground/[0.03] px-3 py-2.5 text-left transition active:scale-[0.99]"
+                className="flex w-full items-center justify-between rounded-xl bg-foreground/[0.03] px-3 py-2.5 text-left transition active:scale-[0.97]"
               >
                 <span className="font-sans text-[13px] font-medium text-foreground">{n}</span>
                 <ArrowRight className="h-4 w-4 text-[#B5828C]" />

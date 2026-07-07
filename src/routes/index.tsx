@@ -33,10 +33,10 @@ import { toast } from "sonner";
 import { BottomNav, PhoneFrame } from "@/components/phone-frame";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getAccounts, getTransactions, formatVND , CURRENT_MONTH_STR, CURRENT_MONTH_SHORT, CURRENT_DATE_ISO, CURRENT_YEAR, getWeekdays} from "@/data";
-import { motion } from "framer-motion";
 import { PullToRefresh } from "@/components/pull-to-refresh";
 import { TransactionRow } from "@/components/transaction-row";
 import { Squish, FadeInUp } from "@/components/ui/animations";
+import { staggerDelay } from "@/lib/motion";
 
 export const Route = createFileRoute("/")(  {
   component: Index,
@@ -132,7 +132,7 @@ function DayCell({ entry, day }: { entry?: DayEntry; day: number }) {
     <Link
       to="/monthly-wrap"
       aria-label={`Xem ngày ${day}`}
-      className="relative flex h-[62px] flex-col items-center pt-2 rounded-xl transition active:scale-95 hover:bg-white/60"
+      className="relative flex h-[62px] flex-col items-center pt-2 rounded-xl transition active:scale-[0.97] hover:bg-white/60"
     >
       {inner}
     </Link>
@@ -273,7 +273,7 @@ function Index() {
                   type="button"
                   aria-label="Tìm kiếm"
                   onClick={() => navigate({ to: "/search" })}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-[0.97]"
                 >
                   <Search className="h-[18px] w-[18px]" strokeWidth={2.2} />
                 </button>
@@ -281,7 +281,7 @@ function Index() {
                   type="button"
                   aria-label="Thông báo"
                   onClick={() => navigate({ to: "/notifications" })}
-                  className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-95"
+                  className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/70 text-foreground/80 shadow-sm backdrop-blur-md transition active:scale-[0.97]"
                 >
                   <Bell className="h-[18px] w-[18px]" strokeWidth={2.2} />
                   {unreadCount > 0 && (
@@ -296,7 +296,7 @@ function Index() {
                     onClick={() => navigate({ to: "/profile" })}
                     aria-label="Hồ sơ & cài đặt"
                     title="Hồ sơ"
-                    className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-95"
+                    className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-white bg-[#ffe4e6] text-[#B5828C] shadow-sm transition active:scale-[0.97]"
                   >
                     <User className="h-5 w-5" strokeWidth={2.2} />
                   </button>
@@ -382,7 +382,7 @@ function Index() {
 
           {/* Manage Items */}
           <div className="mx-5 mb-6">
-            <Link to="/items" className="flex items-center justify-between rounded-3xl border border-white/60 bg-white/50 p-4 shadow-sm backdrop-blur-md transition active:scale-95">
+            <Link to="/items" className="flex items-center justify-between rounded-3xl border border-white/60 bg-white/50 p-4 shadow-sm backdrop-blur-md transition active:scale-[0.97]">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#B5828C]/10 text-[#B5828C]">
                   <Box className="h-5 w-5" strokeWidth={2.2} />
@@ -447,7 +447,7 @@ function Index() {
               <div className="flex flex-col gap-2.5">
                 {recentTxs.map((t, i) => {
                   return (
-                    <FadeInUp key={t.id} delay={i * 0.08}>
+                    <FadeInUp key={t.id} delay={staggerDelay(i)}>
                       <Link
                         to="/transactions/$id"
                         params={{ id: t.id }}
@@ -473,7 +473,7 @@ function Index() {
                 </p>
                 <button
                   onClick={() => navigate({ to: "/capture-receipt" })}
-                  className="mt-4 rounded-xl bg-[#dc2626] px-4 py-2 text-[13px] font-bold text-white active:scale-95 transition"
+                  className="mt-4 rounded-xl bg-[#dc2626] px-4 py-2 text-[13px] font-bold text-white active:scale-[0.97] transition"
                 >
                   Quét hóa đơn ngay
                 </button>
@@ -559,14 +559,14 @@ function Index() {
                 <button
                   type="button"
                   aria-label="Tháng trước"
-                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-95"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-[0.97]"
                 >
                   <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
                 </button>
                 <button
                   type="button"
                   aria-label="Tháng sau"
-                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-95"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground/70 shadow-sm transition active:scale-[0.97]"
                 >
                   <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
                 </button>

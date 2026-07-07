@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { getCategories } from "@/data";
@@ -25,7 +26,7 @@ function CategoriesPage() {
   ];
 
   return (
-    <PhoneFrame title="Danh mục & Nhãn" back>
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Danh mục & Nhãn" back>
       <div className="flex h-full flex-col">
         {/* Tabs */}
         <div className="px-5 pt-2 pb-4">
@@ -145,6 +146,6 @@ function CategoriesPage() {
           )}
         </div>
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

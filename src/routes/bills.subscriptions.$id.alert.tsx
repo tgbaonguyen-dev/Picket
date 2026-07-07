@@ -87,10 +87,10 @@ function SubAlert() {
           </a>
           
           <div className="mt-5 space-y-2">
-            <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground py-4 text-[13px] font-bold text-background shadow-lg transition-transform active:scale-[0.98]">
+            <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-foreground py-4 text-[13px] font-bold text-background shadow-lg transition-transform active:scale-[0.97]">
               <CheckCircle2 className="h-4 w-4" /> Đồng ý giá mới
             </button>
-            <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white/80 py-4 text-[13px] font-bold text-foreground shadow-sm backdrop-blur-md transition-transform active:scale-[0.98]">
+            <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white/80 py-4 text-[13px] font-bold text-foreground shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]">
               <Bell className="h-4 w-4" /> Nhắc tôi 3 ngày trước
             </button>
             <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-50 py-4 text-[13px] font-bold text-red-600 transition-colors active:bg-red-100">

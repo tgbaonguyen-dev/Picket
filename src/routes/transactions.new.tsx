@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Delete, Camera, Repeat, Calendar as CalendarIcon } from "lucide-react";
+import { Delete, Camera, Repeat, Calendar as CalendarIcon, ChevronDown } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { MetaRow } from "@/components/meta-row";
 import { ACCOUNTS, getCategories, formatVND } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/new")({
@@ -20,6 +20,7 @@ function NewTx() {
   const [cat, setCat] = useState(getCategories()[0]);
   const [merchant, setMerchant] = useState("");
   const [recurring, setRecurring] = useState(false);
+  const [picker, setPicker] = useState<"account" | null>(null);
 
   const press = (k: string) => {
     if (k === "back") return setAmount((a) => (a.length <= 1 ? "0" : a.slice(0, -1)));
@@ -83,16 +84,13 @@ function NewTx() {
             />
           </div>
           <MetaRow label="Tài khoản">
-            <Select value={account} onValueChange={setAccount}>
-              <SelectTrigger className="flex h-auto w-auto items-center justify-end border-none bg-transparent p-0 text-right text-[14px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:ml-1">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
-                {ACCOUNTS.map((a) => (
-                  <SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <button 
+              type="button" 
+              onClick={() => setPicker("account")}
+              className="flex h-auto w-auto items-center justify-end border-none bg-transparent p-0 text-right text-[14px] font-semibold outline-none ring-0 focus:ring-0"
+            >
+              {account} <ChevronDown className="ml-1 h-3.5 w-3.5 opacity-50" />
+            </button>
           </MetaRow>
           <MetaRow label="Ngày">
             <span className="flex items-center gap-1.5 text-[14px] font-semibold">
@@ -164,6 +162,14 @@ function NewTx() {
           </button>
         </div>
       </div>
+      <PickerSheet
+        open={picker === "account"}
+        title="Chọn tài khoản"
+        options={ACCOUNTS.map((a) => a.name)}
+        value={account}
+        onSelect={(v) => setAccount(v)}
+        onClose={() => setPicker(null)}
+      />
     </PhoneFrame>
   );
 }

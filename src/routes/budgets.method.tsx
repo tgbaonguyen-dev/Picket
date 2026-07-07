@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { ChevronRight, Sparkles } from "lucide-react";
@@ -14,7 +15,7 @@ const methods = [
 
 function Method() {
   return (
-    <PhoneFrame title="Chọn phương pháp" subtitle="Ngân sách phù hợp bạn">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Chọn phương pháp" subtitle="Ngân sách phù hợp bạn">
       <div className="space-y-3 px-5 pb-8">
         <div className="rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 p-4 text-white">
           <div className="flex items-center gap-2 text-xs font-semibold"><Sparkles className="h-4 w-4" />Đề xuất cho bạn</div>
@@ -22,7 +23,7 @@ function Method() {
         </div>
 
         {methods.map(m => (
-          <Link key={m.id} to="/budgets/new" className="flex items-start gap-3 rounded-2xl bg-white/80 p-4 active:scale-[0.99]">
+          <Link key={m.id} to="/budgets/new" className="flex items-start gap-3 rounded-2xl bg-white/80 p-4 active:scale-[0.97]">
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <p className="font-semibold">{m.name}</p>
@@ -37,6 +38,6 @@ function Method() {
 
         <button className="w-full rounded-2xl border border-dashed border-foreground/20 py-3 text-sm font-medium text-foreground/60">So sánh các phương pháp</button>
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

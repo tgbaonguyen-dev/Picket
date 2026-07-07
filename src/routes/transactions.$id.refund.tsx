@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Camera, Clock, X } from "lucide-react";
+import { Check, Camera, Clock, X, ChevronDown } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { findTx, ACCOUNTS, formatVND } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/$id/refund")({
@@ -27,6 +27,7 @@ function RefundPage() {
   const [mode, setMode] = useState<"refund" | "split">("refund");
   const [amount, setAmount] = useState(String(t.amount));
   const [dest, setDest] = useState(t.account);
+  const [picker, setPicker] = useState(false);
 
   const partial = Number(amount) < t.amount;
 
@@ -101,14 +102,14 @@ function RefundPage() {
               {mode === "refund" ? "Nhận vào tài khoản" : "Từ người"}
             </p>
             {mode === "refund" ? (
-              <Select value={dest} onValueChange={setDest}>
-                <SelectTrigger className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 text-[15px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
-                  {ACCOUNTS.map((a) => (<SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>))}
-                </SelectContent>
-              </Select>
+              <button
+                type="button"
+                onClick={() => setPicker(true)}
+                className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 text-[15px] font-semibold outline-none ring-0 focus:ring-0"
+              >
+                {dest}
+                <ChevronDown className="h-4 w-4 text-foreground/50" />
+              </button>
             ) : (
               <p className="text-[15px] font-semibold">Nam Nguyễn</p>
             )}
@@ -145,6 +146,15 @@ function RefundPage() {
           </button>
         </div>
       </div>
+
+      <PickerSheet
+        open={picker}
+        title="Chọn tài khoản"
+        options={ACCOUNTS.map((a) => a.name)}
+        value={dest}
+        onSelect={(val) => setDest(val)}
+        onClose={() => setPicker(false)}
+      />
     </PhoneFrame>
   );
 }

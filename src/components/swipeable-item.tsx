@@ -2,6 +2,7 @@ import { motion, useAnimation, PanInfo, useMotionValue, useTransform } from "fra
 import { Trash2 } from "lucide-react";
 import { vibrateHeavy } from "@/lib/haptic";
 import { useState } from "react";
+import { SPRING_SETTLE } from "@/lib/motion";
 
 interface SwipeableItemProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ export function SwipeableItem({ children, onDelete, className = "" }: SwipeableI
   const controls = useAnimation();
   const [isDeleting, setIsDeleting] = useState(false);
   const x = useMotionValue(0);
+  const redWidth = useTransform(x, (v) => Math.max(0, -v));
   const redOpacity = useTransform(x, [0, -40], [0, 1]);
 
   const handleDragEnd = async (event: any, info: PanInfo) => {
@@ -27,15 +29,15 @@ export function SwipeableItem({ children, onDelete, className = "" }: SwipeableI
       onDelete?.();
     } else {
       // Trả về vị trí cũ nếu chưa đủ lực
-      controls.start({ x: 0, transition: { type: "spring", stiffness: 400, damping: 25 } });
+      controls.start({ x: 0, transition: SPRING_SETTLE });
     }
   };
 
   if (isDeleting) {
     return (
       <motion.div
-        initial={{ height: "auto", opacity: 1 }}
-        animate={{ height: 0, opacity: 0 }}
+        initial={{ height: "auto", opacity: 1, scale: 1 }}
+        animate={{ height: 0, opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       />
@@ -43,13 +45,15 @@ export function SwipeableItem({ children, onDelete, className = "" }: SwipeableI
   }
 
   return (
-    <div className={`relative w-full overflow-hidden ${className}`}>
-      {/* Background (Delete Action) */}
+    <div className={`relative w-full ${className}`}>
+      {/* Background (Delete Action) - Dynamic width to prevent bleeding behind translucent row */}
       <motion.div 
-        style={{ opacity: redOpacity }}
-        className="absolute inset-0 flex items-center justify-end bg-[#dc2626] px-6"
+        style={{ width: redWidth, opacity: redOpacity }}
+        className="absolute right-0 top-0 bottom-0 flex items-center justify-end bg-[#dc2626] rounded-2xl overflow-hidden"
       >
-        <Trash2 className="h-5 w-5 text-white" />
+        <div className="flex w-[100px] shrink-0 items-center justify-center">
+          <Trash2 className="h-[22px] w-[22px] text-white" strokeWidth={2.5} />
+        </div>
       </motion.div>
 
       {/* Foreground Draggable Item */}

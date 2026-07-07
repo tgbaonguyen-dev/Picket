@@ -52,11 +52,11 @@ function TxDetail() {
               </span>
             )}
           </div>
-          <p className={`mt-3 font-display text-[36px] font-bold leading-none tabular-nums transition duration-500 ${shareMode ? 'blur-md select-none opacity-80' : ''}`}>
+          <p className={`mt-3 font-display text-[36px] font-bold leading-none tabular-nums transition duration-300 ${shareMode ? 'blur-md select-none opacity-80' : ''}`}>
             {sign}
             {formatVND(t.amount, t.currency)}
           </p>
-          <p className={`mt-2 text-[15px] font-semibold transition duration-500 ${shareMode ? 'blur-sm select-none opacity-80' : ''}`}>{t.merchant}</p>
+          <p className={`mt-2 text-[15px] font-semibold transition duration-300 ${shareMode ? 'blur-sm select-none opacity-80' : ''}`}>{t.merchant}</p>
           <p className="text-[12px] opacity-75">
             {new Date(t.date).toLocaleString("vi-VN", {
               weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit",
@@ -171,7 +171,7 @@ function ActionBtn({
     <Link
       to={to as never}
       params={params as never}
-      className="flex flex-col items-center gap-1 rounded-xl border border-white/70 bg-white/80 py-3 text-[11px] font-semibold shadow-sm active:scale-95"
+      className="flex flex-col items-center gap-1 rounded-xl border border-white/70 bg-white/80 py-3 text-[11px] font-semibold shadow-sm active:scale-[0.97]"
     >
       {icon}
       {label}

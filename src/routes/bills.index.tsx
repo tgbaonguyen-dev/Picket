@@ -4,12 +4,11 @@ import { Plus, ChevronLeft, ChevronRight, Calendar, List } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeInUp, PopIn } from "@/components/ui/animations";
+import { getBills } from "@/data";
 
 export const Route = createFileRoute("/bills/")({ component: BillsCalendar });
 
 const fmt = (n: number) => n.toLocaleString("vi-VN") + "₫";
-
-import { getBills } from "@/data";
 
 function BillsCalendar() {
   const [tab, setTab] = useState<"cal" | "list">("cal");
@@ -28,7 +27,7 @@ function BillsCalendar() {
         <Link 
           to="/bills/new" 
           aria-label="Thêm hoá đơn" 
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-lg shadow-black/10 transition-transform active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-lg shadow-black/10 transition-transform active:scale-[0.97]"
         >
           <Plus className="h-5 w-5" />
         </Link>
@@ -120,7 +119,7 @@ function BillsCalendar() {
                   return (
                     <div 
                       key={day} 
-                      className={`relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl transition-transform active:scale-95 ${
+                      className={`relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl transition-transform active:scale-[0.97] ${
                         bill 
                           ? bill.status === "paid" 
                             ? "bg-green-100/70 text-green-700" 
@@ -174,7 +173,7 @@ function BillsCalendar() {
                 <Link 
                   to="/bills/$id" 
                   params={{ id: b.id }} 
-                  className="flex items-center justify-between rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md transition-all active:scale-[0.98]"
+                  className="flex items-center justify-between rounded-3xl bg-white/70 p-4 shadow-sm backdrop-blur-md transition-all active:scale-[0.97]"
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm">

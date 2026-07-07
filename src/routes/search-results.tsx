@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/phone-frame";
@@ -64,7 +65,7 @@ function ResultsPage() {
   }, {});
 
   return (
-    <PhoneFrame
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame
       title={`“${q || "…"}”`}
       subtitle={`${filtered.length} kết quả`}
       right={
@@ -171,7 +172,7 @@ function ResultsPage() {
           <p className="mt-10 text-center font-sans text-[13px] text-foreground/50">Không có kết quả phù hợp.</p>
         )}
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }
 

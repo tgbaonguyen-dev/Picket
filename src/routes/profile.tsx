@@ -1,5 +1,6 @@
 import { getCurrencies, getTimezones, getLanguages, getDateFormats } from "@/data";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import {
   User,
@@ -25,6 +26,7 @@ import {
   Crown,
 } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
+import { PickerSheet } from "@/components/picker-sheet";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -126,7 +128,7 @@ function Row({
 }: {
   icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   label: string;
-  value?: string;
+  value?: React.ReactNode;
   onClick?: () => void;
   right?: React.ReactNode;
   danger?: boolean;
@@ -183,60 +185,6 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
         }`}
       />
     </button>
-  );
-}
-
-function PickerSheet<T extends string>({
-  open,
-  title,
-  options,
-  value,
-  onSelect,
-  onClose,
-  render,
-}: {
-  open: boolean;
-  title: string;
-  options: T[];
-  value: T;
-  onSelect: (v: T) => void;
-  onClose: () => void;
-  render?: (v: T) => React.ReactNode;
-}) {
-  if (!open) return null;
-  return (
-    <div className="absolute inset-0 z-50 flex items-end" onClick={onClose}>
-      <div className="absolute inset-0 bg-foreground/50 backdrop-blur-sm" />
-      <div
-        className="relative w-full rounded-t-[28px] bg-white p-4 pb-6 shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-foreground/15" />
-        <p className="mb-2 px-1 font-display text-[16px] font-bold text-foreground">{title}</p>
-        <ul className="max-h-[55vh] overflow-y-auto">
-          {options.map((opt) => {
-            const selected = opt === value;
-            return (
-              <li key={opt}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onSelect(opt);
-                    onClose();
-                  }}
-                  className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left font-sans text-[13.5px] transition ${
-                    selected ? "bg-[#FFE9D9] font-bold text-foreground" : "font-medium text-foreground/80 hover:bg-foreground/[0.04]"
-                  }`}
-                >
-                  <span className="min-w-0 flex-1 truncate">{render ? render(opt) : opt}</span>
-                  {selected && <Check className="h-4 w-4 text-[#B5828C]" strokeWidth={2.6} />}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </div>
   );
 }
 
@@ -357,7 +305,14 @@ function ProfilePage() {
 
   const currencyLabel = useMemo(() => {
     const c = getCurrencies().find((x) => x.code === prefs.currency);
-    return c ? `${c.symbol} · ${c.code}` : prefs.currency;
+    return c ? (
+      <span className="flex items-center gap-1.5">
+        <img src={`https://flagcdn.com/w20/${c.country}.png`} alt={c.country} className="w-[18px] h-[13px] object-cover rounded-[1px] shadow-[0_0_0_1px_rgba(0,0,0,0.08)]" />
+        <span>{c.symbol} · {c.code}</span>
+      </span>
+    ) : (
+      prefs.currency
+    );
   }, [prefs.currency]);
   const languageLabel = useMemo(
     () => getLanguages().find((l) => l.code === prefs.language)?.label ?? prefs.language,
@@ -378,9 +333,12 @@ function ProfilePage() {
         render={(code) => {
           const c = getCurrencies().find((x) => x.code === code);
           return (
-            <span className="flex items-center justify-between gap-3">
-              <span>
-                <span className="font-bold">{c?.symbol}</span> {c?.label}
+            <span className="flex w-full items-center justify-between gap-3">
+              <span className="flex items-center gap-2.5">
+                {c?.country && <img src={`https://flagcdn.com/w40/${c.country}.png`} alt={c.country} className="w-6 h-[17px] object-cover rounded-[2px] shadow-[0_0_0_1px_rgba(0,0,0,0.08)]" />}
+                <span>
+                  <span className="font-bold">{c?.symbol}</span> {c?.label}
+                </span>
               </span>
               <span className="text-[11px] font-semibold text-foreground/50">{code}</span>
             </span>

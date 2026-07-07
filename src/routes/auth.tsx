@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
@@ -127,7 +128,7 @@ function AuthPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><main className="flex min-h-screen items-center justify-center bg-[#F5E8DA] sm:p-4">
       <div className="relative mx-auto flex h-[100dvh] w-full sm:max-w-[390px] sm:h-[844px] sm:max-h-[calc(100vh-32px)] flex-col overflow-hidden sm:rounded-[44px] bg-[#f4f8fb] sm:shadow-2xl sm:ring-[6px] sm:ring-white">
         {/* Ambient background */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[62%] bg-gradient-to-b from-[#FFE9D9] via-[#f0f6fa] to-transparent" />
@@ -192,7 +193,7 @@ function AuthPage() {
               type="button"
               onClick={() => handleOAuth("google")}
               disabled={oauthLoading !== null || loading}
-              className="flex h-12 items-center justify-center gap-2.5 rounded-2xl border border-black/[0.06] bg-white font-sans text-[13.5px] font-semibold text-foreground shadow-[0_2px_8px_-4px_rgba(15,42,66,0.15)] transition active:scale-[0.98] disabled:opacity-60"
+              className="flex h-12 items-center justify-center gap-2.5 rounded-2xl border border-black/[0.06] bg-white font-sans text-[13.5px] font-semibold text-foreground shadow-[0_2px_8px_-4px_rgba(15,42,66,0.15)] transition active:scale-[0.97] disabled:opacity-60"
             >
               {oauthLoading === "google" ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -205,7 +206,7 @@ function AuthPage() {
               type="button"
               onClick={() => handleOAuth("apple")}
               disabled={oauthLoading !== null || loading}
-              className="flex h-12 items-center justify-center gap-2.5 rounded-2xl bg-[#0a0a0a] font-sans text-[13.5px] font-semibold text-white shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] transition active:scale-[0.98] disabled:opacity-60"
+              className="flex h-12 items-center justify-center gap-2.5 rounded-2xl bg-[#0a0a0a] font-sans text-[13.5px] font-semibold text-white shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] transition active:scale-[0.97] disabled:opacity-60"
             >
               {oauthLoading === "apple" ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -284,7 +285,7 @@ function AuthPage() {
             <button
               type="submit"
               disabled={loading || oauthLoading !== null}
-              className="relative mt-2 flex h-[52px] items-center justify-center gap-2 overflow-hidden rounded-2xl bg-[#B5828C] font-sans text-[14px] font-bold tracking-wide text-white shadow-[0_18px_40px_-16px_rgba(46,107,138,0.7)] transition active:scale-[0.98] disabled:opacity-60"
+              className="relative mt-2 flex h-[52px] items-center justify-center gap-2 overflow-hidden rounded-2xl bg-[#B5828C] font-sans text-[14px] font-bold tracking-wide text-white shadow-[0_18px_40px_-16px_rgba(46,107,138,0.7)] transition active:scale-[0.97] disabled:opacity-60"
             >
               <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0" />
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -322,7 +323,7 @@ function AuthPage() {
         </div>
         </div>
       </div>
-    </main>
+    </main></FadeInUp>
 
   );
 }

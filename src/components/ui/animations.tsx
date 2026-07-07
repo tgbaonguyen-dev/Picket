@@ -1,11 +1,12 @@
 import { motion, HTMLMotionProps } from "framer-motion";
 import React, { ElementType } from "react";
+import { DUR, EASE_SILK, TAP_SCALE, T_FAST } from "@/lib/motion";
 
 export function FadeInUp({
   children,
   delay = 0,
-  duration = 0.3,
-  y = 10,
+  duration = DUR.base,
+  y = 8,
   className = "",
   ...props
 }: HTMLMotionProps<"div"> & { delay?: number; duration?: number; y?: number }) {
@@ -13,7 +14,7 @@ export function FadeInUp({
     <motion.div
       initial={{ opacity: 0, y }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration }}
+      transition={{ delay, duration, ease: EASE_SILK }}
       className={className}
       {...props}
     >
@@ -25,8 +26,8 @@ export function FadeInUp({
 export function FadeInRight({
   children,
   delay = 0,
-  duration = 0.3,
-  x = 10,
+  duration = DUR.base,
+  x = 8,
   className = "",
   ...props
 }: HTMLMotionProps<"div"> & { delay?: number; duration?: number; x?: number }) {
@@ -34,7 +35,7 @@ export function FadeInRight({
     <motion.div
       initial={{ opacity: 0, x }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration }}
+      transition={{ delay, duration, ease: EASE_SILK }}
       className={className}
       {...props}
     >
@@ -46,8 +47,8 @@ export function FadeInRight({
 export function FadeInLeft({
   children,
   delay = 0,
-  duration = 0.3,
-  x = -10,
+  duration = DUR.base,
+  x = -8,
   className = "",
   ...props
 }: HTMLMotionProps<"div"> & { delay?: number; duration?: number; x?: number }) {
@@ -55,7 +56,7 @@ export function FadeInLeft({
     <motion.div
       initial={{ opacity: 0, x }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration }}
+      transition={{ delay, duration, ease: EASE_SILK }}
       className={className}
       {...props}
     >
@@ -67,8 +68,8 @@ export function FadeInLeft({
 export function PopIn({
   children,
   delay = 0,
-  duration = 0.3,
-  scale = 0.95,
+  duration = DUR.base,
+  scale = 0.96,
   className = "",
   ...props
 }: HTMLMotionProps<"div"> & { delay?: number; duration?: number; scale?: number }) {
@@ -76,7 +77,7 @@ export function PopIn({
     <motion.div
       initial={{ opacity: 0, scale }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay, duration }}
+      transition={{ delay, duration, ease: EASE_SILK }}
       className={className}
       {...props}
     >
@@ -87,7 +88,7 @@ export function PopIn({
 
 export function Squish({
   children,
-  scale = 0.96,
+  scale = TAP_SCALE,
   className = "",
   as: Component = motion.div,
   ...props
@@ -95,6 +96,7 @@ export function Squish({
   return (
     <Component
       whileTap={{ scale }}
+      transition={T_FAST}
       className={className}
       {...props}
     >

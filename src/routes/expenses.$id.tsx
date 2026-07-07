@@ -70,7 +70,7 @@ function CategoryDetail() {
         </div>
 
         {/* Action / Budget link */}
-        <Link to="/budgets/$id" params={{ id }} className="flex items-center justify-between rounded-2xl border border-white/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-md active:scale-95 transition">
+        <Link to="/budgets/$id" params={{ id }} className="flex items-center justify-between rounded-2xl border border-white/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-md active:scale-[0.97] transition">
           <div className="flex items-center gap-2">
             <PieChart className="h-4 w-4 opacity-50" />
             <span className="text-[13px] font-bold">Xem ngân sách {catInfo.label}</span>

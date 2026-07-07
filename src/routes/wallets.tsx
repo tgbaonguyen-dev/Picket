@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { ACCOUNTS as INITIAL_ACCOUNTS, formatVND } from "@/data";
@@ -90,7 +91,7 @@ function WalletsPage() {
   };
 
   return (
-    <PhoneFrame title="Ví của bạn" back>
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Ví của bạn" back>
       <div className="flex h-full flex-col">
         {/* Net Worth Header */}
         <div className="mx-5 mb-6 mt-2 rounded-3xl bg-gradient-to-br from-foreground to-foreground/85 p-6 text-background shadow-lg relative overflow-hidden">
@@ -268,6 +269,6 @@ function WalletsPage() {
           </Drawer.Portal>
         </Drawer.Root>
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

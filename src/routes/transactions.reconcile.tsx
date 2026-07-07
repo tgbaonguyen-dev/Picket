@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, AlertTriangle, Plus, CheckCircle2 } from "lucide-react";
+import { Check, AlertTriangle, Plus, CheckCircle2, ChevronDown } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { TRANSACTIONS, ACCOUNTS, formatVND } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/reconcile")({
@@ -18,6 +18,7 @@ function ReconcilePage() {
   const [cleared, setCleared] = useState<Set<string>>(
     new Set(TRANSACTIONS.filter((t) => t.status === "posted").map((t) => t.id)),
   );
+  const [picker, setPicker] = useState(false);
 
   const items = TRANSACTIONS.filter((t) => t.account === account.name);
   const clearedItems = items.filter((t) => cleared.has(t.id));
@@ -41,20 +42,14 @@ function ReconcilePage() {
   return (
     <PhoneFrame title="Đối soát tài khoản" subtitle={account.name}>
       <div className="space-y-4 px-5 pb-6">
-        <Select
-          value={account.id}
-          onValueChange={(val) => {
-            const a = ACCOUNTS.find((x) => x.id === val);
-            if (a) setAccount(a);
-          }}
+        <button
+          type="button"
+          onClick={() => setPicker(true)}
+          className="w-full flex h-auto items-center justify-between rounded-2xl border border-white/70 bg-white/85 px-4 py-3 font-display text-[15px] font-semibold shadow-sm outline-none ring-0 focus:ring-0"
         >
-          <SelectTrigger className="w-full flex h-auto items-center justify-between rounded-2xl border border-white/70 bg-white/85 px-4 py-3 font-display text-[15px] font-semibold shadow-sm outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
-            {ACCOUNTS.map((a) => (<SelectItem key={a.id} value={a.id} className="rounded-lg">{a.name}</SelectItem>))}
-          </SelectContent>
-        </Select>
+          {account.name}
+          <ChevronDown className="h-4 w-4 text-foreground/50" />
+        </button>
 
         {/* Statement */}
         <div className="space-y-3 rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm">
@@ -166,6 +161,18 @@ function ReconcilePage() {
           {balanced ? "Hoàn tất đối soát" : `Còn chênh ${formatVND(Math.abs(diff))}`}
         </button>
       </div>
+      <PickerSheet
+        open={picker}
+        title="Chọn tài khoản"
+        options={ACCOUNTS.map((a) => a.id)}
+        value={account.id}
+        onSelect={(val) => {
+          const a = ACCOUNTS.find((x) => x.id === val);
+          if (a) setAccount(a);
+        }}
+        onClose={() => setPicker(false)}
+        render={(val) => ACCOUNTS.find((a) => a.id === val)?.name}
+      />
     </PhoneFrame>
   );
 }

@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { History, AlertTriangle } from "lucide-react";
+import { History, AlertTriangle, ChevronDown } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { findTx, ACCOUNTS, formatVND } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/$id/edit")({
@@ -27,6 +27,7 @@ function EditTx() {
   const [amount, setAmount] = useState(String(t.amount));
   const [merchant, setMerchant] = useState(t.merchant);
   const [account, setAccount] = useState(t.account);
+  const [picker, setPicker] = useState(false);
   const [note, setNote] = useState(t.note ?? "");
 
   const changed = amount !== String(t.amount) || merchant !== t.merchant || account !== t.account || note !== (t.note ?? "");
@@ -63,14 +64,14 @@ function EditTx() {
             />
           </Field>
           <Field label="Tài khoản">
-            <Select value={account} onValueChange={setAccount}>
-              <SelectTrigger className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 text-[15px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
-                {ACCOUNTS.map((a) => (<SelectItem key={a.id} value={a.name} className="rounded-lg">{a.name}</SelectItem>))}
-              </SelectContent>
-            </Select>
+            <button
+              type="button"
+              onClick={() => setPicker(true)}
+              className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 text-[15px] font-semibold outline-none ring-0 focus:ring-0"
+            >
+              {account}
+              <ChevronDown className="h-4 w-4 text-foreground/50" />
+            </button>
           </Field>
           <Field label="Ghi chú">
             <textarea
@@ -123,6 +124,14 @@ function EditTx() {
           </button>
         </div>
       </div>
+      <PickerSheet
+        open={picker}
+        title="Chọn tài khoản"
+        options={ACCOUNTS.map((a) => a.name)}
+        value={account}
+        onSelect={(val) => setAccount(val)}
+        onClose={() => setPicker(false)}
+      />
     </PhoneFrame>
   );
 }

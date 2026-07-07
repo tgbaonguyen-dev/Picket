@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ArrowDown, ArrowLeftRight, AlertTriangle } from "lucide-react";
 import { PhoneFrame } from "@/components/phone-frame";
 import { ACCOUNTS, formatVND } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PickerSheet } from "@/components/picker-sheet";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/transactions/transfer")({
@@ -124,27 +124,31 @@ function AccountCard({
   account: (typeof ACCOUNTS)[number];
   onChange: (a: (typeof ACCOUNTS)[number]) => void;
 }) {
+  const [open, setOpen] = useState(false);
   return (
     <div className="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm">
       <p className="text-[11px] font-bold uppercase tracking-widest text-foreground/50">
         {label}
       </p>
-      <Select
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 font-display text-[16px] font-semibold outline-none ring-0 focus:ring-0 text-left mt-0.5"
+      >
+        {account.name}
+      </button>
+      <PickerSheet
+        open={open}
+        title={label}
+        options={ACCOUNTS.map((a) => a.id)}
         value={account.id}
-        onValueChange={(val) => {
+        onSelect={(val) => {
           const a = ACCOUNTS.find((x) => x.id === val);
           if (a) onChange(a);
         }}
-      >
-        <SelectTrigger className="w-full flex h-auto items-center justify-between border-none bg-transparent p-0 font-display text-[16px] font-semibold outline-none ring-0 focus:ring-0 [&>span:last-child]:hidden">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className="rounded-xl border border-white/40 bg-white/95 backdrop-blur-md shadow-lg">
-          {ACCOUNTS.map((a) => (
-            <SelectItem key={a.id} value={a.id} className="rounded-lg">{a.name}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        onClose={() => setOpen(false)}
+        render={(val) => ACCOUNTS.find((a) => a.id === val)?.name}
+      />
       <p className="mt-1 text-[12px] text-foreground/55 tabular-nums">
         Số dư: {formatVND(account.balance, account.currency)}
       </p>

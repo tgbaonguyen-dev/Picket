@@ -37,7 +37,7 @@ function SubscriptionDetail() {
       right={
         <Link 
           to="/bills/subscriptions" 
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]"
         >
           <Edit3 className="h-4 w-4 text-foreground/70" />
         </Link>
@@ -111,14 +111,14 @@ function SubscriptionDetail() {
           className="grid grid-cols-2 gap-2"
         >
           <button 
-            className="flex items-center justify-center gap-2 rounded-2xl py-3.5 text-[13px] font-bold shadow-sm transition-all active:scale-95 bg-gradient-to-r from-[#A86A9E] to-[#C27A9B] text-white shadow-[#A86A9E]/20"
+            className="flex items-center justify-center gap-2 rounded-2xl py-3.5 text-[13px] font-bold shadow-sm transition-all active:scale-[0.97] bg-gradient-to-r from-[#A86A9E] to-[#C27A9B] text-white shadow-[#A86A9E]/20"
           >
             <CheckCircle2 className="h-4 w-4" />
             Đã thanh toán
           </button>
           
           <button 
-            className="flex items-center justify-center gap-2 rounded-2xl bg-white/80 py-3.5 text-[13px] font-bold text-foreground/70 shadow-sm backdrop-blur-md border border-white transition-all hover:bg-white active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-white/80 py-3.5 text-[13px] font-bold text-foreground/70 shadow-sm backdrop-blur-md border border-white transition-all hover:bg-white active:scale-[0.97]"
           >
             <Pause className="h-4 w-4" />
             Huỷ gói này

@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/phone-frame";
@@ -23,7 +24,7 @@ function SearchPage() {
   }
 
   return (
-    <PhoneFrame title="Tìm kiếm" subtitle="Toàn bộ dữ liệu">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Tìm kiếm" subtitle="Toàn bộ dữ liệu">
       {/* Sticky search */}
       <div className="sticky top-0 z-10 -mt-3 bg-[#FFF8F0]/95 px-5 pb-3 pt-3 backdrop-blur-md">
         <form
@@ -69,7 +70,7 @@ function SearchPage() {
               key={c}
               type="button"
               onClick={() => submit(c)}
-              className="rounded-full border border-white bg-white/80 px-3 py-1.5 font-sans text-[11px] font-semibold text-foreground/70 shadow-sm transition active:scale-95"
+              className="rounded-full border border-white bg-white/80 px-3 py-1.5 font-sans text-[11px] font-semibold text-foreground/70 shadow-sm transition active:scale-[0.97]"
             >
               {c}
             </button>
@@ -105,7 +106,7 @@ function SearchPage() {
               key={s}
               type="button"
               onClick={() => submit(s)}
-              className="flex w-full items-center gap-3 rounded-2xl border border-white bg-white p-3 text-left shadow-sm transition active:scale-[0.99]"
+              className="flex w-full items-center gap-3 rounded-2xl border border-white bg-white p-3 text-left shadow-sm transition active:scale-[0.97]"
             >
               <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FFE9D9] text-[#B5828C]">
                 <Sparkles className="h-4 w-4" />
@@ -115,6 +116,6 @@ function SearchPage() {
           ))}
         </div>
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

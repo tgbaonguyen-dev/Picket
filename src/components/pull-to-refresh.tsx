@@ -1,7 +1,8 @@
-import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { vibrateLight, vibrateMedium } from "@/lib/haptic";
+import { SPRING_SOFT, SPRING_SETTLE } from "@/lib/motion";
 
 export function PullToRefresh({
   children,
@@ -16,7 +17,6 @@ export function PullToRefresh({
   const containerRef = useRef<HTMLDivElement>(null);
   
   const y = useMotionValue(0);
-  const controls = useAnimation();
   
   const MAX_PULL = 120;
   const THRESHOLD = 70;
@@ -57,17 +57,17 @@ export function PullToRefresh({
       if (y.get() > THRESHOLD && !isRefreshing) {
         setIsRefreshing(true);
         vibrateMedium();
-        await controls.start({ y: 50, transition: { type: "spring", bounce: 0.2 } });
+        animate(y, 80, SPRING_SOFT);
         
         try {
           await onRefresh();
         } finally {
           setIsRefreshing(false);
           vibrateLight();
-          controls.start({ y: 0, transition: { type: "spring", bounce: 0.4 } });
+          animate(y, 0, SPRING_SETTLE);
         }
       } else {
-        controls.start({ y: 0, transition: { type: "spring", bounce: 0.4 } });
+        animate(y, 0, SPRING_SETTLE);
       }
     };
 
@@ -99,15 +99,15 @@ export function PullToRefresh({
 
       if (y.get() > THRESHOLD && !isRefreshing) {
         setIsRefreshing(true);
-        await controls.start({ y: 50, transition: { type: "spring", bounce: 0.2 } });
+        animate(y, 80, SPRING_SOFT);
         try {
           await onRefresh();
         } finally {
           setIsRefreshing(false);
-          controls.start({ y: 0, transition: { type: "spring", bounce: 0.4 } });
+          animate(y, 0, SPRING_SETTLE);
         }
       } else {
-        controls.start({ y: 0, transition: { type: "spring", bounce: 0.4 } });
+        animate(y, 0, SPRING_SETTLE);
       }
     };
 
@@ -127,30 +127,35 @@ export function PullToRefresh({
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isRefreshing, onRefresh, controls, y]);
+  }, [isRefreshing, onRefresh, y]);
 
   // Spinner rotation logic based on pull distance
   const rotate = useTransform(y, [0, MAX_PULL], [0, 360]);
   const opacity = useTransform(y, [0, THRESHOLD], [0, 1]);
+  const scale = useTransform(y, [0, THRESHOLD], [0.8, 1]);
+  const indicatorY = useTransform(y, [0, MAX_PULL], [-60, 60]);
+  const contentY = useTransform(y, [0, MAX_PULL], [0, MAX_PULL * 0.15]); // very subtle parallax
 
   return (
     <div className="relative flex-1 w-full overflow-hidden flex flex-col bg-transparent">
-      {/* Background container for the spinner */}
+      {/* Floating Pill */}
       <motion.div
-        className="absolute top-0 left-0 right-0 flex items-center justify-center z-0 pointer-events-none"
-        style={{ height: y }}
+        className="absolute left-0 right-0 flex items-center justify-center z-50 pointer-events-none"
+        style={{ top: "max(env(safe-area-inset-top), 20px)", y: indicatorY }}
       >
-        <motion.div style={{ rotate, opacity }}>
-          <Loader2 className={`h-6 w-6 text-foreground/50 ${isRefreshing ? "animate-spin" : ""}`} />
+        <motion.div 
+          style={{ rotate, opacity, scale }}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] border border-foreground/5"
+        >
+          <Loader2 className={`h-5 w-5 text-[#B5828C] ${isRefreshing ? "animate-spin" : ""}`} strokeWidth={2.5} />
         </motion.div>
       </motion.div>
 
       {/* Scrollable Content */}
       <motion.div
         ref={containerRef}
-        className={`relative z-10 h-full w-full overflow-y-auto overflow-x-hidden overscroll-none ${scrollClassName}`}
-        style={{ y }}
-        animate={controls}
+        className={`relative z-10 h-full w-full overflow-y-auto overscroll-y-none ${scrollClassName}`}
+        style={{ y: contentY }}
       >
         {children}
       </motion.div>

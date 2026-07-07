@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 
@@ -6,7 +7,7 @@ export const Route = createFileRoute("/budgets/$id/edit")({ component: EditBudge
 function EditBudget() {
   const { id } = useParams({ from: "/budgets/$id/edit" });
   return (
-    <PhoneFrame title="Chỉnh ngân sách" subtitle="Cập nhật hạn mức">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Chỉnh ngân sách" subtitle="Cập nhật hạn mức">
       <div className="space-y-4 px-5 pb-8">
         <div className="rounded-2xl bg-amber-50 p-3 text-xs text-amber-800">Đang chỉnh sửa ngân sách <strong>{id}</strong> · thay đổi áp dụng cho kỳ hiện tại.</div>
 
@@ -27,6 +28,6 @@ function EditBudget() {
         <Link to="/budgets/$id" params={{ id }} className="block rounded-2xl bg-[#B5828C] py-3.5 text-center text-sm font-semibold text-white">Cập nhật</Link>
         <button className="w-full rounded-2xl border border-red-200 py-3 text-sm font-medium text-red-600">Archive ngân sách</button>
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

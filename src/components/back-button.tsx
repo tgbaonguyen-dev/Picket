@@ -34,7 +34,7 @@ export function BackButton({
       aria-label={ariaLabel}
       className={
         className ??
-        "flex h-10 w-10 items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-foreground shadow-sm backdrop-blur-md transition active:scale-95"
+        "flex h-10 w-10 items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-foreground shadow-sm backdrop-blur-md transition active:scale-[0.97]"
       }
     >
       {icon ?? <ChevronLeft className="h-5 w-5" strokeWidth={2.4} />}

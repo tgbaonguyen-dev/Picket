@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/phone-frame";
@@ -69,7 +70,7 @@ function InboxPage() {
   }
 
   return (
-    <PhoneFrame title="Hộp cần kiểm tra" subtitle={`${TASKS.length} việc chờ`}>
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Hộp cần kiểm tra" subtitle={`${TASKS.length} việc chờ`}>
       {/* Tabs */}
       <div className="flex gap-2 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {TABS.map((t) => (
@@ -182,6 +183,6 @@ function InboxPage() {
           </div>
         </div>
       )}
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

@@ -52,7 +52,7 @@ function NewSubscription() {
         <button
           type="button"
           onClick={() => navigate({ to: "/bills/subscriptions" })}
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]"
         >
           <Check className="h-4 w-4 text-foreground/70" />
         </button>
@@ -102,7 +102,7 @@ function NewSubscription() {
                 key={s.name}
                 type="button"
                 onClick={() => { setName(s.name); setIcon(s.icon); setAmount(s.price); }}
-                className={`flex shrink-0 items-center gap-2 rounded-2xl border px-3.5 py-2.5 text-[13px] font-bold transition-all active:scale-95 ${name === s.name ? "border-pink-200 bg-pink-100 text-pink-700 shadow-sm" : "border-white/40 bg-white/50 text-foreground/70 backdrop-blur-sm"}`}
+                className={`flex shrink-0 items-center gap-2 rounded-2xl border px-3.5 py-2.5 text-[13px] font-bold transition-all active:scale-[0.97] ${name === s.name ? "border-pink-200 bg-pink-100 text-pink-700 shadow-sm" : "border-white/40 bg-white/50 text-foreground/70 backdrop-blur-sm"}`}
               >
                 <span className="text-lg">{s.icon}</span>{s.name}
               </button>
@@ -135,7 +135,7 @@ function NewSubscription() {
                   key={e}
                   type="button"
                   onClick={() => setIcon(e)}
-                  className={`grid h-10 w-10 place-items-center rounded-2xl text-xl transition-all active:scale-90 ${icon === e ? "bg-pink-100 ring-2 ring-pink-500 ring-offset-1" : "bg-foreground/5 text-foreground/70"}`}
+                  className={`grid h-10 w-10 place-items-center rounded-2xl text-xl transition-all active:scale-[0.97] ${icon === e ? "bg-pink-100 ring-2 ring-pink-500 ring-offset-1" : "bg-foreground/5 text-foreground/70"}`}
                 >
                   {e}
                 </button>
@@ -228,7 +228,7 @@ function NewSubscription() {
                 key={c}
                 type="button"
                 onClick={() => setCategory(c)}
-                className={`rounded-xl px-3.5 py-1.5 text-[12px] font-bold transition-all active:scale-95 ${category === c ? "bg-[#B5828C] text-white shadow-sm" : "bg-white/50 text-foreground/60 shadow-sm"}`}
+                className={`rounded-xl px-3.5 py-1.5 text-[12px] font-bold transition-all active:scale-[0.97] ${category === c ? "bg-[#B5828C] text-white shadow-sm" : "bg-white/50 text-foreground/60 shadow-sm"}`}
               >
                 {c}
               </button>
@@ -268,7 +268,7 @@ function NewSubscription() {
           <button
             type="button"
             onClick={() => navigate({ to: "/bills/subscriptions" })}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-pink-600 py-4 text-sm font-bold text-white shadow-lg shadow-pink-500/25 transition-transform active:scale-[0.98]"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-pink-600 py-4 text-sm font-bold text-white shadow-lg shadow-pink-500/25 transition-transform active:scale-[0.97]"
           >
             Lưu subscription
             <ArrowRight className="h-4 w-4" />
@@ -284,7 +284,7 @@ function Toggle({ icon, iconColor, iconBg, label, desc, value, onChange }: { ico
     <button
       type="button"
       onClick={() => onChange(!value)}
-      className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.98] transition-transform"
+      className="flex w-full items-center justify-between rounded-3xl bg-white/70 p-4 text-left shadow-sm backdrop-blur-md active:scale-[0.97] transition-transform"
     >
       <div className="flex items-center gap-3">
         <span className={`grid h-10 w-10 place-items-center rounded-2xl ${iconBg} ${iconColor}`}>

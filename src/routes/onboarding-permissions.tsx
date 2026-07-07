@@ -103,7 +103,7 @@ function PermissionsPage() {
       <div className="relative mx-auto flex h-[100dvh] w-full sm:max-w-[390px] sm:h-[844px] sm:max-h-[calc(100vh-32px)] flex-col overflow-hidden sm:rounded-[44px] bg-[#f4f8fb] sm:shadow-2xl sm:ring-[6px] sm:ring-white">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-[#ffe4e6]/70 to-transparent" />
 
-        <div className="relative flex min-h-[780px] w-full flex-col px-6 pb-6 pt-6">
+        <div className="relative flex flex-1 w-full flex-col px-6 pb-[max(env(safe-area-inset-bottom),32px)] pt-6 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex items-center justify-between">
             <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-foreground/45">
               Bước 2 / 3

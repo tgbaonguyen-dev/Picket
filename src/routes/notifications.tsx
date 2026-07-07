@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/phone-frame";
@@ -60,6 +61,7 @@ function NotificationsPage() {
   }
 
   return (
+    <FadeInUp className="h-full flex flex-col w-full flex-1">
     <PhoneFrame
       title="Thông báo"
       subtitle={unreadCount ? `${unreadCount} chưa đọc` : "Đã đọc tất cả"}
@@ -131,5 +133,6 @@ function NotificationsPage() {
         )}
       </div>
     </PhoneFrame>
+    </FadeInUp>
   );
 }

@@ -158,7 +158,7 @@ function ExpensesPage() {
               {byCat.map((c) => {
                 const pct = total > 0 ? Math.round((c.amount / total) * 100) : 0;
                 return (
-                  <Link key={c.key} to="/expenses/$id" params={{ id: c.key }} className="flex items-center gap-3 active:scale-[0.98] transition">
+                  <Link key={c.key} to="/expenses/$id" params={{ id: c.key }} className="flex items-center gap-3 active:scale-[0.97] transition">
                     <div
                       className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] shadow-sm"
                       style={{ backgroundColor: c.bg, color: c.fg }}
@@ -194,7 +194,7 @@ function ExpensesPage() {
         {/* CTA to transactions */}
         <Link
           to="/transactions"
-          className="mt-6 flex items-center justify-between rounded-2xl border border-[#B5828C]/20 bg-gradient-to-r from-[#FFE9D9] to-[#ffe4e6] px-4 py-3.5 shadow-sm transition active:scale-[0.98]"
+          className="mt-6 flex items-center justify-between rounded-2xl border border-[#B5828C]/20 bg-gradient-to-r from-[#FFE9D9] to-[#ffe4e6] px-4 py-3.5 shadow-sm transition active:scale-[0.97]"
         >
           <div className="min-w-0">
             <p className="font-sans text-[10px] font-bold uppercase tracking-[0.14em] text-[#B5828C]">

@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { useState } from "react";
@@ -11,7 +12,7 @@ function NewBudget() {
   const [rollover, setRollover] = useState(true);
 
   return (
-    <PhoneFrame title="Tạo ngân sách" subtitle="Chi tiết mới">
+    <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Tạo ngân sách" subtitle="Chi tiết mới">
       <div className="space-y-4 px-5 pb-8">
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-foreground/60">Tên ngân sách</label>
@@ -58,6 +59,6 @@ function NewBudget() {
 
         <Link to="/budgets" className="block rounded-2xl bg-[#B5828C] py-3.5 text-center text-sm font-semibold text-white shadow-lg">Lưu ngân sách</Link>
       </div>
-    </PhoneFrame>
+    </PhoneFrame></FadeInUp>
   );
 }

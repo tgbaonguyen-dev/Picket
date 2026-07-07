@@ -17,7 +17,7 @@ function BillDetail() {
       <Link 
         to="/bills/$id/edit" 
         params={{ id }} 
-        className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-95"
+        className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]"
       >
         <Edit3 className="h-4 w-4 text-foreground/70" />
       </Link>
@@ -25,7 +25,7 @@ function BillDetail() {
       <div className="space-y-4 px-5 pb-8 pt-2">
         {/* Main Status Card */}
         <PopIn 
-          className={`relative overflow-hidden rounded-3xl p-6 text-white shadow-xl transition-colors duration-500 ${isPaid ? "bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/20" : "bg-gradient-to-br from-amber-500 to-orange-600 shadow-orange-500/20"}`}
+          className={`relative overflow-hidden rounded-3xl p-6 text-white shadow-xl transition-colors duration-300 ${isPaid ? "bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/20" : "bg-gradient-to-br from-amber-500 to-orange-600 shadow-orange-500/20"}`}
         >
           <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/20 blur-2xl" />
           <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10 blur-3xl" />
@@ -56,12 +56,12 @@ function BillDetail() {
         >
           <button 
             onClick={() => setIsPaid(!isPaid)}
-            className={`flex items-center justify-center gap-2 rounded-2xl py-3.5 text-[13px] font-bold shadow-sm transition-all active:scale-95 ${isPaid ? "bg-white/80 text-foreground/50" : "bg-gradient-to-r from-[#8F5F68] to-[#B5828C] text-white shadow-[#8F5F68]/20"}`}
+            className={`flex items-center justify-center gap-2 rounded-2xl py-3.5 text-[13px] font-bold shadow-sm transition-all active:scale-[0.97] ${isPaid ? "bg-white/80 text-foreground/50" : "bg-gradient-to-r from-[#8F5F68] to-[#B5828C] text-white shadow-[#8F5F68]/20"}`}
           >
             <CheckCircle2 className="h-4 w-4" />
             {isPaid ? "Hoàn tác" : "Đánh dấu đã trả"}
           </button>
-          <button className="flex items-center justify-center gap-2 rounded-2xl bg-white/70 py-3.5 text-[13px] font-bold text-foreground/70 shadow-sm backdrop-blur-md transition-all active:scale-95">
+          <button className="flex items-center justify-center gap-2 rounded-2xl bg-white/70 py-3.5 text-[13px] font-bold text-foreground/70 shadow-sm backdrop-blur-md transition-all active:scale-[0.97]">
             <Pause className="h-4 w-4" /> Tạm dừng
           </button>
         </FadeInUp>

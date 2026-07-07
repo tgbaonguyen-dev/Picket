@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
@@ -40,7 +41,7 @@ function BulkPage() {
 
   if (items.length === 0) {
     return (
-      <PhoneFrame title="Thao tác hàng loạt">
+      <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Thao tác hàng loạt">
         <div className="p-10 text-center text-foreground/55">
           <p className="text-[14px]">Chưa chọn giao dịch nào.</p>
           <button
@@ -50,7 +51,7 @@ function BulkPage() {
             Quay về danh sách
           </button>
         </div>
-      </PhoneFrame>
+      </PhoneFrame></FadeInUp>
     );
   }
 
@@ -154,7 +155,7 @@ function BulkAction({
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-start gap-2 rounded-2xl border p-4 text-left shadow-sm active:scale-95 ${
+      className={`flex flex-col items-start gap-2 rounded-2xl border p-4 text-left shadow-sm active:scale-[0.97] ${
         danger
           ? "border-destructive/20 bg-white text-destructive"
           : "border-white/70 bg-white/85"

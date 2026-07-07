@@ -1,18 +1,18 @@
 export const PREFS_KEY = "picket.prefs";
 
-export interface CurrencyConfig { code: string; label: string; symbol: string }
+export interface CurrencyConfig { code: string; label: string; symbol: string; flag: string; country: string }
 
 export const CURRENCIES: CurrencyConfig[] = [
-  { code: "VND", label: "Việt Nam Đồng", symbol: "₫" },
-  { code: "USD", label: "US Dollar", symbol: "$" },
-  { code: "EUR", label: "Euro", symbol: "€" },
-  { code: "JPY", label: "Japanese Yen", symbol: "¥" },
-  { code: "KRW", label: "Korean Won", symbol: "₩" },
-  { code: "GBP", label: "British Pound", symbol: "£" },
-  { code: "AUD", label: "Australian Dollar", symbol: "A$" },
-  { code: "SGD", label: "Singapore Dollar", symbol: "S$" },
-  { code: "THB", label: "Thai Baht", symbol: "฿" },
-  { code: "CNY", label: "Chinese Yuan", symbol: "¥" },
+  { code: "VND", label: "Việt Nam Đồng", symbol: "₫", flag: "🇻🇳", country: "vn" },
+  { code: "USD", label: "US Dollar", symbol: "$", flag: "🇺🇸", country: "us" },
+  { code: "EUR", label: "Euro", symbol: "€", flag: "🇪🇺", country: "eu" },
+  { code: "JPY", label: "Japanese Yen", symbol: "¥", flag: "🇯🇵", country: "jp" },
+  { code: "KRW", label: "Korean Won", symbol: "₩", flag: "🇰🇷", country: "kr" },
+  { code: "GBP", label: "British Pound", symbol: "£", flag: "🇬🇧", country: "gb" },
+  { code: "AUD", label: "Australian Dollar", symbol: "A$", flag: "🇦🇺", country: "au" },
+  { code: "SGD", label: "Singapore Dollar", symbol: "S$", flag: "🇸🇬", country: "sg" },
+  { code: "THB", label: "Thai Baht", symbol: "฿", flag: "🇹🇭", country: "th" },
+  { code: "CNY", label: "Chinese Yuan", symbol: "¥", flag: "🇨🇳", country: "cn" },
 ];
 
 export const TIMEZONES = [

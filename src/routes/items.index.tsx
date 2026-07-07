@@ -87,8 +87,8 @@ function ItemsIndex() {
                     params={{ id: item.id }}
                     className="block overflow-hidden rounded-3xl bg-white/70 shadow-sm backdrop-blur-md transition-transform active:scale-[0.97]"
                   >
-                    <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-6xl">
-                      {item.img}
+                    <div className="flex aspect-square items-center justify-center bg-gray-100 text-6xl">
+                      <img src={item.img} alt={item.name} className="h-full w-full object-cover" />
                     </div>
                     <div className="p-3">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-foreground/40">{item.category}</p>

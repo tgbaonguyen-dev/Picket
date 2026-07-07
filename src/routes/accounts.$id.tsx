@@ -31,12 +31,12 @@ function AccountDetailsPage() {
       <header className="sticky top-0 z-50 flex items-center justify-between bg-page/80 px-5 pt-[max(env(safe-area-inset-top),24px)] pb-4 backdrop-blur-xl">
         <button 
           onClick={handleBack}
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground/5 text-foreground/80 active:scale-95 transition"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground/5 text-foreground/80 active:scale-[0.97] transition"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
         <span className="font-display text-[17px] font-bold text-foreground">Chi tiết ví</span>
-        <button className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground/5 text-foreground/80 active:scale-95 transition">
+        <button className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground/5 text-foreground/80 active:scale-[0.97] transition">
           <MoreHorizontal className="h-5 w-5" />
         </button>
       </header>
@@ -64,13 +64,13 @@ function AccountDetailsPage() {
 
       {/* Quick Actions */}
       <div className="px-5 mt-6 grid grid-cols-2 gap-4">
-        <button className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 shadow-sm active:scale-95 transition">
+        <button className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 shadow-sm active:scale-[0.97] transition">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
             <ArrowDownRight className="h-5 w-5" />
           </div>
           <span className="font-sans text-[13px] font-bold text-foreground">Thu tiền</span>
         </button>
-        <button className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 shadow-sm active:scale-95 transition">
+        <button className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 shadow-sm active:scale-[0.97] transition">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-rose-600">
             <ArrowUpRight className="h-5 w-5" />
           </div>
@@ -83,7 +83,7 @@ function AccountDetailsPage() {
         <h3 className="font-display text-[18px] font-bold text-foreground mb-6">Lịch sử giao dịch</h3>
         <div className="space-y-4">
           {isLoading ? (
-            <div className="space-y-4 animate-in fade-in duration-500">
+            <div className="space-y-4 animate-in fade-in duration-300">
               {[1, 2, 3].map(i => (
                 <div key={i} className="flex items-center gap-4 border-b border-foreground/5 pb-4 last:border-0 last:pb-0">
                   <div className="h-12 w-12 shrink-0 rounded-[18px] bg-foreground/5 animate-pulse" />

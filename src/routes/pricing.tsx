@@ -118,7 +118,7 @@ function PricingPage() {
               <FadeInUp key={plan.id} delay={0.08 + i * 0.06}>
                 <button
                   onClick={() => { vibrateLight(); setSelected(plan.id); }}
-                  className={`relative w-full rounded-3xl border-2 p-5 text-left transition-all active:scale-[0.98] ${
+                  className={`relative w-full rounded-3xl border-2 p-5 text-left transition-all active:scale-[0.97] ${
                     isSelected
                       ? "border-foreground bg-white shadow-lg shadow-foreground/10"
                       : "border-transparent bg-white/70 shadow-sm"
@@ -226,7 +226,7 @@ function PricingPage() {
         <FadeInUp delay={0.25}>
           <button
             onClick={handleSubscribe}
-            className="flex w-full items-center justify-between rounded-2xl bg-foreground p-4 font-sans text-[15px] font-bold text-background shadow-xl shadow-foreground/20 transition active:scale-[0.98]"
+            className="flex w-full items-center justify-between rounded-2xl bg-foreground p-4 font-sans text-[15px] font-bold text-background shadow-xl shadow-foreground/20 transition active:scale-[0.97]"
           >
             <span>
               {selected === "free"

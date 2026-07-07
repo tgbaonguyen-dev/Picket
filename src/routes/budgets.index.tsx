@@ -1,3 +1,4 @@
+import { FadeInUp } from "@/components/ui/animations";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/phone-frame";
 import { Plus, ChevronRight, TrendingUp, AlertTriangle, CheckCircle2, Calendar, ArrowRightLeft } from "lucide-react";
@@ -24,7 +25,7 @@ function BudgetDashboard() {
   
   if (!isLoading && budgetsList.length === 0) {
     return (
-      <PhoneFrame title="Ngân sách" subtitle="Kế hoạch chi tiêu" right={
+      <FadeInUp className="h-full flex flex-col w-full flex-1"><PhoneFrame title="Ngân sách" subtitle="Kế hoạch chi tiêu" right={
         <button onClick={() => setBudgetsList(budgets)} className="text-[10px] font-bold uppercase text-foreground/50 active:scale-95 transition">Demo Khôi phục</button>
       }>
         <div className="flex h-full flex-col items-center justify-center px-6 pb-20 text-center animate-in fade-in duration-500">
@@ -41,7 +42,7 @@ function BudgetDashboard() {
             Tạo ngân sách đầu tiên
           </Link>
         </div>
-      </PhoneFrame>
+      </PhoneFrame></FadeInUp>
     );
   }
 
