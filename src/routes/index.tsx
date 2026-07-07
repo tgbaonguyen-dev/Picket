@@ -254,7 +254,7 @@ function Index() {
       scrollClassName="[&::-webkit-scrollbar]:hidden"
     >
       {/* Upper fluid sky layer — header only */}
-          <div className="relative rounded-b-[40px] bg-[#FFE9D9] pb-5 pt-[max(env(safe-area-inset-top),40px)] sm:pt-8 shadow-[0_20px_40px_-30px_rgba(46,107,138,0.35)]">
+          <div className="relative overflow-hidden rounded-b-[40px] bg-[#FFE9D9] pb-5 pt-[max(env(safe-area-inset-top),40px)] sm:pt-8 shadow-[0_20px_40px_-30px_rgba(46,107,138,0.35)]">
             <div className="pointer-events-none absolute -right-8 -top-4 h-32 w-32 rounded-full bg-[#ffe4e6] opacity-70 blur-2xl" />
             <div className="pointer-events-none absolute -left-6 top-16 h-24 w-24 rounded-full bg-[#f9a8a8] opacity-30 blur-2xl" />
 
