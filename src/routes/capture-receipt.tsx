@@ -274,6 +274,7 @@ function CameraStage({
 }) {
   const [isDark, setIsDark] = useState(false);
   const [isBlurry, setIsBlurry] = useState(false);
+  const [mode, setMode] = useState<'mock' | 'receipt' | 'item' | 'trip'>('receipt');
 
   useEffect(() => {
     let frameId: number;
@@ -309,146 +310,170 @@ function CameraStage({
   }, [videoRef]);
 
   return (
-    <div className="relative flex h-full w-full flex-col">
-      {/* Video */}
-      <video
-        ref={videoRef}
-        playsInline
-        muted
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      
-      {camError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#1f3446] to-[#0b1a26] p-8 text-center z-20">
-          <div>
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-white">
-              <ScanLine className="h-7 w-7" />
-            </div>
-            <p className="font-display text-[16px] font-semibold text-white">Camera chưa sẵn sàng</p>
-            <p className="mt-1.5 font-sans text-[13px] leading-snug text-white/70">{camError}</p>
-            <button
-              type="button"
-              onClick={onPickFile}
-              className="mt-5 rounded-full bg-white px-5 py-2.5 font-sans text-[13px] font-semibold text-foreground shadow-md active:scale-95 transition"
-            >
-              Chọn ảnh từ thư viện
-            </button>
-          </div>
-        </div>
+    <div className="relative flex h-full w-full flex-col bg-black">
+      {/* Video or Mock */}
+      {(camError || mode === 'mock') ? (
+        <img 
+          src="/mock-receipt.jpg" 
+          alt="Mock Receipt"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          playsInline
+          muted
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       )}
-
+      
       {/* Flash overlay */}
       <div
-        className={`pointer-events-none absolute inset-0 bg-white transition-opacity duration-150 z-20 ${
-          flash ? "opacity-90" : "opacity-0"
+        className={`pointer-events-none absolute inset-0 bg-white transition-opacity duration-150 z-50 ${
+          flash ? "opacity-100" : "opacity-0"
         }`}
       />
 
-      {/* Guide frame & Dimmer */}
-      <div className="absolute inset-0 pointer-events-none z-10 flex flex-col">
-        {/* Top bar */}
-        <div className="flex shrink-0 items-center justify-between px-5 pt-[max(env(safe-area-inset-top),24px)] sm:pt-6 pb-4 bg-black/40">
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-10 w-10 pointer-events-auto items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md active:scale-95"
-          >
-            <X className="h-5 w-5" strokeWidth={2.4} />
-          </button>
+      {/* Main Camera UI */}
+      <div className="absolute inset-0 z-10 flex flex-col justify-between">
           
-          <button
-            type="button"
-            onClick={onFlip}
-            className="flex h-10 w-10 pointer-events-auto items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md active:scale-95"
-          >
-            <RotateCcw className="h-4 w-4" strokeWidth={2.4} />
-          </button>
-        </div>
-
-        {/* Middle area with transparent cutout */}
-        <div className="flex-1 flex overflow-hidden">
-          <div className="w-8 bg-black/40 shrink-0" />
-          <div className="flex-1 relative flex flex-col justify-center">
-            {/* The transparent cutout area */}
-            <div className="w-full h-[65%] border-[1.5px] border-white/20 rounded-xl relative">
-              <FrameCorner className="left-0 top-0" />
-              <FrameCorner className="right-0 top-0 rotate-90" />
-              <FrameCorner className="right-0 bottom-0 rotate-180" />
-              <FrameCorner className="left-0 bottom-0 -rotate-90" />
-              
-              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center">
-                <span className="font-sans text-[13px] font-semibold text-white/60 tracking-wide uppercase drop-shadow-md">
-                  Đưa toàn bộ hóa đơn vào khung
-                </span>
-              </div>
-            </div>
-            
-            {/* Top/Bottom masks for the middle column */}
-            <div className="absolute top-0 inset-x-0 h-[17.5%] bg-black/40" />
-            <div className="absolute bottom-0 inset-x-0 h-[17.5%] bg-black/40" />
-          </div>
-          <div className="w-8 bg-black/40 shrink-0" />
-        </div>
-
-        {/* Badges floating above mask */}
-        <div className="absolute top-[20%] inset-x-0 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-300">
-          {isBlurry ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-red-500/90 px-3 py-1.5 shadow-lg backdrop-blur text-white animate-in slide-in-from-top-2">
-              <AlertTriangle className="h-3.5 w-3.5" strokeWidth={2.5} />
-              <span className="font-sans text-[11px] font-bold">Ảnh bị mờ — Giữ chặt tay</span>
-            </div>
-          ) : isDark && !torch ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-amber-400/90 px-3 py-1.5 shadow-lg backdrop-blur text-amber-950 animate-in slide-in-from-top-2">
-              <Lightbulb className="h-3.5 w-3.5" strokeWidth={2.5} />
-              <span className="font-sans text-[11px] font-bold">Thiếu sáng — Bật đèn</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1.5 shadow-lg backdrop-blur text-white/90">
-              <Smartphone className="h-3.5 w-3.5" strokeWidth={2.5} />
-              <span className="font-sans text-[11px] font-bold">Giữ máy thẳng</span>
-            </div>
-          )}
-        </div>
-
-      </div>
-
-      {/* Bottom controls */}
-      <div className="relative z-20 shrink-0 bg-black px-8 pb-[max(env(safe-area-inset-bottom),32px)] sm:pb-8 pt-2">
-        {/* Mode carousel */}
-        <div className="mb-4 flex justify-center">
-          <div className="flex gap-4">
-            <button className="rounded-full bg-white px-4 py-1.5 font-sans text-[13px] font-bold text-black transition">Hoá đơn</button>
-            <button className="rounded-full px-4 py-1.5 font-sans text-[13px] font-bold text-white/50 transition active:bg-white/10">Món đồ</button>
-            <button className="rounded-full px-4 py-1.5 font-sans text-[13px] font-bold text-white/50 transition active:bg-white/10">Chuyến đi</button>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <button
-            type="button"
-            onClick={onPickFile}
-            className="flex h-12 w-12 flex-col items-center justify-center text-white/80 active:scale-95 transition"
-          >
-            <ImageIcon className="h-6 w-6 mb-1" strokeWidth={2} />
-            <span className="text-[10px] font-medium uppercase">Thư viện</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={onCapture}
-            className="flex h-[76px] w-[76px] items-center justify-center rounded-full bg-white/20 backdrop-blur-md ring-4 ring-white/30 active:scale-95 transition-transform"
-          >
-            <span className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-white shadow-lg" />
-          </button>
-
+        {/* Top Bar (Gradient overlay) */}
+        <div className="relative z-30 flex w-full items-center justify-between px-6 pt-[max(env(safe-area-inset-top),24px)] sm:pt-8 pb-12 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-none">
           <button
             type="button"
             onClick={onToggleTorch}
-            className="flex h-12 w-12 flex-col items-center justify-center text-white/80 active:scale-95 transition"
+            className="flex h-10 w-10 pointer-events-auto items-center justify-start text-white active:scale-95 transition drop-shadow-md"
           >
-            {torch ? <Zap className="h-6 w-6 mb-1 text-amber-400" strokeWidth={2} /> : <ZapOff className="h-6 w-6 mb-1" strokeWidth={2} />}
-            <span className={`text-[10px] font-medium uppercase ${torch ? "text-amber-400" : ""}`}>Đèn flash</span>
-          </button>
+            {torch ? <Zap className="h-6 w-6 text-[#FFD60A]" strokeWidth={2} /> : <ZapOff className="h-6 w-6" strokeWidth={2} />}
+            </button>
+            
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex h-10 w-10 pointer-events-auto items-center justify-end text-white active:scale-95 transition drop-shadow-md"
+            >
+              <X className="h-7 w-7" strokeWidth={1.5} />
+            </button>
+          </div>
+
+          {/* Center Guide (Subtle, no dimming) */}
+          <div className="flex-1 relative flex flex-col items-center justify-center pointer-events-none">
+            {/* Grid lines similar to iOS (optional, but requested by user for balance) */}
+            <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-20">
+              <div className="border-b border-r border-white"></div>
+              <div className="border-b border-r border-white"></div>
+              <div className="border-b border-white"></div>
+              <div className="border-b border-r border-white"></div>
+              <div className="border-b border-r border-white"></div>
+              <div className="border-b border-white"></div>
+              <div className="border-r border-white"></div>
+              <div className="border-r border-white"></div>
+              <div></div>
+            </div>
+
+            {/* Document Frame Guide */}
+            {mode === 'receipt' && (
+              <div className="relative w-[85%] max-w-[340px] aspect-[1/1.4] rounded-xl flex items-center justify-center transition-all duration-300">
+                <FrameCorner className="left-0 top-0" />
+                <FrameCorner className="right-0 top-0 rotate-90" />
+                <FrameCorner className="right-0 bottom-0 rotate-180" />
+                <FrameCorner className="left-0 bottom-0 -rotate-90" />
+                <span className="font-sans text-[12px] font-bold text-[#FFD60A] tracking-widest uppercase drop-shadow-md opacity-90 absolute">
+                  Hoá đơn
+                </span>
+              </div>
+            )}
+            
+            {mode === 'item' && (
+              <div className="relative w-[85%] max-w-[340px] aspect-square rounded-xl flex items-center justify-center transition-all duration-300">
+                <FrameCorner className="left-0 top-0" />
+                <FrameCorner className="right-0 top-0 rotate-90" />
+                <FrameCorner className="right-0 bottom-0 rotate-180" />
+                <FrameCorner className="left-0 bottom-0 -rotate-90" />
+                <span className="font-sans text-[12px] font-bold text-[#FFD60A] tracking-widest uppercase drop-shadow-md opacity-90 absolute">
+                  Món đồ
+                </span>
+              </div>
+            )}
+            
+            {mode === 'trip' && (
+              <div className="relative w-[85%] max-w-[340px] aspect-video rounded-xl flex items-center justify-center transition-all duration-300">
+                <FrameCorner className="left-0 top-0" />
+                <FrameCorner className="right-0 top-0 rotate-90" />
+                <FrameCorner className="right-0 bottom-0 rotate-180" />
+                <FrameCorner className="left-0 bottom-0 -rotate-90" />
+                <span className="font-sans text-[12px] font-bold text-[#FFD60A] tracking-widest uppercase drop-shadow-md opacity-90 absolute">
+                  Chuyến đi
+                </span>
+              </div>
+            )}
+
+            {/* Picket Signature Badge */}
+            <div className="absolute bottom-[20%] inset-x-0 flex justify-center pointer-events-none">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md ring-1 ring-white/10 shadow-lg animate-in fade-in duration-500">
+                <Sparkles className="h-3 w-3 text-[#FFD60A]" />
+                <span className="font-sans text-[10px] font-bold text-white/90 tracking-[0.2em] uppercase">PICKET VISION</span>
+              </div>
+            </div>
+
+            {/* Badges */}
+            <div className="absolute top-[10%] inset-x-0 flex flex-col items-center gap-2 transition-opacity duration-300">
+              {isBlurry ? (
+                <div className="flex items-center gap-1.5 rounded-full bg-red-500/90 px-3 py-1.5 shadow-lg backdrop-blur text-white animate-in slide-in-from-top-2">
+                  <AlertTriangle className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  <span className="font-sans text-[11px] font-bold">Ảnh bị mờ — Giữ chặt tay</span>
+                </div>
+              ) : isDark && !torch ? (
+                <div className="flex items-center gap-1.5 rounded-full bg-amber-400/90 px-3 py-1.5 shadow-lg backdrop-blur text-amber-950 animate-in slide-in-from-top-2">
+                  <Lightbulb className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  <span className="font-sans text-[11px] font-bold">Thiếu sáng — Bật đèn</span>
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          {/* Bottom Controls (Gradient overlay) */}
+          <div className="relative z-30 w-full flex flex-col items-center bg-gradient-to-t from-black/90 via-black/70 to-transparent px-6 pb-[max(env(safe-area-inset-bottom),40px)] sm:pb-8 pt-16 pointer-events-none">
+            
+            {/* Mode Selector */}
+            <div className="mb-6 flex justify-center w-full pointer-events-auto overflow-x-auto hide-scrollbar px-6">
+              <div className="flex gap-6 items-center">
+                <button onClick={() => setMode('mock')} className={`font-sans text-[12px] font-bold transition tracking-widest drop-shadow-md shrink-0 ${mode === 'mock' ? 'text-[#FFD60A]' : 'text-white opacity-70'}`}>MOCK</button>
+                <button onClick={() => setMode('receipt')} className={`font-sans text-[12px] font-bold transition tracking-widest drop-shadow-md shrink-0 ${mode === 'receipt' ? 'text-[#FFD60A]' : 'text-white opacity-70'}`}>HOÁ ĐƠN</button>
+                <button onClick={() => setMode('item')} className={`font-sans text-[12px] font-bold transition tracking-widest drop-shadow-md shrink-0 ${mode === 'item' ? 'text-[#FFD60A]' : 'text-white opacity-70'}`}>MÓN ĐỒ</button>
+                <button onClick={() => setMode('trip')} className={`font-sans text-[12px] font-bold transition tracking-widest drop-shadow-md shrink-0 ${mode === 'trip' ? 'text-[#FFD60A]' : 'text-white opacity-70'}`}>CHUYẾN ĐI</button>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex w-full items-center justify-between px-2 pointer-events-auto">
+              {/* Gallery Button */}
+              <button
+                type="button"
+                onClick={onPickFile}
+                className="flex h-12 w-12 items-center justify-center rounded-lg bg-black/40 backdrop-blur-md active:scale-95 transition overflow-hidden ring-1 ring-white/20"
+              >
+                <ImageIcon className="h-6 w-6 text-white" strokeWidth={1.5} />
+              </button>
+
+              {/* Capture Button */}
+              <button
+                type="button"
+                onClick={onCapture}
+                className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-white active:scale-95 transition-transform"
+              >
+                <span className="flex h-[56px] w-[56px] rounded-full bg-white" />
+              </button>
+
+              {/* Flip Camera Button */}
+              <button
+                type="button"
+                onClick={onFlip}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-black/40 backdrop-blur-md active:scale-95 transition ring-1 ring-white/20"
+              >
+                <RotateCcw className="h-5 w-5 text-white" strokeWidth={2} />
+              </button>
+            </div>
         </div>
       </div>
     </div>
@@ -458,7 +483,7 @@ function CameraStage({
 function FrameCorner({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`absolute h-8 w-8 border-t-[4px] border-l-[4px] border-white shadow-sm ${className}`}
+      className={`absolute h-8 w-8 border-t-[2px] border-l-[2px] border-[#FFD60A] shadow-sm ${className}`}
       style={{ borderTopLeftRadius: 12 }}
     />
   );
