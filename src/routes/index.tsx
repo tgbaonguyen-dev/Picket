@@ -37,6 +37,7 @@ import { PullToRefresh } from "@/components/pull-to-refresh";
 import { TransactionRow } from "@/components/transaction-row";
 import { Squish, FadeInUp } from "@/components/ui/animations";
 import { staggerDelay } from "@/lib/motion";
+import { vibrateLight, vibrateMedium } from "@/lib/haptic";
 
 export const Route = createFileRoute("/")(  {
   component: Index,
@@ -148,7 +149,10 @@ function Index() {
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 1200);
+    const t = setTimeout(() => {
+      setIsLoading(false);
+      vibrateLight();
+    }, 1200);
     return () => clearTimeout(t);
   }, []);
 

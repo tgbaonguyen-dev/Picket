@@ -24,6 +24,7 @@ import {
 import { toast } from "sonner";
 import { formatVND, getCategories } from "@/data";
 import { PickerSheet } from "@/components/picker-sheet";
+import { vibrateLight, vibrateHeavy, vibrateSuccess } from "@/lib/haptic";
 
 export const Route = createFileRoute("/capture-receipt")({
   component: CaptureReceiptPage,
@@ -89,6 +90,7 @@ function CaptureReceiptPage() {
   }, [stage, facing]);
 
   function capture() {
+    vibrateHeavy();
     const video = videoRef.current;
     if (!video || !video.videoWidth) {
       toast.error("Chưa sẵn sàng");
@@ -160,6 +162,7 @@ function CaptureReceiptPage() {
   }
 
   function save() {
+    vibrateSuccess();
     toast.success("Đã lưu hoá đơn");
     setStage("success");
   }

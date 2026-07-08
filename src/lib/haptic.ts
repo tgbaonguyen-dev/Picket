@@ -1,38 +1,58 @@
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+
 /**
  * Haptic Feedback Utility
  * 
- * Sử dụng Navigator.vibrate API tích hợp sẵn của trình duyệt.
- * Trên Android, API này hoạt động trơn tru. Trên iOS Safari, nó bị chặn,
- * tuy nhiên sau này bọc bằng Capacitor, ta có thể dùng plugin @capacitor/haptics
- * để thay thế bên trong các hàm này mà không phải sửa lại toàn bộ UI.
+ * Sử dụng Capacitor Haptics API cho ứng dụng di động (iOS/Android).
+ * Hỗ trợ fallback về Navigator.vibrate API trên web (Android Chrome).
  */
 
-export const vibrateLight = () => {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate(10); // Rung rất nhẹ
+export const vibrateLight = async () => {
+  try {
+    await Haptics.impact({ style: ImpactStyle.Light });
+  } catch (e) {
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate(10); // Rung rất nhẹ
+    }
   }
 };
 
-export const vibrateMedium = () => {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate(30); // Rung vừa (khi vuốt)
+export const vibrateMedium = async () => {
+  try {
+    await Haptics.impact({ style: ImpactStyle.Medium });
+  } catch (e) {
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate(30); // Rung vừa
+    }
   }
 };
 
-export const vibrateHeavy = () => {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate(50); // Rung mạnh (khi xoá)
+export const vibrateHeavy = async () => {
+  try {
+    await Haptics.impact({ style: ImpactStyle.Heavy });
+  } catch (e) {
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate(50); // Rung mạnh
+    }
   }
 };
 
-export const vibrateSuccess = () => {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate([15, 50, 15]); // Rung kiểu thành công
+export const vibrateSuccess = async () => {
+  try {
+    await Haptics.notification({ type: NotificationType.Success });
+  } catch (e) {
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate([15, 50, 15]);
+    }
   }
 };
 
-export const vibrateError = () => {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate([50, 100, 50]); // Rung kiểu cảnh báo lỗi
+export const vibrateError = async () => {
+  try {
+    await Haptics.notification({ type: NotificationType.Error });
+  } catch (e) {
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate([50, 100, 50]);
+    }
   }
 };
