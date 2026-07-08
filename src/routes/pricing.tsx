@@ -47,13 +47,13 @@ function PricingPage() {
     vibrateMedium();
     if (selected === "free") {
       toast.success("Đã kích hoạt gói Free!");
+      navigate({ to: "/" });
     } else {
-      toast.success(
-        `Bắt đầu dùng thử ${selectedPlan.name} miễn phí ${trialDays} ngày!`,
-        { description: "Bạn sẽ không bị tính phí trong thời gian dùng thử." }
-      );
+      navigate({ 
+        to: "/checkout", 
+        search: { plan: selected as "plus" | "pro", billing } 
+      });
     }
-    navigate({ to: "/" });
   };
 
   return (

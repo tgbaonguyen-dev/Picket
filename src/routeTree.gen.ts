@@ -28,6 +28,7 @@ import { Route as MonthlyWrapRouteImport } from './routes/monthly-wrap'
 import { Route as ItemsRouteImport } from './routes/items'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CaptureReceiptRouteImport } from './routes/capture-receipt'
 import { Route as BudgetsRouteImport } from './routes/budgets'
@@ -161,6 +162,11 @@ const InboxRoute = InboxRouteImport.update({
 const ExpensesRoute = ExpensesRouteImport.update({
   id: '/expenses',
   path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesRoute = CategoriesRouteImport.update({
@@ -367,6 +373,7 @@ export interface FileRoutesByFullPath {
   '/budgets': typeof BudgetsRouteWithChildren
   '/capture-receipt': typeof CaptureReceiptRoute
   '/categories': typeof CategoriesRoute
+  '/checkout': typeof CheckoutRoute
   '/expenses': typeof ExpensesRouteWithChildren
   '/inbox': typeof InboxRoute
   '/items': typeof ItemsRouteWithChildren
@@ -425,6 +432,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/capture-receipt': typeof CaptureReceiptRoute
   '/categories': typeof CategoriesRoute
+  '/checkout': typeof CheckoutRoute
   '/inbox': typeof InboxRoute
   '/monthly-wrap': typeof MonthlyWrapRoute
   '/notifications': typeof NotificationsRoute
@@ -482,6 +490,7 @@ export interface FileRoutesById {
   '/budgets': typeof BudgetsRouteWithChildren
   '/capture-receipt': typeof CaptureReceiptRoute
   '/categories': typeof CategoriesRoute
+  '/checkout': typeof CheckoutRoute
   '/expenses': typeof ExpensesRouteWithChildren
   '/inbox': typeof InboxRoute
   '/items': typeof ItemsRouteWithChildren
@@ -544,6 +553,7 @@ export interface FileRouteTypes {
     | '/budgets'
     | '/capture-receipt'
     | '/categories'
+    | '/checkout'
     | '/expenses'
     | '/inbox'
     | '/items'
@@ -602,6 +612,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/capture-receipt'
     | '/categories'
+    | '/checkout'
     | '/inbox'
     | '/monthly-wrap'
     | '/notifications'
@@ -658,6 +669,7 @@ export interface FileRouteTypes {
     | '/budgets'
     | '/capture-receipt'
     | '/categories'
+    | '/checkout'
     | '/expenses'
     | '/inbox'
     | '/items'
@@ -719,6 +731,7 @@ export interface RootRouteChildren {
   BudgetsRoute: typeof BudgetsRouteWithChildren
   CaptureReceiptRoute: typeof CaptureReceiptRoute
   CategoriesRoute: typeof CategoriesRoute
+  CheckoutRoute: typeof CheckoutRoute
   ExpensesRoute: typeof ExpensesRouteWithChildren
   InboxRoute: typeof InboxRoute
   ItemsRoute: typeof ItemsRouteWithChildren
@@ -874,6 +887,13 @@ declare module '@tanstack/react-router' {
       path: '/expenses'
       fullPath: '/expenses'
       preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories': {
@@ -1315,6 +1335,7 @@ const rootRouteChildren: RootRouteChildren = {
   BudgetsRoute: BudgetsRouteWithChildren,
   CaptureReceiptRoute: CaptureReceiptRoute,
   CategoriesRoute: CategoriesRoute,
+  CheckoutRoute: CheckoutRoute,
   ExpensesRoute: ExpensesRouteWithChildren,
   InboxRoute: InboxRoute,
   ItemsRoute: ItemsRouteWithChildren,
